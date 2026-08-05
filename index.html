@@ -22,132 +22,110 @@
     <title>Resident Evil Requiem</title>
   </head>
   <body>
-    <!-- the title -->
-    <section class="header">
+    <nav class="main-nav">
+      <button
+        type="button"
+        class="nav-toggle"
+        aria-expanded="false"
+        aria-controls="nav-menu"
+      >
+        <i class="fa-solid fa-bars"></i>
+      </button>
+
+      <ul id="nav-menu" class="nav-menu">
+        <li><a href="#home" class="nav-link is-active">Accueil</a></li>
+        <li><a href="#news" class="nav-link">News</a></li>
+        <li><a href="#trailers" class="nav-link">Trailers</a></li>
+        <li><a href="#about" class="nav-link">À propos</a></li>
+        <li><a href="#story" class="nav-link">Histoire</a></li>
+        <li><a href="#characters" class="nav-link">Personnages</a></li>
+        <li><a href="#locations" class="nav-link">Lieux</a></li>
+        <li><a href="#gameplay" class="nav-link">Gameplay</a></li>
+        <li><a href="#products" class="nav-link">Produits</a></li>
+      </ul>
+    </nav>
+
+    <header class="hero" id="home">
       <div class="video-container">
-        <video autoplay muted loop playsinline class="bg-video">
+        <video class="bg-video" autoplay muted loop playsinline>
           <source src="assets/video/mainVisual_bg.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
         </video>
-        <div class="video-content"></div>
       </div>
-      <nav>
-        <div class="header_menu_wrap" style="opacity: 1">
-          <ul class="header_menu ff-se2">
-            <li>
-              <button type="button" class="btn">
-                <span class="btn_inner"
-                  ><span class="btn_txt" aria-hidden="true">Accueil</span
-                  ><span class="hidden">Accueil</span></span
-                >
-              </button>
-            </li>
-            <li>
-              <button type="button" class="btn">
-                <span class="btn_inner"
-                  ><span class="new"></span
-                  ><span class="btn_txt" aria-hidden="true">News</span
-                  ><span class="hidden">News</span></span
-                >
-              </button>
-            </li>
-            <li>
-              <button type="button" class="btn">
-                <span class="btn_inner"
-                  ><span class="new"></span
-                  ><span class="btn_txt" aria-hidden="true">Trailers</span
-                  ><span class="hidden">Trailers</span></span
-                >
-              </button>
-            </li>
-            <li>
-              <button type="button" class="btn">
-                <span class="btn_inner"
-                  ><span class="btn_txt" aria-hidden="true">À propos</span
-                  ><span class="hidden">À propos</span></span
-                >
-              </button>
-            </li>
-            <li>
-              <button type="button" class="btn">
-                <span class="btn_inner"
-                  ><span class="btn_txt" aria-hidden="true">Histoire</span
-                  ><span class="hidden">Histoire</span></span
-                >
-              </button>
-            </li>
-            <li>
-              <button type="button" class="btn">
-                <span class="btn_inner"
-                  ><span class="new"></span
-                  ><span class="btn_txt" aria-hidden="true">Personnages</span
-                  ><span class="hidden">Personnages</span></span
-                >
-              </button>
-            </li>
-            <li>
-              <button type="button" class="btn">
-                <span class="btn_inner"
-                  ><span class="new"></span
-                  ><span class="btn_txt" aria-hidden="true">Lieux</span
-                  ><span class="hidden">Lieux</span></span
-                >
-              </button>
-            </li>
-            <li>
-              <button type="button" class="btn">
-                <span class="btn_inner"
-                  ><span class="btn_txt" aria-hidden="true">Gameplay</span
-                  ><span class="hidden">Gameplay</span></span
-                >
-              </button>
-            </li>
-            <li>
-              <button type="button" class="btn">
-                <span class="btn_inner"
-                  ><span class="new"></span
-                  ><span class="btn_txt" aria-hidden="true">Produits</span
-                  ><span class="hidden">Produits</span></span
-                >
-              </button>
-            </li>
-          </ul>
-          <a class="product_btn gtm-products-link" href="/requiem/fr/products/"
-            >Disponible<img
-              alt=""
-              loading="lazy"
-              decoding="async"
-              data-nimg="fill"
-              class="product_btn_bg_img"
-              src="/requiem/assets/images/common/parts/bg_btn_1.webp"
-              style="
-                position: absolute;
-                height: 100%;
-                width: 100%;
-                inset: 0px;
-                color: transparent;
-              "
-          /></a>
-        </div>
-      </nav>
-      <div class="text-box">
-        <h1 class="logo img_wrap">
+
+      <div class="hero-content">
+        <h1 class="logo">
           <img
-            alt="Resident Evil Requiem"
+            src="/assets/img/logo_w.webp"
             width="881"
             height="342"
+            alt="Resident Evil Requiem"
             decoding="async"
-            data-nimg="1"
-            src="/assets/img/logo_w.webp"
-            style="color: transparent"
           />
         </h1>
-        <p class="text_release ff-se">Disponible le 27 février 2026</p>
-        <a href="" target="" class="visit-button">À propos</a>
+        <p class="release-date">27/2/2026</p>
+        <a href="#about" class="cta-button">
+          <span>À propos</span>
+        </a>
+      </div>
+    </header>
+
+    <section id="about">
+      <h2>About</h2>
+      <h3>Requiem pour les morts. L'enfer pour les vivants.</h3>
+      <div>
+        <p>
+          Une nouvelle ère de survival horror s'ouvre avec Resident Evil
+          Requiem, le prochain volet et le plus immersif de la saga culte
+          Resident Evil ! Vivez une expérience terrifiante de survival horror
+          aux côtés de Grace Ashcroft, analyste du FBI, et plongez dans une
+          action intense avec l'agent légendaire Leon S. Kennedy. Leurs destins
+          et leurs styles de jeu uniques s'entremêlent dans une expérience
+          palpitante et émouvante qui vous glacera le sang.
+        </p>
       </div>
     </section>
-    <section>
-      <div></div>
+    <br />
+
+    <section id="story">
+      <h2>Story</h2>
+      <p>
+        Une série de morts mystérieuses a frappé les États-Unis, et le dernier
+        cadavre en date a été retrouvé dans un hôtel abandonné du Midwest.
+      </p>
+      <br />
+      <p>
+        Grace Ashcroft, une analyste du FBI, a été chargée de l'enquête et va
+        devoir retourner dans cet établissement... celui-là même où sa mère a
+        été assassinée il y a huit ans. Toutefois, lorsque la disparition d'un
+        agent de police dans cet hôtel est éventée, le vétéran chevronné Leon S.
+        Kennedy est également envoyé sur les lieux.
+      </p>
+      <br />
+      <p>
+        Alors que les chemins de Grace et de Leon convergent, tous deux doivent
+        affronter leurs démons et découvrir la vérité sur l'incident de Raccoon
+        City, la catastrophe qui a changé la face du monde à tout jamais. Mais
+        tandis que l'horreur refait surface dans leur mémoire, revivront-ils le
+        même cauchemar... ou parviendront-ils à offrir un requiem pour les
+        défunts ?
+      </p>
     </section>
+    <br />
+    <section id="location">
+      <h2>Location</h2>
+      <p>
+        Le jeu se déroule dans une série de lieux glaçants, comme un centre de
+        soins infesté de zombies, ou encore les ruines de Raccoon City, détruite
+        par un missile. Quelles horreurs indicibles attendent Grace et Leon ?
+      </p>
+      <div>
+        <img src="" alt="" /><img src="" alt="" /><img src="" alt="" /><img
+          src=""
+          alt=""
+        /><img src="" alt="" /><img src="" alt="" /><img src="" alt="" />
+      </div>
+    </section>
+
+    <script src="index.js"></script>
   </body>
 </html>

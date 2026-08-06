@@ -34,12 +34,12 @@
 
       <ul id="nav-menu" class="nav-menu">
         <li><a href="#home" class="nav-link is-active">Accueil</a></li>
-        <li><a href="#news" class="nav-link">News</a></li>
-        <li><a href="#trailers" class="nav-link">Trailers</a></li>
+        <!-- <li><a href="#news" class="nav-link">News</a></li> -->
         <li><a href="#about" class="nav-link">À propos</a></li>
         <li><a href="#story" class="nav-link">Histoire</a></li>
-        <li><a href="#characters" class="nav-link">Personnages</a></li>
         <li><a href="#locations" class="nav-link">Lieux</a></li>
+        <li><a href="#characters" class="nav-link">Personnages</a></li>
+        <li><a href="#trailers" class="nav-link">Trailers</a></li>
         <li><a href="#gameplay" class="nav-link">Gameplay</a></li>
         <li><a href="#products" class="nav-link">Produits</a></li>
       </ul>
@@ -69,11 +69,17 @@
       </div>
     </header>
 
-    <section id="about">
-      <h2>About</h2>
-      <h3>Requiem pour les morts. L'enfer pour les vivants.</h3>
-      <div>
-        <p>
+    <!-- ---------------------------------------------------------
+         About
+    --------------------------------------------------------- -->
+    <section id="about" class="info-section">
+      <div class="info-section__bg" aria-hidden="true"></div>
+      <div class="info-section__inner info-section__inner--narrow">
+        <h2 class="info-title">About</h2>
+        <p class="info-tagline">
+          Requiem pour les morts. L'enfer pour les vivants.
+        </p>
+        <p class="info-text">
           Une nouvelle ère de survival horror s'ouvre avec Resident Evil
           Requiem, le prochain volet et le plus immersif de la saga culte
           Resident Evil ! Vivez une expérience terrifiante de survival horror
@@ -84,45 +90,180 @@
         </p>
       </div>
     </section>
-    <br />
 
-    <section id="story">
-      <h2>Story</h2>
-      <p>
-        Une série de morts mystérieuses a frappé les États-Unis, et le dernier
-        cadavre en date a été retrouvé dans un hôtel abandonné du Midwest.
-      </p>
-      <br />
-      <p>
-        Grace Ashcroft, une analyste du FBI, a été chargée de l'enquête et va
-        devoir retourner dans cet établissement... celui-là même où sa mère a
-        été assassinée il y a huit ans. Toutefois, lorsque la disparition d'un
-        agent de police dans cet hôtel est éventée, le vétéran chevronné Leon S.
-        Kennedy est également envoyé sur les lieux.
-      </p>
-      <br />
-      <p>
-        Alors que les chemins de Grace et de Leon convergent, tous deux doivent
-        affronter leurs démons et découvrir la vérité sur l'incident de Raccoon
-        City, la catastrophe qui a changé la face du monde à tout jamais. Mais
-        tandis que l'horreur refait surface dans leur mémoire, revivront-ils le
-        même cauchemar... ou parviendront-ils à offrir un requiem pour les
-        défunts ?
-      </p>
+    <!-- ---------------------------------------------------------
+         Story — text on the left, fade slider on the right
+    --------------------------------------------------------- -->
+    <section id="story" class="info-section info-section--split">
+      <div class="info-section__bg" aria-hidden="true"></div>
+      <div class="info-section__inner">
+        <div class="info-copy">
+          <h2 class="info-title">Story</h2>
+
+          <p class="info-text info-text--highlight">
+            Une série de morts mystérieuses a frappé les États-Unis, et le
+            dernier cadavre en date a été retrouvé dans un hôtel abandonné du
+            Midwest.
+          </p>
+          <br />
+          <br />
+          <p class="info-text info-text--highlight">
+            Grace Ashcroft, une analyste du FBI, a été chargée de l'enquête et
+            va devoir retourner dans cet établissement... celui-là même où sa
+            mère a été assassinée il y a huit ans. Toutefois, lorsque la
+            disparition d'un agent de police dans cet hôtel est éventée, le
+            vétéran chevronné Leon S. Kennedy est également envoyé sur les
+            lieux.
+          </p>
+          <br />
+          <br />
+          <p class="info-text info-text--highlight">
+            Alors que les chemins de Grace et de Leon convergent, tous deux
+            doivent affronter leurs démons et découvrir la vérité sur l'incident
+            de Raccoon City, la catastrophe qui a changé la face du monde à tout
+            jamais. Mais tandis que l'horreur refait surface dans leur mémoire,
+            revivront-ils le même cauchemar... ou parviendront-ils à offrir un
+            requiem pour les défunts ?
+          </p>
+        </div>
+
+        <div class="media-slider media-slider--fade" data-slider>
+          <div class="media-slider__frame">
+            <div class="media-slider__slide is-active" data-slide>
+              <img
+                src="assets/img/Story/story_thumb1.webp"
+                alt="Resident Evil Requiem — story artwork 1"
+              />
+            </div>
+            <div class="media-slider__slide" data-slide>
+              <img
+                src="assets/img/Story/story_thumb2.webp"
+                alt="Resident Evil Requiem — story artwork 2"
+              />
+            </div>
+            <div class="media-slider__slide" data-slide>
+              <img
+                src="assets/img/Story/story_thumb3.webp"
+                alt="Resident Evil Requiem — story artwork 3"
+              />
+            </div>
+          </div>
+
+          <div class="media-slider__nav" data-slider-nav>
+            <span class="media-slider__label">Images</span>
+            <button
+              type="button"
+              class="media-slider__dot is-active"
+              data-slide-index="0"
+              aria-label="Show image 1"
+            >
+              1
+            </button>
+            <span class="media-slider__sep">–</span>
+            <button
+              type="button"
+              class="media-slider__dot"
+              data-slide-index="1"
+              aria-label="Show image 2"
+            >
+              2
+            </button>
+            <span class="media-slider__sep">–</span>
+            <button
+              type="button"
+              class="media-slider__dot"
+              data-slide-index="2"
+              aria-label="Show image 3"
+            >
+              3
+            </button>
+          </div>
+        </div>
+      </div>
     </section>
-    <br />
-    <section id="location">
-      <h2>Location</h2>
-      <p>
-        Le jeu se déroule dans une série de lieux glaçants, comme un centre de
-        soins infesté de zombies, ou encore les ruines de Raccoon City, détruite
-        par un missile. Quelles horreurs indicibles attendent Grace et Leon ?
-      </p>
-      <div>
-        <img src="" alt="" /><img src="" alt="" /><img src="" alt="" /><img
-          src=""
-          alt=""
-        /><img src="" alt="" /><img src="" alt="" /><img src="" alt="" />
+
+    <!-- ---------------------------------------------------------
+         Locations — sliding carousel on the left, text on the right
+    --------------------------------------------------------- -->
+    <section
+      id="locations"
+      class="info-section info-section--split info-section--reverse"
+    >
+      <div class="info-section__bg" aria-hidden="true"></div>
+      <div class="info-section__inner">
+        <div class="media-slider media-slider--carousel" data-slider>
+          <div class="media-slider__track" data-slider-track>
+            <div class="media-slider__slide" data-slide>
+              <img
+                src="assets/img/Location/location_thumb1.webp"
+                alt="Resident Evil Requiem — location artwork 1"
+              />
+            </div>
+            <div class="media-slider__slide" data-slide>
+              <img
+                src="assets/img/Location/location_thumb2.webp"
+                alt="Resident Evil Requiem — location artwork 2"
+              />
+            </div>
+            <div class="media-slider__slide" data-slide>
+              <img
+                src="assets/img/Location/location_thumb3.webp"
+                alt="Resident Evil Requiem — location artwork 3"
+              />
+            </div>
+            <div class="media-slider__slide" data-slide>
+              <img
+                src="assets/img/Location/location_thumb4.webp"
+                alt="Resident Evil Requiem — location artwork 4"
+              />
+            </div>
+            <div class="media-slider__slide" data-slide>
+              <img
+                src="assets/img/Location/location_thumb5.webp"
+                alt="Resident Evil Requiem — location artwork 5"
+              />
+            </div>
+            <div class="media-slider__slide" data-slide>
+              <img
+                src="assets/img/Location/location_thumb6.webp"
+                alt="Resident Evil Requiem — location artwork 6"
+              />
+            </div>
+            <div class="media-slider__slide" data-slide>
+              <img
+                src="assets/img/Location/location_thumb7.webp"
+                alt="Resident Evil Requiem — location artwork 7"
+              />
+            </div>
+          </div>
+
+          <button
+            type="button"
+            class="media-slider__arrow media-slider__arrow--prev"
+            data-slide-prev
+            aria-label="Previous image"
+          >
+            <i class="fa-solid fa-chevron-left"></i>
+          </button>
+          <button
+            type="button"
+            class="media-slider__arrow media-slider__arrow--next"
+            data-slide-next
+            aria-label="Next image"
+          >
+            <i class="fa-solid fa-chevron-right"></i>
+          </button>
+        </div>
+
+        <div class="info-copy">
+          <h2 class="info-title">Locations</h2>
+          <p class="info-text">
+            Le jeu se déroule dans une série de lieux glaçants, comme un centre
+            de soins infesté de zombies, ou encore les ruines de Raccoon City,
+            détruite par un missile. Quelles horreurs indicibles attendent Grace
+            et Leon ?
+          </p>
+        </div>
       </div>
     </section>
 

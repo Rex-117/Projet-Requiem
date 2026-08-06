@@ -215,3 +215,259 @@
     padding: 0 20px;
   }
 }
+
+/* ---------------------------------------------------------
+   Info sections — About / Story / Locations
+   Shared dark, textured panel used by all three
+--------------------------------------------------------- */
+.info-section {
+  position: relative;
+  overflow: hidden;
+  background-color: #0c0c0d;
+  color: var(--color-white);
+  padding: 120px 6%;
+}
+
+.info-section__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.7;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.035) 0px,
+      transparent 1px,
+      transparent 48px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.035) 0px,
+      transparent 1px,
+      transparent 48px
+    ),
+    radial-gradient(circle at 12% 35%, rgba(42, 36, 36, 0.25), transparent 40%);
+  background-color: #2a2a2a;
+}
+
+.info-section__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.info-section__inner--narrow {
+  max-width: 760px;
+}
+
+.info-section--split .info-section__inner {
+  display: grid;
+  grid-template-columns: minmax(280px, 440px) 1fr;
+  gap: 190px;
+  align-items: center;
+}
+
+.info-section--reverse .info-section__inner {
+  grid-template-columns: 1fr minmax(280px, 440px);
+}
+
+.info-copy {
+  width: 590px;
+}
+
+.info-section--reverse .info-copy {
+  order: 2;
+}
+
+.info-section--reverse .media-slider {
+  order: 1;
+}
+
+.info-title {
+  font-family: "Special Elite", "Sofia Sans Semi Condensed", serif;
+  font-size: 52px;
+  font-weight: 400;
+  margin-bottom: 24px;
+}
+
+.info-tagline {
+  font-size: 20px;
+  font-style: italic;
+  opacity: 0.85;
+  margin-bottom: 20px;
+  background: rgba(230, 230, 225, 0.92);
+  color: #111;
+  padding: 4px 6px;
+}
+
+.info-text {
+  font-size: 16px;
+  line-height: 1.7;
+  margin-bottom: 20px;
+  max-width: 640px;
+}
+
+/* "redacted case file" highlighted text: box-decoration-break makes the
+   background wrap each individual line, not just the whole paragraph */
+.info-text--highlight {
+  display: inline;
+  background: rgba(230, 230, 225, 0.92);
+  color: #111;
+  padding: 4px 6px;
+  line-height: 2;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+/* ---------------------------------------------------------
+   Media slider — shared frame, two behaviors below
+--------------------------------------------------------- */
+.media-slider {
+  position: relative;
+}
+
+/* Fade variant (Story) --------------------------------------------- */
+.media-slider--fade .media-slider__frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: #1a1a1a;
+}
+
+.media-slider--fade .media-slider__slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+.media-slider--fade .media-slider__slide.is-active {
+  opacity: 1;
+}
+
+.media-slider__slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  background: #222; /* placeholder color until real image src is set */
+}
+
+.media-slider__nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+  font-family: "Special Elite", serif;
+  font-size: 14px;
+  letter-spacing: 1px;
+  justify-content: flex-end;
+}
+
+.media-slider__label {
+  text-transform: uppercase;
+  opacity: 0.7;
+  margin-right: 6px;
+}
+
+.media-slider__dot {
+  background: none;
+  border: 1px solid transparent;
+  color: var(--color-white);
+  font: inherit;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    border-color 0.25s ease,
+    color 0.25s ease;
+}
+
+.media-slider__dot:hover {
+  color: var(--color-accent);
+}
+
+.media-slider__dot.is-active {
+  border-color: var(--color-white);
+}
+
+.media-slider__sep {
+  opacity: 0.5;
+}
+
+/* Carousel variant (Locations) -------------------------------------- */
+.media-slider--carousel {
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+}
+
+.media-slider__track {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s ease;
+}
+
+.media-slider--carousel .media-slider__slide {
+  flex: 0 0 100%;
+  height: 100%;
+}
+
+.media-slider__arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: rgba(0, 0, 0, 0.5);
+  color: var(--color-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease;
+  z-index: 2;
+}
+
+.media-slider__arrow:hover {
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.media-slider__arrow--prev {
+  left: 16px;
+}
+
+.media-slider__arrow--next {
+  right: 16px;
+}
+
+/* Stack the columns on narrower screens */
+@media (max-width: 900px) {
+  .info-section {
+    padding: 80px 6%;
+  }
+
+  .info-section--split .info-section__inner,
+  .info-section--reverse .info-section__inner {
+    grid-template-columns: 1fr;
+  }
+
+  .info-section--reverse .info-copy,
+  .info-section--reverse .media-slider {
+    order: initial;
+  }
+
+  .info-title {
+    font-size: 38px;
+  }
+}

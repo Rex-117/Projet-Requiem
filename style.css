@@ -527,7 +527,7 @@
   position: relative;
   z-index: 1;
   max-width: 1400px;
-  margin: 0 auto;
+  margin: -5% auto;
   padding-top: 40px;
   display: flex;
   flex-direction: column;
@@ -577,8 +577,8 @@
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   scroll-padding-left: 6%;
-  padding: 4px 6% 10px;
-  margin: 0 -6%;
+  padding: 116px 6% 10px;
+  margin: 0 -44%;
 
   /* hide the scrollbar; arrows + drag/swipe handle navigation */
   scrollbar-width: none;
@@ -670,6 +670,16 @@
 }
 
 .trailer-slider__arrow {
+  background: none;
+  border: none;
+  color: var(--color-white);
+  font-size: 18px;
+  cursor: pointer;
+  transition: color 0.25s ease;
+}
+
+.trailer-slider__arrow-right {
+  transform: scaleX(-1);
   background: none;
   border: none;
   color: var(--color-white);

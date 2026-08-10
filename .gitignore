@@ -1,0 +1,34 @@
+# Always ignore sensitive information and API keys
+.env
+.env.local
+.env.*.local
+*.env
+
+# VS Code specific files (except shared team workspace settings)
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/code-workspace
+.history/
+*.vsix
+
+# Operating System files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V10
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Common package manager lockfiles and dependencies 
+# (Uncomment the ones matching your language)
+node_modules/
+# __pycache__/
+# *.pyc
+ .venv/
+ target/
+ dist/
+ build/

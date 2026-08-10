@@ -49,6 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   initFadeSliders();
   initCarousels();
+  initTrailerSlider();
 });
 
 // --- Story-style slider: images crossfade, driven by numbered dots ------
@@ -123,4 +124,55 @@ function initCarousels() {
     update();
     restartAutoplay();
   });
+}
+
+// --- Trailer filmstrip: native horizontal scroll + snap, driven by
+//     prev/next arrows, with a live "current / total" counter --------
+function initTrailerSlider() {
+  const track = document.querySelector("[data-trailer-track]");
+  if (!track) return;
+
+  const cards = track.querySelectorAll("[data-trailer-card]");
+  const prevBtn = document.querySelector("[data-trailer-prev]");
+  const nextBtn = document.querySelector("[data-trailer-next]");
+  const currentEl = document.querySelector("[data-trailer-current]");
+  const totalEl = document.querySelector("[data-trailer-total]");
+  if (!cards.length) return;
+
+  const pad = (n) => String(n).padStart(2, "0");
+
+  if (totalEl) totalEl.textContent = pad(cards.length);
+
+  const step = () => {
+    const cardWidth = cards[0].getBoundingClientRect().width;
+    const gap = parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap || "0");
+    return cardWidth + gap;
+  };
+
+  const updateCounter = () => {
+    if (!currentEl) return;
+    const index = Math.round(track.scrollLeft / step());
+    const clamped = Math.min(Math.max(index, 0), cards.length - 1);
+    currentEl.textContent = pad(clamped + 1);
+  };
+
+  prevBtn?.addEventListener("click", () => {
+    track.scrollBy({ left: -step(), behavior: "smooth" });
+  });
+
+  nextBtn?.addEventListener("click", () => {
+    track.scrollBy({ left: step(), behavior: "smooth" });
+  });
+
+  let ticking = false;
+  track.addEventListener("scroll", () => {
+    if (ticking) return;
+    ticking = true;
+    window.requestAnimationFrame(() => {
+      updateCounter();
+      ticking = false;
+    });
+  });
+
+  updateCounter();
 }

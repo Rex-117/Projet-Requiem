@@ -15,7 +15,7 @@
       href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/fontawesome.min.css"
     />
     <link rel="shortcut icon" href="img/" type="image/x-icon" />
-    <title>Resident Evil Requiem</title>
+    <title>Resident Evil Requiem — Trailer</title>
   </head>
   <body>
     <nav class="main-nav">
@@ -29,51 +29,179 @@
       </button>
 
       <ul id="nav-menu" class="nav-menu">
-        <li><a href="index.html" class="nav-link is-active">Accueil</a></li>
-        <!-- <li><a href="#news" class="nav-link">News</a></li> -->
-        <li><a href="#about" class="nav-link">À propos</a></li>
-        <li><a href="#story" class="nav-link">Histoire</a></li>
-        <li><a href="#locations" class="nav-link">Lieux</a></li>
-        <li><a href="#characters" class="nav-link">Personnages</a></li>
-        <li><a href="#trailers" class="nav-link">Trailers</a></li>
-        <li><a href="#gameplay" class="nav-link">Gameplay</a></li>
-        <li><a href="#products" class="nav-link">Produits</a></li>
+        <li><a href="index.html" class="nav-link">Accueil</a></li>
+        <li><a href="index.html#about" class="nav-link">À propos</a></li>
+        <li><a href="index.html#story" class="nav-link">Histoire</a></li>
+        <li><a href="index.html#locations" class="nav-link">Lieux</a></li>
+        <li>
+          <a href="index.html#characters" class="nav-link">Personnages</a>
+        </li>
+        <li><a href="trailer.html" class="nav-link is-active">Trailers</a></li>
+        <li><a href="index.html#gameplay" class="nav-link">Gameplay</a></li>
+        <li><a href="index.html#products" class="nav-link">Produits</a></li>
       </ul>
     </nav>
 
-    <!-- <header class="hero" id="home-trailer">
-      <div class="video-container">
-        <video class="bg-video" autoplay muted loop playsinline>
-          <source src="assets/video/mainVisual_bg.mp4" type="video/mp4" />
-        </video>
-      </div>
-    </header> -->
+    <!-- ---------------------------------------------------------
+         Trailer 
+    --------------------------------------------------------- -->
+    <main id="main-trailer" class="info-section">
+      <div class="info-section__bg" aria-hidden="true"></div>
 
-    <main id="main-trailer">
-      <h1>---</h1>
-      <div id="video-wrapper">
-        <iframe
-          src="https://www.youtube.com/embed/---"
-          title="Vidéo YouTube"
-          frameborder="0"
-          allow="
-            accelerometer;
-            autoplay;
-            clipboard-write;
-            encrypted-media;
-            gyroscope;
-            picture-in-picture;
-            web-share;
-          "
-          allowfullscreen
-        ></iframe>
+      <div class="trailer-page__inner">
+        <h1 class="info-title">Trailer</h1>
+
+        <div id="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/---"
+            title="Vidéo YouTube"
+            frameborder="0"
+            allow="
+              accelerometer;
+              autoplay;
+              clipboard-write;
+              encrypted-media;
+              gyroscope;
+              picture-in-picture;
+              web-share;
+            "
+            allowfullscreen
+          ></iframe>
+        </div>
+
+        <p class="caption">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate
+          totam nisi asperiores alias tempora maxime fuga eius, voluptatum dicta
+          placeat laboriosam esse minus optio eos maiores quae quasi labore
+          assumenda!
+        </p>
+
+        <!-- ---------------------------------------------------------
+             Trailer filmstrip
+        --------------------------------------------------------- -->
+        <div class="trailer-slider" data-trailer-slider>
+          <div class="trailer-slider__track" data-trailer-track>
+            <a
+              class="trailer-card"
+              href="https://www.youtube.com/watch?v=REPLACE_ME_1"
+              target="_blank"
+              rel="noopener"
+              data-trailer-card
+            >
+              <span class="trailer-card__frame">
+                <img
+                  src="assets/img/Trailers/thumb_10.webp"
+                  alt="Leon Must Die Forever"
+                />
+                <span class="trailer-card__play" aria-hidden="true">
+                  <img src="assets/img/Trailers/icon_btn.webp" alt="" />
+                </span>
+              </span>
+              <span class="trailer-card__label">Leon Must Die Forever</span>
+            </a>
+
+            <a
+              class="trailer-card"
+              href="https://www.youtube.com/watch?v=REPLACE_ME_2"
+              target="_blank"
+              rel="noopener"
+              data-trailer-card
+            >
+              <span class="trailer-card__frame">
+                <img
+                  src="assets/img/Trailers/thumb_9.webp"
+                  alt="Through the Darkness (Short Version) / Colin &amp; Caroline"
+                />
+                <span class="trailer-card__play" aria-hidden="true">
+                  <img src="assets/img/Trailers/icon_btn.webp" alt="" />
+                </span>
+              </span>
+              <span class="trailer-card__label"
+                >Through the Darkness (Short Version) / Colin &amp;
+                Caroline</span
+              >
+            </a>
+
+            <a
+              class="trailer-card"
+              href="https://www.youtube.com/watch?v=REPLACE_ME_3"
+              target="_blank"
+              rel="noopener"
+              data-trailer-card
+            >
+              <span class="trailer-card__frame">
+                <img src="assets/img/Trailers/thumb_8.webp" alt="4th Trailer" />
+                <span class="trailer-card__play" aria-hidden="true">
+                  <img src="assets/img/Trailers/icon_btn.webp" alt="" />
+                </span>
+              </span>
+              <span class="trailer-card__label">4th Trailer</span>
+            </a>
+
+            <a
+              class="trailer-card"
+              href="https://www.youtube.com/watch?v=REPLACE_ME_4"
+              target="_blank"
+              rel="noopener"
+              data-trailer-card
+            >
+              <span class="trailer-card__frame">
+                <img
+                  src="assets/img/Trailers/trailer_5.webp"
+                  alt="5th Trailer"
+                />
+                <span class="trailer-card__play" aria-hidden="true">
+                  <img src="assets/img/Trailers/play-button.png" alt="" />
+                </span>
+              </span>
+              <span class="trailer-card__label">5th Trailer</span>
+            </a>
+
+            <a
+              class="trailer-card"
+              href="https://www.youtube.com/watch?v=REPLACE_ME_5"
+              target="_blank"
+              rel="noopener"
+              data-trailer-card
+            >
+              <span class="trailer-card__frame">
+                <img
+                  src="assets/img/Trailers/trailer_6.webp"
+                  alt="6th Trailer"
+                />
+                <span class="trailer-card__play" aria-hidden="true">
+                  <img src="assets/img/Trailers/play-button.png" alt="" />
+                </span>
+              </span>
+              <span class="trailer-card__label">6th Trailer</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="trailer-slider__nav">
+          <button
+            type="button"
+            class="trailer-slider__arrow"
+            data-trailer-prev
+            aria-label="Previous trailer"
+          >
+            <i class="fa-solid fa-arrow-left"></i>
+          </button>
+          <span class="trailer-slider__counter">
+            <span data-trailer-current>01</span>/<span data-trailer-total
+              >10</span
+            >
+          </span>
+          <button
+            type="button"
+            class="trailer-slider__arrow"
+            data-trailer-next
+            aria-label="Next trailer"
+          >
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
       </div>
-      <p class="caption">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate
-        totam nisi asperiores alias tempora maxime fuga eius, voluptatum dicta
-        placeat laboriosam esse minus optio eos maiores quae quasi labore
-        assumenda!
-      </p>
     </main>
 
     <script src="index.js"></script>

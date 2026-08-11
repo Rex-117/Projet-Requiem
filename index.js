@@ -29,7 +29,10 @@ document.addEventListener("DOMContentLoaded", () => {
   if (sections.length) {
     const setActiveLink = (id) => {
       navLinks.forEach((link) => {
-        link.classList.toggle("is-active", link.getAttribute("href") === `#${id}`);
+        link.classList.toggle(
+          "is-active",
+          link.getAttribute("href") === `#${id}`,
+        );
       });
     };
 
@@ -41,89 +44,158 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         });
       },
-      { rootMargin: "-50% 0px -50% 0px" } // trigger when a section crosses the middle of the viewport
+      { rootMargin: "-50% 0px -50% 0px" }, // trigger when a section crosses the middle of the viewport
     );
 
     sections.forEach((section) => observer.observe(section));
   }
 
   initFadeSliders();
-  initCarousels();
+  initLocationSlider();
   initTrailerSlider();
 });
 
 // --- Story-style slider: images crossfade, driven by numbered dots ------
 function initFadeSliders() {
-  document.querySelectorAll(".media-slider--fade[data-slider]").forEach((slider) => {
-    const slides = slider.querySelectorAll("[data-slide]");
-    const dots = slider.querySelectorAll("[data-slide-index]");
-    if (!slides.length) return;
+  document
+    .querySelectorAll(".media-slider--fade[data-slider]")
+    .forEach((slider) => {
+      const slides = slider.querySelectorAll("[data-slide]");
+      const dots = slider.querySelectorAll("[data-slide-index]");
+      if (!slides.length) return;
 
-    let current = 0;
-    let timer = null;
+      let current = 0;
+      let timer = null;
 
-    const show = (index) => {
-      current = (index + slides.length) % slides.length;
-      slides.forEach((slide, i) => slide.classList.toggle("is-active", i === current));
-      dots.forEach((dot, i) => dot.classList.toggle("is-active", i === current));
-    };
+      const show = (index) => {
+        current = (index + slides.length) % slides.length;
+        slides.forEach((slide, i) =>
+          slide.classList.toggle("is-active", i === current),
+        );
+        dots.forEach((dot, i) =>
+          dot.classList.toggle("is-active", i === current),
+        );
+      };
 
-    const restartAutoplay = () => {
-      clearInterval(timer);
-      timer = setInterval(() => show(current + 1), 5000);
-    };
+      const restartAutoplay = () => {
+        clearInterval(timer);
+        timer = setInterval(() => show(current + 1), 5000);
+      };
 
-    dots.forEach((dot) => {
-      dot.addEventListener("click", () => {
-        show(Number(dot.dataset.slideIndex));
-        restartAutoplay(); // manual pick resets the clock instead of jumping right after
+      dots.forEach((dot) => {
+        dot.addEventListener("click", () => {
+          show(Number(dot.dataset.slideIndex));
+          restartAutoplay(); // manual pick resets the clock instead of jumping right after
+        });
       });
-    });
 
-    show(0);
-    restartAutoplay();
-  });
+      show(0);
+      restartAutoplay();
+    });
 }
 
-// --- Locations-style slider: track slides horizontally, prev/next arrows -
-function initCarousels() {
-  document.querySelectorAll(".media-slider--carousel[data-slider]").forEach((slider) => {
-    const track = slider.querySelector("[data-slider-track]");
-    const slides = slider.querySelectorAll("[data-slide]");
-    const prevBtn = slider.querySelector("[data-slide-prev]");
-    const nextBtn = slider.querySelector("[data-slide-next]");
-    if (!track || !slides.length) return;
+// --- Locations peek carousel
 
-    let current = 0;
-    let timer = null;
+function initLocationSlider() {
+  const root = document.querySelector("[data-location-slider]");
+  if (!root) return;
 
-    const update = () => {
-      track.style.transform = `translateX(-${current * 100}%)`;
-    };
+  const track = root.querySelector("[data-slider-track]");
+  const slides = track?.querySelectorAll("[data-slide]");
+  const prevBtn = document.querySelector("[data-slide-prev]");
+  const nextBtn = document.querySelector("[data-slide-next]");
+  const progressBar = document.querySelector("[data-slide-progress]");
+  if (!track || !slides.length) return;
 
-    const go = (direction) => {
-      current = (current + direction + slides.length) % slides.length;
-      update();
-    };
+  let current = 0;
 
-    const restartAutoplay = () => {
-      clearInterval(timer);
-      timer = setInterval(() => go(1), 5000);
-    };
+  const gapPx = () =>
+    parseFloat(
+      getComputedStyle(track).columnGap || getComputedStyle(track).gap || "0",
+    );
 
-    prevBtn?.addEventListener("click", () => {
-      go(-1);
-      restartAutoplay();
-    });
+  // How far to shift the track so that slide `index` sits centered in
+  // the viewport, regardless of the container's/slide's actual width.
+  const offsetForIndex = (index) => {
+    const containerWidth = root.getBoundingClientRect().width;
+    const slideWidth = slides[0].getBoundingClientRect().width;
+    const step = slideWidth + gapPx();
+    const slideLeft = index * step;
+    return -(slideLeft - (containerWidth - slideWidth) / 2.2);
+  };
 
-    nextBtn?.addEventListener("click", () => {
+  const render = (animate = true) => {
+    track.style.transition = animate ? "transform 0.6s ease" : "none";
+    track.style.transform = `translateX(${offsetForIndex(current)}px)`;
+
+    slides.forEach((slide, i) =>
+      slide.classList.toggle("is-active", i === current),
+    );
+
+    if (progressBar) {
+      progressBar.style.width = `${((current + 1) / slides.length) * 100}%`;
+    }
+  };
+
+  const go = (direction) => {
+    current = (current + direction + slides.length) % slides.length;
+    render();
+  };
+
+  prevBtn?.addEventListener("click", () => go(-1));
+  nextBtn?.addEventListener("click", () => go(1));
+
+  // --- Drag / swipe: click-and-drag with a mouse, or touch on mobile ---
+  let isDragging = false;
+  let startX = 0;
+  let baseOffset = 0;
+  let latestDelta = 0;
+
+  const onPointerDown = (event) => {
+    isDragging = true;
+    startX = event.clientX;
+    baseOffset = offsetForIndex(current);
+    latestDelta = 0;
+    root.classList.add("is-dragging");
+    track.setPointerCapture?.(event.pointerId);
+  };
+
+  const onPointerMove = (event) => {
+    if (!isDragging) return;
+    latestDelta = event.clientX - startX;
+    track.style.transform = `translateX(${baseOffset + latestDelta}px)`;
+  };
+
+  const endDrag = () => {
+    if (!isDragging) return;
+    isDragging = false;
+    root.classList.remove("is-dragging");
+
+    const slideWidth = slides[0].getBoundingClientRect().width;
+    const threshold = slideWidth * 0.18; // drag past ~18% of a slide's width to advance
+
+    if (latestDelta <= -threshold) {
       go(1);
-      restartAutoplay();
-    });
+    } else if (latestDelta >= threshold) {
+      go(-1);
+    } else {
+      render(); // snap back to the current slide
+    }
+  };
 
-    update();
-    restartAutoplay();
+  track.addEventListener("pointerdown", onPointerDown);
+  track.addEventListener("pointermove", onPointerMove);
+  track.addEventListener("pointerup", endDrag);
+  track.addEventListener("pointercancel", endDrag);
+  track.addEventListener("pointerleave", (event) => {
+    // only end the drag if the mouse button is no longer held
+    if (isDragging && event.buttons === 0) endDrag();
   });
+
+  // Re-center on resize — the pixel offset depends on the viewport width
+  window.addEventListener("resize", () => render(false));
+
+  render(false);
 }
 
 // --- Trailer filmstrip: native horizontal scroll + snap, driven by
@@ -145,7 +217,9 @@ function initTrailerSlider() {
 
   const step = () => {
     const cardWidth = cards[0].getBoundingClientRect().width;
-    const gap = parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap || "0");
+    const gap = parseFloat(
+      getComputedStyle(track).columnGap || getComputedStyle(track).gap || "0",
+    );
     return cardWidth + gap;
   };
 

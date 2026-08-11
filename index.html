@@ -192,79 +192,12 @@
 
     <div class="about-fade about-fade--textured"></div>
     <!-- ---------------------------------------------------------
-         Locations — sliding carousel on the left, text on the right
+         Locations — title/text 
     --------------------------------------------------------- -->
-    <section
-      id="locations"
-      class="info-section info-section--split info-section--reverse"
-    >
+    <section id="locations" class="info-section">
       <div class="info-section__bg" aria-hidden="true"></div>
       <div class="info-section__inner">
-        <div class="media-slider media-slider--carousel" data-slider>
-          <div class="media-slider__track" data-slider-track>
-            <div class="media-slider__slide" data-slide>
-              <img
-                src="assets/img/Location/location_thumb1.webp"
-                alt="Resident Evil Requiem — location artwork 1"
-              />
-            </div>
-            <div class="media-slider__slide" data-slide>
-              <img
-                src="assets/img/Location/location_thumb2.webp"
-                alt="Resident Evil Requiem — location artwork 2"
-              />
-            </div>
-            <div class="media-slider__slide" data-slide>
-              <img
-                src="assets/img/Location/location_thumb3.webp"
-                alt="Resident Evil Requiem — location artwork 3"
-              />
-            </div>
-            <div class="media-slider__slide" data-slide>
-              <img
-                src="assets/img/Location/location_thumb4.webp"
-                alt="Resident Evil Requiem — location artwork 4"
-              />
-            </div>
-            <div class="media-slider__slide" data-slide>
-              <img
-                src="assets/img/Location/location_thumb5.webp"
-                alt="Resident Evil Requiem — location artwork 5"
-              />
-            </div>
-            <div class="media-slider__slide" data-slide>
-              <img
-                src="assets/img/Location/location_thumb6.webp"
-                alt="Resident Evil Requiem — location artwork 6"
-              />
-            </div>
-            <div class="media-slider__slide" data-slide>
-              <img
-                src="assets/img/Location/location_thumb7.webp"
-                alt="Resident Evil Requiem — location artwork 7"
-              />
-            </div>
-          </div>
-
-          <button
-            type="button"
-            class="media-slider__arrow media-slider__arrow--prev"
-            data-slide-prev
-            aria-label="Previous image"
-          >
-            <i class="fa-solid fa-chevron-left"></i>
-          </button>
-          <button
-            type="button"
-            class="media-slider__arrow media-slider__arrow--next"
-            data-slide-next
-            aria-label="Next image"
-          >
-            <i class="fa-solid fa-chevron-right"></i>
-          </button>
-        </div>
-
-        <div class="info-copy">
+        <div class="location-header">
           <h2 class="info-title">Locations</h2>
           <p class="info-text">
             Le jeu se déroule dans une série de lieux glaçants, comme un centre
@@ -274,9 +207,91 @@
           </p>
         </div>
       </div>
+
+      <div class="location-slider" data-location-slider>
+        <div class="location-slider__track" data-slider-track>
+          <div class="location-slider__slide" data-slide>
+            <img
+              src="assets/img/Location/location_thumb1.webp"
+              alt="Resident Evil Requiem — location artwork 1"
+              draggable="false"
+            />
+          </div>
+          <div class="location-slider__slide" data-slide>
+            <img
+              src="assets/img/Location/location_thumb2.webp"
+              alt="Resident Evil Requiem — location artwork 2"
+              draggable="false"
+            />
+          </div>
+          <div class="location-slider__slide" data-slide>
+            <img
+              src="assets/img/Location/location_thumb3.webp"
+              alt="Resident Evil Requiem — location artwork 3"
+              draggable="false"
+            />
+          </div>
+          <div class="location-slider__slide" data-slide>
+            <img
+              src="assets/img/Location/location_thumb4.webp"
+              alt="Resident Evil Requiem — location artwork 4"
+              draggable="false"
+            />
+          </div>
+          <div class="location-slider__slide" data-slide>
+            <img
+              src="assets/img/Location/location_thumb5.webp"
+              alt="Resident Evil Requiem — location artwork 5"
+              draggable="false"
+            />
+          </div>
+          <div class="location-slider__slide" data-slide>
+            <img
+              src="assets/img/Location/location_thumb6.webp"
+              alt="Resident Evil Requiem — location artwork 6"
+              draggable="false"
+            />
+          </div>
+          <div class="location-slider__slide" data-slide>
+            <img
+              src="assets/img/Location/location_thumb7.webp"
+              alt="Resident Evil Requiem — location artwork 7"
+              draggable="false"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="location-slider__nav">
+        <button
+          type="button"
+          class="location-slider__arrow"
+          data-slide-prev
+          aria-label="Previous image"
+        >
+          <img src="assets/img/icon_arrow_small.webp" alt="" srcset="" />
+        </button>
+        <span class="location-slider__progress" aria-hidden="true">
+          <span
+            class="location-slider__progress-bar"
+            data-slide-progress
+          ></span>
+        </span>
+        <button
+          type="button"
+          class="location-slider__arrow-right"
+          data-slide-next
+          aria-label="Next image"
+        >
+          <img
+            src="assets/img/icon_arrow_small - right.webp"
+            alt=""
+            srcset=""
+          />
+        </button>
+      </div>
     </section>
 
     <script src="index.js"></script>
-    <script src="injectionScript.js"></script>
   </body>
 </html>

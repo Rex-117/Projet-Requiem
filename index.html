@@ -39,7 +39,7 @@
         <li><a href="#about" class="nav-link">À propos</a></li>
         <li><a href="#story" class="nav-link">Histoire</a></li>
         <li><a href="#locations" class="nav-link">Lieux</a></li>
-        <li><a href="#characters" class="nav-link">Personnages</a></li>
+        <li><a href="characters.html" class="nav-link">Personnages</a></li>
         <li><a href="trailer.html" class="nav-link">Trailers</a></li>
         <li><a href="#gameplay" class="nav-link">Gameplay</a></li>
         <li><a href="#products" class="nav-link">Produits</a></li>
@@ -75,6 +75,8 @@
     --------------------------------------------------------- -->
 
     <div class="about-fade"></div>
+    <div class="about-fade about-fade--textured-bottom"></div>
+    <!-- <div class="about-fade-bottom"></div> -->
     <section id="about" class="info-section info-section--video">
       <div class="info-section__video" aria-hidden="true">
         <video class="bg-video" autoplay muted loop playsinline>
@@ -292,6 +294,87 @@
       </div>
     </section>
 
+    <div class="about-fade about-fade--textured"></div>
+    <!-- ---------------------------------------------------------
+         Gameplay 
+    --------------------------------------------------------- -->
+    <section id="gameplay" class="info-section">
+      <div class="info-section__bg" aria-hidden="true"></div>
+      <div class="info-section__inner">
+        <div class="location-header">
+          <h2 class="info-title">Gameplay</h2>
+        </div>
+        <p class="info-tagline gameplay-tagline">
+          Deux protagonistes. Deux expériences.
+        </p>
+      </div>
+
+      <div class="gameplay-duo">
+        <div class="gameplay-duo__panel">
+          <img
+            src="assets/img/gameplay_intro1.webp"
+            alt="Grace Ashcroft gameplay"
+            draggable="false"
+          />
+          <span class="gameplay-duo__name gameplay-duo__name--left"
+            >Grace Ashcroft</span
+          >
+          <div
+            class="gameplay-duo__caption gameplay-duo__caption--bottom-right"
+          >
+            <span class="gameplay-duo__caption-label">Leon:</span>
+            <h3 class="gameplay-duo__caption-title">l'action sans limites</h3>
+          </div>
+        </div>
+
+        <div class="gameplay-duo__panel">
+          <img
+            src="assets/img/gameplay_intro2.webp"
+            alt="Leon S. Kennedy gameplay"
+            draggable="false"
+          />
+          <span class="gameplay-duo__name gameplay-duo__name--right"
+            >Leon S. Kennedy</span
+          >
+          <div class="gameplay-duo__caption gameplay-duo__caption--top-left">
+            <span class="gameplay-duo__caption-label">Grace:</span>
+            <h3 class="gameplay-duo__caption-title">l'effroi à l'état pur</h3>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-section__inner">
+        <!-- ---------------------------------------------------------
+             One feature row per mechanic 
+        --------------------------------------------------------- -->
+        <div class="gameplay-feature">
+          <h3 class="gameplay-feature__title">Combat</h3>
+          <div class="gameplay-feature__row">
+            <div class="gameplay-feature__media">
+              <img
+                src="assets/img/gameplay_combat_grace_thumb1."
+                alt="Grace Ashcroft in combat"
+                draggable="false"
+              />
+              <span class="gameplay-feature__chip">Grace Ashcroft</span>
+            </div>
+            <div class="gameplay-feature__copy">
+              <span class="gameplay-feature__who">Grace</span>
+              <h4 class="gameplay-feature__heading">
+                Survival with Limited Resources
+              </h4>
+              <p class="info-text">
+                Munitions et fournitures se font rares : chaque combat de Grace
+                exige d'improviser, d'esquiver et de choisir ses affrontements
+                avec soin plutôt que de foncer tête baissée dans le danger.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <script src="index.js"></script>
+    <!-- <script src="injectionScript.js"></script> -->
   </body>
 </html>

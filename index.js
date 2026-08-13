@@ -118,10 +118,13 @@ function initLocationSlider() {
   // the viewport, regardless of the container's/slide's actual width.
   const offsetForIndex = (index) => {
     const containerWidth = root.getBoundingClientRect().width;
-    const slideWidth = slides[0].getBoundingClientRect().width;
-    const step = slideWidth + gapPx();
-    const slideLeft = index * step;
-    return -(slideLeft - (containerWidth - slideWidth) / 2.2);
+    const slide = slides[index];
+
+    const slideCenter =
+      slide.offsetLeft + slide.getBoundingClientRect().width / 2;
+
+    const containerCenter = containerWidth / 2.069;
+    return containerCenter - slideCenter;
   };
 
   const render = (animate = true) => {
@@ -250,3 +253,29 @@ function initTrailerSlider() {
 
   updateCounter();
 }
+
+function smoothscroll() {
+  const lenis = new Lenis({
+    lerp: 0.08,
+    smoothWheel: true,
+  });
+
+  function raf(time) {
+    lenis.raf(time);
+    requestAnimationFrame(raf);
+  }
+
+  requestAnimationFrame(raf);
+
+  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+    anchor.addEventListener("click", (event) => {
+      event.preventDefault();
+
+      const target = anchor.getAttribute("href");
+
+      lenis.scrollTo(target);
+    });
+  });
+}
+
+smoothscroll();

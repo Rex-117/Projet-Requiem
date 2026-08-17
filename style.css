@@ -270,7 +270,7 @@
   overflow: hidden;
   background-color: #0c0c0d;
   color: var(--color-white);
-  padding: clamp(120px, 14vw, 240px) 0;
+  padding: clamp(120px, 14vw, 150px) 0;
 }
 
 .info-section__bg {
@@ -281,13 +281,45 @@
   background-image:
     repeating-linear-gradient(
       0deg,
-      rgba(255, 255, 255, 0.035) 0px,
+      rgba(255, 255, 255, 0.076) 0px,
       transparent 1px,
       transparent 48px
     ),
     repeating-linear-gradient(
       90deg,
-      rgba(255, 255, 255, 0.035) 0px,
+      rgba(255, 255, 255, 0.076) 0px,
+      transparent 1px,
+      transparent 48px
+    ),
+    radial-gradient(circle at 12% 35%, rgba(42, 36, 36, 0.25), transparent 40%);
+  background-color: #2a2a2a;
+}
+
+.info-section__bg_trailer {
+  /* position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.7;
+  background-image: url(/assets/img/Resident-Evil-Requiem_2025_12-11-25_017.jpg);
+  background-size: cover;
+  background-position: center center;
+  background-attachment: fixed;
+  background-repeat: no-repeat; */
+  /* ----------------------------------- */
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.7;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.076) 0px,
+      transparent 1px,
+      transparent 48px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.076) 0px,
       transparent 1px,
       transparent 48px
     ),
@@ -298,13 +330,13 @@
 .info-section__inner {
   position: relative;
   z-index: 1;
-  max-width: 2000px;
+  max-width: 2200px;
   margin: 0 auto;
   padding: 0 6%;
 }
 
 .info-section__inner--narrow {
-  max-width: 760px;
+  max-width: 950px;
 }
 
 /* Video-background variant (About) ---------------------------------- */
@@ -391,6 +423,27 @@
   line-height: 2;
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
+}
+
+/* ---------------------------------------------------------
+   Cycle-fade — a container holding 2+ images that automatically
+   crossfade between each other over time. 
+--------------------------------------------------------- */
+.cycle-fade__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  opacity: 0;
+  transition: opacity 1.4s ease;
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+.cycle-fade__img.is-active {
+  opacity: 1;
 }
 
 /* ---------------------------------------------------------
@@ -650,6 +703,7 @@
 
 .gameplay-duo__name {
   position: absolute;
+  z-index: 1;
   top: 50%;
   writing-mode: vertical-rl;
   text-orientation: mixed;
@@ -672,6 +726,7 @@
 
 .gameplay-duo__caption {
   position: absolute;
+  z-index: 1;
   max-width: 90%;
 }
 
@@ -710,9 +765,9 @@
   display: inline-block;
 }
 
-/* Feature rows (Combat, and duplicates for other mechanics) */
+/* Feature blocks (Combat, and duplicates for other mechanics) --------  */
 .gameplay-feature {
-  margin-top: 100px;
+  margin-top: 200px;
 }
 
 .gameplay-feature__title {
@@ -723,34 +778,59 @@
 }
 
 .gameplay-feature__row {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(280px, 420px);
-  gap: 60px;
-  align-items: center;
+  display: flex;
+  gap: 70px;
+  align-items: flex-start;
 }
 
+.gameplay-feature__col {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 130px;
+}
+
+/* The right-hand column's photo sits closer to the top */
+.gameplay-feature__col--offset {
+  gap: 90px;
+}
+
+/* Offset outline behind the photo */
 .gameplay-feature__media {
   position: relative;
+  aspect-ratio: 16 / 9;
+  background-color: #1a1a1a;
+  border: 1px solid rgba(255, 255, 255, 0.35);
 }
 
-.gameplay-feature__media img {
-  width: 100%;
-  aspect-ratio: 4 / 5;
-  object-fit: cover;
-  display: block;
-  background-color: #1a1a1a;
+.gameplay-feature__media::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -14px -14px 14px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
 }
 
 .gameplay-feature__chip {
   position: absolute;
-  top: 16px;
-  right: 16px;
+  z-index: 1;
   background: rgba(230, 230, 225, 0.92);
   color: #111;
   font-family: "Special Elite", "Sofia Sans Semi Condensed", serif;
   font-size: 13px;
   letter-spacing: 1px;
   padding: 6px 12px;
+}
+
+.gameplay-feature__chip--top-right {
+  top: -18px;
+  right: 24px;
+}
+
+.gameplay-feature__chip--bottom-left {
+  bottom: -18px;
+  left: 24px;
 }
 
 .gameplay-feature__who {
@@ -769,6 +849,159 @@
   max-width: 520px;
 }
 
+/* ---------------------------------------------------------
+   Modes de vue — character toggle + diagonal first/third
+   person shots that crossfade when a name is clicked
+--------------------------------------------------------- */
+.viewmode-toggle {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 460px;
+  margin: 32px 0 56px;
+}
+
+.viewmode-toggle__option {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: var(--color-white);
+  text-align: left;
+}
+
+.viewmode-toggle__label {
+  flex: 1 1 auto;
+  padding: 10px 20px;
+  font-family: "Special Elite", "Sofia Sans Semi Condensed", serif;
+  font-size: 18px;
+  letter-spacing: 1px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  background-color: transparent;
+  color: var(--color-white);
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.viewmode-toggle__option.is-active .viewmode-toggle__label {
+  background-color: rgba(230, 230, 225, 0.92);
+  color: #111;
+  border-bottom-color: transparent;
+}
+
+.viewmode-toggle__arrow {
+  color: var(--color-white);
+  opacity: 0;
+  transform: translateX(-6px);
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}
+
+.viewmode-toggle__option.is-active .viewmode-toggle__arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Two shots, diagonally offset */
+.viewmode-shots {
+  position: relative;
+}
+
+.viewmode-shots__pair {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 60px;
+}
+
+.viewmode-shots__item {
+  flex: 1 1 420px;
+  min-width: 0;
+}
+
+.viewmode-shots__item--first {
+  align-self: flex-end;
+}
+
+.viewmode-shots__item--third {
+  flex-basis: 480px;
+  margin-top: -60px;
+}
+
+.viewmode-shots__media {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background-color: #1a1a1a;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.viewmode-shots__media::before {
+  /* stacked-photo offset frame */
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -14px -14px 14px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.viewmode-shots__label {
+  position: absolute;
+  z-index: 1;
+  background: rgba(60, 60, 60, 0.9);
+  color: var(--color-white);
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  padding: 8px 16px;
+}
+
+.viewmode-shots__label--third {
+  top: 4%;
+  left: 51%;
+}
+
+.viewmode-shots__label--first {
+  bottom: 4%;
+  left: 38%;
+}
+
+.viewmode-shots__arrow {
+  position: absolute;
+  z-index: 1;
+  width: 110px;
+  height: 90px;
+  color: rgba(255, 255, 255, 0.7);
+  pointer-events: none;
+}
+
+.viewmode-shots__arrow--to-third {
+  top: 14%;
+  left: 41%;
+}
+
+.viewmode-shots__arrow--to-first {
+  bottom: 14%;
+  left: 44%;
+}
+
+@media (max-width: 1100px) {
+  .viewmode-shots__arrow,
+  .viewmode-shots__label--third,
+  .viewmode-shots__label--first {
+    display: none;
+  }
+
+  .viewmode-shots__item--third {
+    margin-top: 0;
+  }
+}
+
 @media (max-width: 900px) {
   .gameplay-duo {
     flex-direction: column;
@@ -779,13 +1012,22 @@
   }
 
   .gameplay-feature__row {
-    grid-template-columns: 1fr;
+    flex-direction: column;
+    gap: 48px;
+  }
+
+  .gameplay-feature__col,
+  .gameplay-feature__col--offset {
+    gap: 24px;
+  }
+
+  .viewmode-shots__pair {
+    flex-direction: column;
   }
 }
 
 /* ---------------------------------------------------------
-   Trailer page — reuses .info-section / .info-section__bg for the
-   same textured background as the landing page's info sections
+   Trailer page
 --------------------------------------------------------- */
 #main-trailer {
   min-height: 100vh;
@@ -807,7 +1049,48 @@
 }
 
 .trailer-page__inner .info-title {
+  display: inline;
+  background: rgba(230, 230, 225, 0.92);
+  color: #111;
+  padding: 4px 40px;
+  line-height: 2;
   margin-bottom: 0;
+  /* text-shadow:
+    0 0 3px #000000,
+    0 0 12px #040404; */
+  font-size: 52px;
+  line-height: 1.5;
+  margin-bottom: 20px;
+  max-width: 640px;
+}
+
+.trailer-page__inner-bottom {
+  position: relative;
+  z-index: 1;
+  max-width: 1400px;
+  margin: 10% auto;
+  padding-top: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  text-align: center;
+}
+
+.trailer-page__inner-bottom .info-title {
+  display: inline;
+  background: rgba(230, 230, 225, 0.92);
+  color: #111;
+  padding: 4px 40px;
+  line-height: 2;
+  margin-bottom: 0;
+  /* text-shadow:
+    0 0 3px #000000,
+    0 0 12px #040404; */
+  font-size: 33px;
+  line-height: 1.5;
+  margin-bottom: 20px;
+  max-width: 640px;
 }
 
 #video-wrapper {
@@ -847,7 +1130,7 @@
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   scroll-padding-left: 6%;
-  padding: 116px 6% 10px;
+  padding: 166px 6% 10px;
   margin: 0 -44%;
 
   /* hide the scrollbar; arrows + drag/swipe handle navigation */
@@ -998,5 +1281,89 @@ body {
 
   .info-title {
     font-size: 38px;
+  }
+}
+
+/* ---------------------------------------------------------
+   Footer — logo
+--------------------------------------------------------- */
+.footer-section {
+  text-align: center;
+}
+
+.footer-logo {
+  margin-bottom: 64px;
+}
+
+.footer-logo img {
+  width: min(100%, 620px);
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.footer-specs {
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.footer-specs::before {
+  /* the single vertical rule */
+  content: "";
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: calc(200px + 24px);
+  width: 1px;
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.footer-specs__row {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  column-gap: 48px;
+  padding: 16px 0;
+  align-items: baseline;
+}
+
+.footer-specs__row dt {
+  font-weight: 700;
+  text-align: right;
+  opacity: 0.9;
+}
+
+.footer-specs__row dd {
+  margin: 0;
+}
+
+.footer-specs__row dd p {
+  margin: 0 0 12px;
+  line-height: 1.6;
+}
+
+.footer-specs__row dd p:last-child {
+  margin-bottom: 0;
+}
+
+.footer-specs__lang-label {
+  font-weight: 700;
+}
+
+@media (max-width: 640px) {
+  .footer-specs::before {
+    display: none;
+  }
+
+  .footer-specs__row {
+    grid-template-columns: 1fr;
+    row-gap: 6px;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  .footer-specs__row dt {
+    text-align: left;
   }
 }

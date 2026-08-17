@@ -39,10 +39,10 @@
         <li><a href="#about" class="nav-link">À propos</a></li>
         <li><a href="#story" class="nav-link">Histoire</a></li>
         <li><a href="#locations" class="nav-link">Lieux</a></li>
-        <li><a href="characters.html" class="nav-link">Personnages</a></li>
-        <li><a href="trailer.html" class="nav-link">Trailers</a></li>
         <li><a href="#gameplay" class="nav-link">Gameplay</a></li>
         <li><a href="#products" class="nav-link">Produits</a></li>
+        <li><a href="characters.html" class="nav-link">Personnages</a></li>
+        <li><a href="trailer.html" class="nav-link">Trailers</a></li>
       </ul>
     </nav>
 
@@ -192,7 +192,7 @@
       </div>
     </section>
 
-    <div class="about-fade about-fade--textured"></div>
+    <!-- <div class="about-fade about-fade--textured"></div> -->
     <!-- ---------------------------------------------------------
          Locations — title/text 
     --------------------------------------------------------- -->
@@ -294,7 +294,7 @@
       </div>
     </section>
 
-    <div class="about-fade about-fade--textured"></div>
+    <!-- <div class="about-fade about-fade--textured"></div> -->
     <!-- ---------------------------------------------------------
          Gameplay 
     --------------------------------------------------------- -->
@@ -312,7 +312,7 @@
       <div class="gameplay-duo">
         <div class="gameplay-duo__panel">
           <img
-            src="assets/img/gameplay_intro1.webp"
+            src="assets/img/gameplay/gameplay_intro1.webp"
             alt="Grace Ashcroft gameplay"
             draggable="false"
           />
@@ -329,7 +329,7 @@
 
         <div class="gameplay-duo__panel">
           <img
-            src="assets/img/gameplay_intro2.webp"
+            src="assets/img/gameplay/gameplay_intro2.webp"
             alt="Leon S. Kennedy gameplay"
             draggable="false"
           />
@@ -345,34 +345,329 @@
 
       <div class="info-section__inner">
         <!-- ---------------------------------------------------------
-             One feature row per mechanic 
+             One feature block per mechanic 
         --------------------------------------------------------- -->
         <div class="gameplay-feature">
           <h3 class="gameplay-feature__title">Combat</h3>
           <div class="gameplay-feature__row">
-            <div class="gameplay-feature__media">
-              <img
-                src="assets/img/gameplay_combat_grace_thumb1."
-                alt="Grace Ashcroft in combat"
-                draggable="false"
-              />
-              <span class="gameplay-feature__chip">Grace Ashcroft</span>
+            <div class="gameplay-feature__col">
+              <div class="gameplay-feature__media cycle-fade">
+                <img
+                  class="cycle-fade__img is-active"
+                  src="assets/img/gameplay/gameplay_combat_grace_thumb1.webp"
+                  alt="Grace Ashcroft in combat"
+                  draggable="false"
+                />
+                <img
+                  class="cycle-fade__img"
+                  src="assets/img/gameplay/gameplay_combat_grace_thumb2.webp"
+                  alt="Grace Ashcroft in combat"
+                  draggable="false"
+                />
+                <span
+                  class="gameplay-feature__chip gameplay-feature__chip--top-right"
+                  >Grace Ashcroft</span
+                >
+              </div>
+              <div class="gameplay-feature__copy">
+                <span class="gameplay-feature__who">Leon</span>
+                <h4 class="gameplay-feature__heading">Une action exaltante</h4>
+                <p class="info-text info-text--highlight">
+                  En plus de ses nombreuses armes à feu et de sa fidèle hache,
+                  Leon peut aussi se battre au corps à corps, parer les attaques
+                  ennemies et même s'emparer de leurs armes.
+                </p>
+                <br />
+                <p class="info-text info-text--highlight">
+                  Utilisez tous les moyens à votre disposition pour venir à bout
+                  des ennemis.
+                </p>
+              </div>
             </div>
-            <div class="gameplay-feature__copy">
-              <span class="gameplay-feature__who">Grace</span>
-              <h4 class="gameplay-feature__heading">
-                Survival with Limited Resources
-              </h4>
-              <p class="info-text">
-                Munitions et fournitures se font rares : chaque combat de Grace
-                exige d'improviser, d'esquiver et de choisir ses affrontements
-                avec soin plutôt que de foncer tête baissée dans le danger.
-              </p>
+
+            <div class="gameplay-feature__col gameplay-feature__col--offset">
+              <div class="gameplay-feature__copy">
+                <span class="gameplay-feature__who">Grace</span>
+                <h4 class="gameplay-feature__heading">
+                  Survie avec des ressources limitées
+                </h4>
+                <p class="info-text info-text--highlight">
+                  Le nombre d'objets que Grace peut obtenir et transporter est
+                  limité. Pour survivre, il est essentiel d'analyser les ennemis
+                  afin de décider quand combattre et quand fuir.
+                </p>
+              </div>
+              <div class="gameplay-feature__media cycle-fade">
+                <img
+                  class="cycle-fade__img is-active"
+                  src="assets/img/gameplay/gameplay_combat_leon_thumb1.webp"
+                  alt="Leon S. Kennedy in combat"
+                  draggable="false"
+                />
+                <img
+                  class="cycle-fade__img"
+                  src="assets/img/gameplay/gameplay_combat_leon_thumb2.webp"
+                  alt="Leon S. Kennedy in combat"
+                  draggable="false"
+                />
+                <span
+                  class="gameplay-feature__chip gameplay-feature__chip--bottom-left"
+                  >Leon S. Kennedy</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="gameplay-feature">
+          <h3 class="gameplay-feature__title">Stratégie</h3>
+          <div class="gameplay-feature__row">
+            <div class="gameplay-feature__col">
+              <div class="gameplay-feature__media cycle-fade">
+                <img
+                  class="cycle-fade__img is-active"
+                  src="assets/img/gameplay/gameplay_strategy_grace_thumb1_fr.webp"
+                  alt="Grace Ashcroft in combat"
+                  draggable="false"
+                />
+                <img
+                  class="cycle-fade__img"
+                  src="assets/img/gameplay/gameplay_strategy_grace_thumb2.webp"
+                  alt="Grace Ashcroft in combat"
+                  draggable="false"
+                />
+                <span
+                  class="gameplay-feature__chip gameplay-feature__chip--top-right"
+                  >Grace Ashcroft</span
+                >
+              </div>
+              <div class="gameplay-feature__copy">
+                <span class="gameplay-feature__who">Leon</span>
+                <h4 class="gameplay-feature__heading">
+                  Un équipement personnalisable
+                </h4>
+                <p class="info-text info-text--highlight">
+                  Leon peut utiliser de nombreux types d'armes. Gardez les
+                  munitions et les objets de soin en ordre dans sa mallette, et
+                  améliorez ses armes en y ajoutant divers éléments.
+                </p>
+              </div>
+            </div>
+
+            <div class="gameplay-feature__col gameplay-feature__col--offset">
+              <div class="gameplay-feature__copy">
+                <span class="gameplay-feature__who">Grace</span>
+                <h4 class="gameplay-feature__heading">Fabrication d'objets</h4>
+                <p class="info-text info-text--highlight">
+                  Grace peut se servir du sang des ennemis infectés pour
+                  fabriquer des objets, des munitions et des injecteurs capables
+                  d'éliminer ses adversaires d'un seul coup.
+                </p>
+              </div>
+              <div class="gameplay-feature__media cycle-fade">
+                <img
+                  class="cycle-fade__img is-active"
+                  src="assets/img/gameplay/gameplay_strategy_leon_thumb1_fr.webp"
+                  alt="Leon S. Kennedy in combat"
+                  draggable="false"
+                />
+                <img
+                  class="cycle-fade__img"
+                  src="assets/img/gameplay/gameplay_strategy_leon_thumb2.webp"
+                  alt="Leon S. Kennedy in combat"
+                  draggable="false"
+                />
+                <span
+                  class="gameplay-feature__chip gameplay-feature__chip--bottom-left"
+                  >Leon S. Kennedy</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ---------------------------------------------------------
+             Modes de vue — clicking a character's name crossfades
+             BOTH shots (first-person + third-person) ----------------------- -->
+        <div class="gameplay-feature">
+          <h3 class="gameplay-feature__title">Modes de vue</h3>
+          <p class="info-text info-text--highlight">
+            Que vous incarniez Grace ou Leon, chaque section de l'histoire peut
+            être jouée à la première ou à la troisième personne.
+          </p>
+          <p class="info-text info-text--highlight">
+            Affrontez la peur avec le mode de vue de votre choix.
+          </p>
+
+          <div class="viewmode-toggle" data-viewmode-toggle>
+            <button
+              type="button"
+              class="viewmode-toggle__option is-active"
+              data-viewmode-character="grace"
+            >
+              <span class="viewmode-toggle__label">Grace Ashcroft</span>
+              <span class="viewmode-toggle__arrow" aria-hidden="true">
+                <img src="assets/img/icon_arrow_small.webp" alt="" />
+              </span>
+            </button>
+            <button
+              type="button"
+              class="viewmode-toggle__option"
+              data-viewmode-character="leon"
+            >
+              <span class="viewmode-toggle__label">Leon S. Kennedy</span>
+              <span class="viewmode-toggle__arrow" aria-hidden="true">
+                <img src="assets/img/icon_arrow_small.webp" alt="" />
+              </span>
+            </button>
+          </div>
+
+          <div class="viewmode-shots">
+            <div class="viewmode-shots__pair">
+              <div class="viewmode-shots__item viewmode-shots__item--first">
+                <div class="viewmode-shots__media" data-viewmode-media="first">
+                  <img
+                    class="cycle-fade__img is-active"
+                    data-viewmode-character="grace"
+                    src="assets/img/gameplay/gameplay_camera_grace_thumb1.webp"
+                    alt="Grace Ashcroft — vue à la première personne"
+                    draggable="false"
+                  />
+                  <img
+                    class="cycle-fade__img"
+                    data-viewmode-character="leon"
+                    src="assets/img/gameplay/gameplay_camera_leon_thumb1.webp"
+                    alt="Leon S. Kennedy — vue à la première personne"
+                    draggable="false"
+                  />
+                </div>
+              </div>
+
+              <div class="viewmode-shots__item viewmode-shots__item--third">
+                <div class="viewmode-shots__media" data-viewmode-media="third">
+                  <img
+                    class="cycle-fade__img is-active"
+                    data-viewmode-character="grace"
+                    src="assets/img/gameplay/gameplay_camera_grace_thumb2.webp"
+                    alt="Grace Ashcroft — vue à la troisième personne"
+                    draggable="false"
+                  />
+                  <img
+                    class="cycle-fade__img"
+                    data-viewmode-character="leon"
+                    src="assets/img/gameplay/gameplay_camera_leon_thumb2.webp"
+                    alt="Leon S. Kennedy — vue à la troisième personne"
+                    draggable="false"
+                  />
+                </div>
+              </div>
+
+              <svg
+                class="viewmode-shots__arrow viewmode-shots__arrow--to-third"
+                viewBox="0 0 120 100"
+                aria-hidden="true"
+              >
+                <path
+                  d="M10,90 C 45,72 62,32 108,12"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                />
+                <path
+                  d="M108,12 l-15,1 M108,12 l-5,14"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                />
+              </svg>
+              <span class="viewmode-shots__label viewmode-shots__label--third"
+                >Vue à la troisième personne</span
+              >
+
+              <svg
+                class="viewmode-shots__arrow viewmode-shots__arrow--to-first"
+                viewBox="0 0 120 100"
+                aria-hidden="true"
+              >
+                <path
+                  d="M108,12 C 75,32 55,70 12,90"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                />
+                <path
+                  d="M12,90 l15,-1 M12,90 l5,-14"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                />
+              </svg>
+              <span class="viewmode-shots__label viewmode-shots__label--first"
+                >Vue à la première personne</span
+              >
             </div>
           </div>
         </div>
       </div>
     </section>
+
+    <!-- ---------------------------------------------------------
+         Footer — logo, then a two-column spec list with a single
+         continuous vertical divider running through it
+    --------------------------------------------------------- -->
+    <footer id="index_footer" class="info-section footer-section">
+      <div class="info-section__bg" aria-hidden="true"></div>
+      <div class="info-section__inner">
+        <div class="footer-logo">
+          <img
+            src="/assets/img/logo_w.webp"
+            alt="Resident Evil Requiem"
+            decoding="async"
+          />
+        </div>
+
+        <dl class="footer-specs">
+          <div class="footer-specs__row">
+            <dt>Genre</dt>
+            <dd>Survival Horror</dd>
+          </div>
+
+          <div class="footer-specs__row">
+            <dt>Date de sortie</dt>
+            <dd>Disponible (27 février 2026)</dd>
+          </div>
+
+          <div class="footer-specs__row">
+            <dt>Nombre de joueurs</dt>
+            <dd>1</dd>
+          </div>
+
+          <div class="footer-specs__row">
+            <dt>Classification</dt>
+            <dd>PEGI 18</dd>
+          </div>
+
+          <div class="footer-specs__row">
+            <dt>Langues prises en charge</dt>
+            <dd>
+              <p class="footer-specs__lang-label">Langues d'affichage :</p>
+              <p>
+                japonais, anglais, français, italien, allemand, espagnol
+                (Europe), espagnol (Amérique latine), portugais (Brésil),
+                polonais, russe, chinois simplifié, chinois traditionnel,
+                coréen, arabe
+              </p>
+              <p class="footer-specs__lang-label">Langues des voix :</p>
+              <p>
+                japonais, anglais, français, italien, allemand, espagnol
+                (Europe), espagnol (Amérique latine), portugais (Brésil), russe,
+                mandarin
+              </p>
+            </dd>
+          </div>
+        </dl>
+      </div>
+    </footer>
 
     <script src="https://unpkg.com/lenis@1.3.15/dist/lenis.min.js"></script>
     <script src="index.js"></script>

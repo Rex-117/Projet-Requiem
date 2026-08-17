@@ -53,6 +53,8 @@ document.addEventListener("DOMContentLoaded", () => {
   initFadeSliders();
   initLocationSlider();
   initTrailerSlider();
+  initCycleFade();
+  initViewModeToggle();
 });
 
 // --- Story-style slider: images crossfade, driven by numbered dots ------
@@ -252,6 +254,71 @@ function initTrailerSlider() {
   });
 
   updateCounter();
+}
+
+// --- Cycle-fade --------------------------------------------------
+function initCycleFade() {
+  document.querySelectorAll(".cycle-fade").forEach((container) => {
+    const slides = container.querySelectorAll(".cycle-fade__img");
+    if (slides.length < 2) return;
+
+    let current = Math.max(
+      0,
+      Array.from(slides).findIndex((slide) =>
+        slide.classList.contains("is-active"),
+      ),
+    );
+
+    const next = () => {
+      const upcoming = (current + 1) % slides.length;
+      slides[current].classList.remove("is-active");
+      slides[upcoming].classList.add("is-active");
+      current = upcoming;
+    };
+
+    const startDelay = Math.random() * 2000;
+    setTimeout(() => {
+      next();
+      setInterval(next, 4500);
+    }, startDelay);
+  });
+}
+
+// --- Modes de vue: clicking a character's name crossfades every
+//     [data-viewmode-media] shot to that character's image at once. ---
+
+function initViewModeToggle() {
+  const toggle = document.querySelector("[data-viewmode-toggle]");
+  if (!toggle) return;
+
+  const buttons = toggle.querySelectorAll("[data-viewmode-character]");
+  const mediaGroups = document.querySelectorAll("[data-viewmode-media]");
+  if (!buttons.length || !mediaGroups.length) return;
+
+  const setCharacter = (character) => {
+    buttons.forEach((btn) => {
+      btn.classList.toggle(
+        "is-active",
+        btn.dataset.viewmodeCharacter === character,
+      );
+    });
+
+    mediaGroups.forEach((media) => {
+      media.querySelectorAll("[data-viewmode-character]").forEach((img) => {
+        img.classList.toggle(
+          "is-active",
+          img.dataset.viewmodeCharacter === character,
+        );
+      });
+    });
+  };
+
+  buttons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      if (btn.classList.contains("is-active")) return;
+      setCharacter(btn.dataset.viewmodeCharacter);
+    });
+  });
 }
 
 function smoothscroll() {

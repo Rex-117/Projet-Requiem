@@ -673,6 +673,20 @@
   margin-bottom: 0;
 }
 
+.combat {
+  position: sticky;
+  /* height: 100vh; */
+  top: 0;
+  min-height: 100vh;
+  z-index: 1;
+}
+
+.strategie {
+  position: relative;
+  min-height: 100vh;
+  z-index: 2;
+}
+
 /* Full-bleed duo hero: Grace's and Leon's screens side by side,
    same viewport breakout technique as .location-slider */
 .gameplay-duo {
@@ -1365,5 +1379,126 @@ body {
 
   .footer-specs__row dt {
     text-align: left;
+  }
+}
+
+/* ---------------------------------------------------------
+   Credits page
+--------------------------------------------------------- */
+#main-credits {
+  min-height: 100vh;
+}
+
+.credits-page__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1700px;
+  margin: -6% auto;
+  padding: clamp(100px, 12vw, 160px) 6% clamp(120px, 14vw, 200px);
+}
+
+.credits-logo {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.credits-logo img {
+  /* width: min(100%, 380px); */
+  height: auto;
+  display: inline-block;
+}
+
+/* Thin decorative line */
+.credits-thread {
+  display: block;
+  width: 1px;
+  height: 120px;
+  margin: 0 auto 64px;
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.credits-group {
+  text-align: center;
+}
+
+.credits-group .info-title {
+  margin-top: 140px;
+  margin-bottom: 72px;
+  text-decoration-line: underline;
+}
+
+.credits-grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(240px, 380px));
+  justify-content: space-between;
+  column-gap: 220px;
+  row-gap: 100px;
+  text-align: left;
+}
+
+/* Decorative side rails flanking the whole grid */
+.credits-grid__rail {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background-color: rgba(230, 230, 225, 0.92);
+}
+
+.credits-grid__rail--left {
+  left: -245px;
+}
+
+.credits-grid__rail--right {
+  right: -245px;
+}
+
+.credits-card img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  display: block;
+  background-color: #1a1a1a;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+.credits-card__name {
+  margin-top: 22px;
+  font-family: "Special Elite", "Sofia Sans Semi Condensed", serif;
+  font-size: 15px;
+  letter-spacing: 1px;
+  display: inline-block;
+  background: rgba(230, 230, 225, 0.92);
+  color: #111;
+  padding: 5px 12px;
+}
+
+.credits-card__bio {
+  margin-top: 14px;
+  font-size: 14px;
+  line-height: 1.7;
+  opacity: 0.85;
+}
+
+.credits-divider {
+  border: none;
+  border-top: 1px dashed rgba(255, 255, 255, 0.25);
+  margin: 140px 0;
+}
+
+@media (max-width: 720px) {
+  .credits-grid {
+    grid-template-columns: 1fr;
+    column-gap: 0;
+    max-width: 320px;
+    margin: 0 auto;
+  }
+
+  .credits-grid__rail {
+    display: none;
   }
 }

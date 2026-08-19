@@ -330,13 +330,14 @@
 .info-section__inner {
   position: relative;
   z-index: 1;
-  max-width: 2200px;
+  /* max-width: 2200px; */
+  width: 100%;
   margin: 0 auto;
-  padding: 0 6%;
+  padding: 0 12%;
 }
 
 .info-section__inner--narrow {
-  max-width: 950px;
+  max-width: 1220px;
 }
 
 /* Video-background variant (About) ---------------------------------- */
@@ -673,18 +674,29 @@
   margin-bottom: 0;
 }
 
+#gameplay {
+  overflow: visible;
+}
+
 .combat {
   position: sticky;
-  /* height: 100vh; */
   top: 0;
-  min-height: 100vh;
+  /* min-height: 100vh; */
   z-index: 1;
 }
 
 .strategie {
-  position: relative;
-  min-height: 100vh;
+  position: sticky;
+  top: 0;
+  /* min-height: 100vh; */
   z-index: 2;
+}
+
+.mode-de-vue {
+  position: sticky;
+  top: 0;
+  /* min-height: 100vh; */
+  z-index: 3;
 }
 
 /* Full-bleed duo hero: Grace's and Leon's screens side by side,

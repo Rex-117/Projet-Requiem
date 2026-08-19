@@ -81,7 +81,7 @@ function initFadeSliders() {
 
       const restartAutoplay = () => {
         clearInterval(timer);
-        timer = setInterval(() => show(current + 1), 5000);
+        timer = setInterval(() => show(current + 1), 3000);
       };
 
       dots.forEach((dot) => {
@@ -346,3 +346,78 @@ function smoothscroll() {
 }
 
 smoothscroll();
+
+// Gameplay Section fade out after scroll
+const stickySection = [
+  document.querySelector(".combat"),
+  document.querySelector(".strategie"),
+  document.querySelector(".mode-de-vue"),
+].filter(Boolean);
+
+stickySection.forEach((section) => {
+  section.dataset.start = section.getBoundingClientRect().top + window.scrollY;
+});
+
+window.addEventListener("scroll", () => {
+  stickySection.forEach((section, index) => {
+    // Get the section that comes after this one
+    const nextSection = stickySection[index + 1];
+
+    // If there is no next section, don't fade this one
+    if (!nextSection) {
+      section.style.opacity = 1;
+      return;
+    }
+
+    const nextStart = Number(nextSection.dataset.start);
+
+    const distanceUntilNext = nextStart - window.scrollY;
+
+    const fadeDistance = 1350;
+
+    // Start fading when the NEXT section is
+    // within 1000px of the top
+    if (distanceUntilNext < fadeDistance && distanceUntilNext > 0) {
+      const progress = 1 - distanceUntilNext / fadeDistance;
+
+      section.style.opacity = Math.max(1 - progress * 1.5, 0);
+    } else if (distanceUntilNext <= 0) {
+      section.style.opacity = 0;
+    } else {
+      section.style.opacity = 1;
+    }
+  });
+});
+
+// Sticky dampening for fade out Gameplay section
+
+const noModDeVue = [
+  document.querySelector(".combat"),
+  document.querySelector(".strategie"),
+];
+
+noModDeVue.forEach((section) => {
+  section.dataset.start = section.getBoundingClientRect().top + window.scrollY;
+});
+
+const damping = 0.45;
+
+function stickyDamping() {
+  noModDeVue.forEach((section) => {
+    const start = Number(section.dataset.start);
+
+    const scrolledPastTop = window.scrollY - start;
+
+    if (scrolledPastTop > 0) {
+      const moveUp = scrolledPastTop * damping;
+
+      section.style.transform = `translateY(-${moveUp}px)`;
+    } else {
+      section.style.transform = "translateY(0)";
+    }
+  });
+
+  requestAnimationFrame(stickyDamping);
+}
+
+requestAnimationFrame(stickyDamping);

@@ -12,6 +12,7 @@
       "status": "Vivante",
       "sex": "Female",
       "blood-type": "Unknown",
+      "isConfirmed": true,
 
       "images": [
         "https://res.cloudinary.com/go4exsf4/image/upload/v1786388635/character_grace_thumb1.webp",
@@ -20,6 +21,8 @@
         "https://res.cloudinary.com/go4exsf4/image/upload/v1786388635/character_grace_thumb4.webp",
         "https://res.cloudinary.com/go4exsf4/image/upload/v1786388635/character_grace_thumb5.webp"
       ],
+
+      "thumbnail_image": "",
 
       "description": [
         "Une analyste du FBI qui fait preuve d'un sens de la concentration et de la déduction hors du commun.",
@@ -40,6 +43,7 @@
       "status": "Vivant",
       "sex": "Male",
       "blood-type": "A",
+      "isConfirmed": true,
 
       "images": [
         "https://res.cloudinary.com/go4exsf4/image/upload/v1786390602/character_leon_thumb1.webp",
@@ -63,6 +67,7 @@
       "status": "Décédé",
       "sex": "Female",
       "blood-type": "N/A",
+      "isConfirmed": true,
 
       "images": [
         "https://res.cloudinary.com/go4exsf4/image/upload/v1786391502/character_alyssa_thumb1.webp",
@@ -86,6 +91,7 @@
       "status": "Alive",
       "sex": "Female",
       "blood-type": "N/A",
+      "isConfirmed": true,
 
       "images": [
         "https://res.cloudinary.com/go4exsf4/image/upload/v1786391564/character_nathan_thumb1.webp",
@@ -107,6 +113,7 @@
       "status": "Vivante",
       "sex": "Female",
       "blood-type": "N/A",
+      "isConfirmed": true,
 
       "images": [
         "https://res.cloudinary.com/go4exsf4/image/upload/v1786391483/character_emily_thumb1.webp",
@@ -131,6 +138,31 @@
       "status": "Décédé",
       "sex": "Male",
       "blood-type": "N/A",
+      "isConfirmed": true,
+
+      "images": [
+        "https://res.cloudinary.com/go4exsf4/image/upload/v1786390622/character_victor_thumb1.webp",
+        "https://res.cloudinary.com/go4exsf4/image/upload/v1786390622/character_victor_thumb2.webp"
+      ],
+
+      "description": "Le suspect principal dans la vague de morts étranges qui s'abat sur les États-Unis. Selon plusieurs sources, Victor menait auparavant des recherches sur le virus T pour Umbrella Corporation, l'entreprise pharmaceutique au cœur de l'incident de Raccoon City."
+    },
+    {
+      "name": "Ada Wong",
+      "age": "54",
+      "pob": "United States of America",
+      "nationality": "Caucasian/American",
+      "affiliation": [
+        "Umbrella Corporation (????-2003)",
+        "The Connections (????-2026)"
+      ],
+      "job": "Researcher / Virologist",
+      "family": "N/A",
+
+      "status": "Décédé",
+      "sex": "Male",
+      "blood-type": "N/A",
+      "isConfirmed": false,
 
       "images": [
         "https://res.cloudinary.com/go4exsf4/image/upload/v1786390622/character_victor_thumb1.webp",

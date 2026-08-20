@@ -394,7 +394,7 @@ window.addEventListener("scroll", () => {
 const noModDeVue = [
   document.querySelector(".combat"),
   document.querySelector(".strategie"),
-];
+].filter(Boolean);
 
 noModDeVue.forEach((section) => {
   section.dataset.start = section.getBoundingClientRect().top + window.scrollY;

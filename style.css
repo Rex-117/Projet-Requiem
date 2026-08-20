@@ -604,6 +604,12 @@
   user-select: none;
   pointer-events: none; /* the track itself handles the drag gesture */
 }
+.location-slider .location-slider__track .location-slider__slide:nth-child(3) {
+  aspect-ratio: initial;
+  aspect-ratio: initial;
+  aspect-ratio: 16 / 9;
+  object-fit: fill;
+}
 
 .location-slider__nav {
   position: relative;
@@ -1592,7 +1598,7 @@ body {
 /* Big carousel: same breakout/drag mechanics */
 .character-slider .location-slider__slide {
   position: relative;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 2 / 0;
 }
 
 .character-slider .location-slider__slide.is-active::before {

@@ -1,7 +1,6 @@
 // Resident Evil Requiem — Character page
-// Fetches /api/characters, builds the thumbnail switcher strip, and
-// drives a peek-carousel (same visual style as the Locations section
-// on the landing page) scoped to whichever character is active.
+// Separates confirmed and unconfirmed characters
+// and initializes one independent carousel for each section.
 
 async function loadCharacters() {
   try {
@@ -11,239 +10,809 @@ async function loadCharacters() {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
 
-    const data = await response.json();
-    initCharacterSection(data);
+    const characters = await response.json();
+
+    console.log("ALL CHARACTERS:", characters);
+
+    console.log(characters[0]);
+    console.log(characters[0].isConfirmed);
+    console.log(typeof characters[0].isConfirmed);
+    console.log(Object.keys(characters[0]));
+
+    // ---------------------------------------------------------
+    // Separate confirmed / unconfirmed characters
+    // ---------------------------------------------------------
+
+    const confirmedCharacters = characters.filter(
+      (character) => character.isConfirmed === true
+    );
+
+    const unconfirmedCharacters = characters.filter(
+      (character) => character.isConfirmed === false
+    );
+
+    console.log("CONFIRMED:", confirmedCharacters);
+    console.log("UNCONFIRMED:", unconfirmedCharacters);
+
+    // ---------------------------------------------------------
+    // Find both HTML sections
+    // ---------------------------------------------------------
+
+    const confirmedSection = document.querySelector(
+      '[data-character-section="confirmed"]'
+    );
+
+    const unconfirmedSection = document.querySelector(
+      '[data-character-section="unconfirmed"]'
+    );
+
+    console.log("CONFIRMED SECTION:", confirmedSection);
+    console.log("UNCONFIRMED SECTION:", unconfirmedSection);
+
+    // ---------------------------------------------------------
+    // Initialize both sections
+    // ---------------------------------------------------------
+
+    initCharacterSection(
+      confirmedCharacters,
+      confirmedSection
+    );
+
+    initCharacterSection(
+      unconfirmedCharacters,
+      unconfirmedSection
+    );
+
   } catch (error) {
     console.error("Error loading characters:", error);
   }
 }
 
-function initCharacterSection(characters) {
-  if (!Array.isArray(characters) || !characters.length) return;
 
-  const switcherTrack = document.querySelector("[data-character-track]");
-  const switcherPrev = document.querySelector("[data-character-prev]");
-  const switcherNext = document.querySelector("[data-character-next]");
-  const imagesNav = document.querySelector("[data-character-images-nav]");
-  const sliderRoot = document.querySelector("[data-character-slider]");
-  const sliderTrack = document.querySelector("[data-character-slider-track]");
-  const nameEl = document.querySelector("[data-character-name]");
-  const bioEl = document.querySelector("[data-character-bio]");
+// =========================================================
+// INITIALIZE ONE CHARACTER SECTION
+// =========================================================
 
-  if (!switcherTrack || !sliderRoot || !sliderTrack) return;
+function initCharacterSection(characters, section) {
+
+  if (!section) {
+    console.error("Character section not found");
+    return;
+  }
+
+  if (!Array.isArray(characters) || characters.length === 0) {
+    console.error(
+      "No characters found for section:",
+      section
+    );
+
+    return;
+  }
+
+
+  // ---------------------------------------------------------
+  // Elements inside THIS section only
+  // ---------------------------------------------------------
+
+  const switcherTrack = section.querySelector(
+    "[data-character-track]"
+  );
+
+  const switcherPrev = section.querySelector(
+    "[data-character-prev]"
+  );
+
+  const switcherNext = section.querySelector(
+    "[data-character-next]"
+  );
+
+  const imagesNav = section.querySelector(
+    "[data-character-images-nav]"
+  );
+
+  const sliderRoot = section.querySelector(
+    "[data-character-slider]"
+  );
+
+  const sliderTrack = section.querySelector(
+    "[data-character-slider-track]"
+  );
+
+  const nameEl = section.querySelector(
+    "[data-character-name]"
+  );
+
+  const bioEl = section.querySelector(
+    "[data-character-bio]"
+  );
+
+
+  if (!switcherTrack || !sliderRoot || !sliderTrack) {
+    console.error(
+      "Missing required character elements inside:",
+      section
+    );
+
+    return;
+  }
+
+
+  // ---------------------------------------------------------
+  // Current indexes
+  // ---------------------------------------------------------
 
   let activeCharacterIndex = 0;
   let activeImageIndex = 0;
 
-  const currentCharacter = () => characters[activeCharacterIndex];
-  const currentImages = () => currentCharacter().images || [];
 
-  // --- Thumbnail switcher strip ---------------------------
+  // ---------------------------------------------------------
+  // Helpers
+  // ---------------------------------------------------------
+
+  function currentCharacter() {
+    return characters[activeCharacterIndex];
+  }
+
+
+  function currentImages() {
+    return currentCharacter()?.images || [];
+  }
+
+
+  // ---------------------------------------------------------
+  // Create thumbnail switcher
+  // ---------------------------------------------------------
+
   switcherTrack.innerHTML = "";
+
+
   characters.forEach((character, index) => {
+
     const thumb = document.createElement("button");
+
     thumb.type = "button";
-    thumb.className = "character-switcher__thumb";
-    thumb.dataset.characterIndex = String(index);
-    thumb.setAttribute("aria-label", character.name);
 
-    const img = document.createElement("img");
-    img.src = (character.images && character.images[0]) || "";
-    img.alt = character.name;
-    img.draggable = false;
+    thumb.className =
+      "character-switcher__thumb";
 
-    thumb.appendChild(img);
-    thumb.addEventListener("click", () => setActiveCharacter(index));
-    switcherTrack.appendChild(thumb);
-  });
+    thumb.dataset.characterIndex =
+      String(index);
 
-  const updateSwitcherHighlight = () => {
-    switcherTrack
-      .querySelectorAll("[data-character-index]")
-      .forEach((thumb) => {
-        thumb.classList.toggle(
-          "is-active",
-          Number(thumb.dataset.characterIndex) === activeCharacterIndex,
-        );
-      });
-  };
-
-  // --- Peek-carousel centering math ---------------
-  const gapPx = () =>
-    parseFloat(
-      getComputedStyle(sliderTrack).columnGap ||
-        getComputedStyle(sliderTrack).gap ||
-        "0",
+    thumb.setAttribute(
+      "aria-label",
+      character.name
     );
 
-  const offsetForImageIndex = (index) => {
-    const slides = sliderTrack.querySelectorAll("[data-character-slide]");
-    const slide = slides[index];
-    if (!slide) return 0;
 
-    const containerWidth = sliderRoot.getBoundingClientRect().width;
-    const slideWidth = slide.getBoundingClientRect().width;
-    const slideCenter = slide.offsetLeft + slideWidth / 2;
+    const img = document.createElement("img");
 
-    return containerWidth / 2 - slideCenter;
-  };
+    img.src =
+      character.images?.[0] || "";
 
-  // --- Rebuilds the slide markup -----------------------------------
-  const renderCharacterImages = () => {
-    const images = currentImages();
-    const name = currentCharacter().name;
+    img.alt =
+      character.name;
 
-    sliderTrack.innerHTML = images
-      .map(
-        (src, i) => `
-        <div class="location-slider__slide${i === 0 ? " is-active" : ""}" data-character-slide>
-          <img src="${src}" alt="${name} — image ${i + 1}" draggable="false" />
-        </div>`,
-      )
-      .join("");
+    img.draggable =
+      false;
 
-    renderImageDots();
 
-    // Snap to the first image instantly
-    sliderTrack.style.transition = "none";
-    requestAnimationFrame(() => {
-      sliderTrack.style.transform = `translateX(${offsetForImageIndex(0)}px)`;
+    thumb.appendChild(img);
+
+
+    thumb.addEventListener(
+      "click",
+      () => {
+        setActiveCharacter(index);
+      }
+    );
+
+
+    switcherTrack.appendChild(thumb);
+
+  });
+
+
+  // ---------------------------------------------------------
+  // Highlight current character thumbnail
+  // ---------------------------------------------------------
+
+  function updateSwitcherHighlight() {
+
+    const thumbnails =
+      switcherTrack.querySelectorAll(
+        "[data-character-index]"
+      );
+
+
+    thumbnails.forEach((thumb) => {
+
+      const thumbIndex =
+        Number(
+          thumb.dataset.characterIndex
+        );
+
+
+      thumb.classList.toggle(
+        "is-active",
+        thumbIndex === activeCharacterIndex
+      );
+
     });
-  };
 
-  // --- "Images 1 – 2 – 3 – 4 – 5" dot nav -------
-  const renderImageDots = () => {
-    if (!imagesNav) return;
-    const images = currentImages();
+  }
+
+
+  // ---------------------------------------------------------
+  // Calculate carousel offset
+  // ---------------------------------------------------------
+
+  function offsetForImageIndex(index) {
+
+    const slides =
+      sliderTrack.querySelectorAll(
+        "[data-character-slide]"
+      );
+
+
+    const slide =
+      slides[index];
+
+
+    if (!slide) {
+      return 0;
+    }
+
+
+    const containerWidth =
+      sliderRoot
+        .getBoundingClientRect()
+        .width;
+
+
+    const slideWidth =
+      slide
+        .getBoundingClientRect()
+        .width;
+
+
+    const slideCenter =
+      slide.offsetLeft +
+      slideWidth / 2;
+
+
+    return (
+      containerWidth / 2 -
+      slideCenter
+    );
+
+  }
+
+
+  // ---------------------------------------------------------
+  // Render image navigation
+  // ---------------------------------------------------------
+
+  function renderImageDots() {
+
+    if (!imagesNav) {
+      return;
+    }
+
+
+    const images =
+      currentImages();
+
 
     const dots = images
       .map(
-        (_, i) => `
-        <button
-          type="button"
-          class="media-slider__dot${i === activeImageIndex ? " is-active" : ""}"
-          data-character-image-dot="${i}"
-          aria-label="Afficher l'image ${i + 1}"
-        >${i + 1}</button>`,
+        (_, index) => {
+
+          return `
+            <button
+              type="button"
+              class="media-slider__dot ${
+                index === activeImageIndex
+                  ? "is-active"
+                  : ""
+              }"
+              data-character-image-dot="${index}"
+              aria-label="Afficher l'image ${index + 1}"
+            >
+              ${index + 1}
+            </button>
+          `;
+
+        }
       )
-      .join('<span class="media-slider__sep">–</span>');
-
-    imagesNav.innerHTML = `<span class="media-slider__label">Images</span>${dots}`;
-
-    imagesNav.querySelectorAll("[data-character-image-dot]").forEach((dot) => {
-      dot.addEventListener("click", () => {
-        goToImage(Number(dot.dataset.characterImageDot));
-      });
-    });
-  };
-
-  // --- Moves within the CURRENT character's images (dot click, arrow
-  //     drag) — toggles existing slides rather than rebuilding them. ---
-  const goToImage = (index, animate = true) => {
-    const images = currentImages();
-    if (!images.length) return;
-
-    activeImageIndex = (index + images.length) % images.length;
-
-    sliderTrack
-      .querySelectorAll("[data-character-slide]")
-      .forEach((slide, i) => {
-        slide.classList.toggle("is-active", i === activeImageIndex);
-      });
-
-    imagesNav?.querySelectorAll("[data-character-image-dot]").forEach((dot) => {
-      dot.classList.toggle(
-        "is-active",
-        Number(dot.dataset.characterImageDot) === activeImageIndex,
+      .join(
+        '<span class="media-slider__sep">–</span>'
       );
+
+
+    imagesNav.innerHTML = `
+      <span class="media-slider__label">
+        Images
+      </span>
+
+      ${dots}
+    `;
+
+
+    const imageDots =
+      imagesNav.querySelectorAll(
+        "[data-character-image-dot]"
+      );
+
+
+    imageDots.forEach((dot) => {
+
+      dot.addEventListener(
+        "click",
+        () => {
+
+          const index =
+            Number(
+              dot.dataset.characterImageDot
+            );
+
+          goToImage(index);
+
+        }
+      );
+
     });
 
-    sliderTrack.style.transition = animate ? "transform 0.6s ease" : "none";
-    sliderTrack.style.transform = `translateX(${offsetForImageIndex(activeImageIndex)}px)`;
-  };
+  }
 
-  // --- Switches which character is shown: name, bio, thumbnail strip
-  //     highlight, and rebuilds the image carousel for that character. -
+
+  // ---------------------------------------------------------
+  // Render current character images
+  // ---------------------------------------------------------
+
+  function renderCharacterImages() {
+
+    const character =
+      currentCharacter();
+
+    const images =
+      currentImages();
+
+
+    sliderTrack.innerHTML =
+      images
+        .map(
+          (src, index) => {
+
+            return `
+              <div
+                class="location-slider__slide ${
+                  index === 0
+                    ? "is-active"
+                    : ""
+                }"
+                data-character-slide
+              >
+
+                <img
+                  src="${src}"
+                  alt="${character.name} — image ${index + 1}"
+                  draggable="false"
+                />
+
+              </div>
+            `;
+
+          }
+        )
+        .join("");
+
+
+    renderImageDots();
+
+
+    sliderTrack.style.transition =
+      "none";
+
+
+    requestAnimationFrame(() => {
+
+      sliderTrack.style.transform =
+        `translateX(${offsetForImageIndex(0)}px)`;
+
+    });
+
+  }
+
+
+  // ---------------------------------------------------------
+  // Go to specific image
+  // ---------------------------------------------------------
+
+  function goToImage(
+    index,
+    animate = true
+  ) {
+
+    const images =
+      currentImages();
+
+
+    if (!images.length) {
+      return;
+    }
+
+
+    activeImageIndex =
+      (
+        index +
+        images.length
+      ) %
+      images.length;
+
+
+    const slides =
+      sliderTrack.querySelectorAll(
+        "[data-character-slide]"
+      );
+
+
+    slides.forEach(
+      (slide, slideIndex) => {
+
+        slide.classList.toggle(
+          "is-active",
+          slideIndex === activeImageIndex
+        );
+
+      }
+    );
+
+
+    if (imagesNav) {
+
+      const dots =
+        imagesNav.querySelectorAll(
+          "[data-character-image-dot]"
+        );
+
+
+      dots.forEach((dot) => {
+
+        dot.classList.toggle(
+          "is-active",
+          Number(
+            dot.dataset.characterImageDot
+          ) === activeImageIndex
+        );
+
+      });
+
+    }
+
+
+    sliderTrack.style.transition =
+      animate
+        ? "transform 0.6s ease"
+        : "none";
+
+
+    sliderTrack.style.transform =
+      `translateX(${offsetForImageIndex(activeImageIndex)}px)`;
+
+  }
+
+
+  // ---------------------------------------------------------
+  // Change active character
+  // ---------------------------------------------------------
+
   function setActiveCharacter(index) {
-    activeCharacterIndex = (index + characters.length) % characters.length;
+
+    activeCharacterIndex =
+      (
+        index +
+        characters.length
+      ) %
+      characters.length;
+
+
     activeImageIndex = 0;
+
 
     updateSwitcherHighlight();
 
-    const character = currentCharacter();
-    if (nameEl) nameEl.textContent = character.name;
+
+    const character =
+      currentCharacter();
+
+
+    // -------------------------------------------------------
+    // Name
+    // -------------------------------------------------------
+
+    if (nameEl) {
+
+      nameEl.textContent =
+        character.name;
+
+    }
+
+
+    // -------------------------------------------------------
+    // Description
+    // -------------------------------------------------------
 
     if (bioEl) {
-      const paragraphs = Array.isArray(character.description)
-        ? character.description
-        : [character.description].filter(Boolean);
 
-      bioEl.innerHTML = paragraphs
-        .map((text) => `<p class="info-text info-text--highlight">${text}</p>`)
-        .join("");
+      const paragraphs =
+        Array.isArray(
+          character.description
+        )
+          ? character.description
+          : [
+              character.description
+            ].filter(Boolean);
+
+
+      bioEl.innerHTML =
+        paragraphs
+          .map(
+            (text) => {
+
+              return `
+                <p class="info-text info-text--highlight">
+                  ${text}
+                </p>
+              `;
+
+            }
+          )
+          .join("");
+
     }
+
 
     renderCharacterImages();
+
   }
 
-  switcherPrev?.addEventListener("click", () =>
-    setActiveCharacter(activeCharacterIndex - 1),
-  );
-  switcherNext?.addEventListener("click", () =>
-    setActiveCharacter(activeCharacterIndex + 1),
+
+  // ---------------------------------------------------------
+  // Previous character
+  // ---------------------------------------------------------
+
+  switcherPrev?.addEventListener(
+    "click",
+    () => {
+
+      setActiveCharacter(
+        activeCharacterIndex - 1
+      );
+
+    }
   );
 
-  // --- Drag / swipe on the big carousel — same pattern as the
-  //     Locations peek-carousel on the landing page. -------------------
+
+  // ---------------------------------------------------------
+  // Next character
+  // ---------------------------------------------------------
+
+  switcherNext?.addEventListener(
+    "click",
+    () => {
+
+      setActiveCharacter(
+        activeCharacterIndex + 1
+      );
+
+    }
+  );
+
+
+  // =========================================================
+  // DRAG / SWIPE
+  // =========================================================
+
   let isDragging = false;
+
   let startX = 0;
+
   let baseOffset = 0;
+
   let latestDelta = 0;
 
-  sliderTrack.addEventListener("pointerdown", (event) => {
-    isDragging = true;
-    startX = event.clientX;
-    baseOffset = offsetForImageIndex(activeImageIndex);
-    latestDelta = 0;
-    sliderRoot.classList.add("is-dragging");
-    sliderTrack.style.transition = "none";
-    sliderTrack.setPointerCapture?.(event.pointerId);
-  });
 
-  sliderTrack.addEventListener("pointermove", (event) => {
-    if (!isDragging) return;
-    latestDelta = event.clientX - startX;
-    sliderTrack.style.transform = `translateX(${baseOffset + latestDelta}px)`;
-  });
+  // ---------------------------------------------------------
+  // Pointer down
+  // ---------------------------------------------------------
 
-  const endDrag = () => {
-    if (!isDragging) return;
-    isDragging = false;
-    sliderRoot.classList.remove("is-dragging");
+  sliderTrack.addEventListener(
+    "pointerdown",
+    (event) => {
 
-    const slides = sliderTrack.querySelectorAll("[data-character-slide]");
-    const slideWidth = slides[0]?.getBoundingClientRect().width || 1;
-    const threshold = slideWidth * 0.18;
+      isDragging = true;
 
-    if (latestDelta <= -threshold) {
-      goToImage(activeImageIndex + 1);
-    } else if (latestDelta >= threshold) {
-      goToImage(activeImageIndex - 1);
-    } else {
-      goToImage(activeImageIndex); // snap back
+      startX =
+        event.clientX;
+
+      baseOffset =
+        offsetForImageIndex(
+          activeImageIndex
+        );
+
+      latestDelta = 0;
+
+
+      sliderRoot.classList.add(
+        "is-dragging"
+      );
+
+
+      sliderTrack.style.transition =
+        "none";
+
+
+      sliderTrack.setPointerCapture?.(
+        event.pointerId
+      );
+
     }
-  };
+  );
 
-  sliderTrack.addEventListener("pointerup", endDrag);
-  sliderTrack.addEventListener("pointercancel", endDrag);
-  sliderTrack.addEventListener("pointerleave", (event) => {
-    if (isDragging && event.buttons === 0) endDrag();
-  });
 
-  window.addEventListener("resize", () => goToImage(activeImageIndex, false));
+  // ---------------------------------------------------------
+  // Pointer move
+  // ---------------------------------------------------------
 
-  // --- Go! ---------------------------------------------------------------
+  sliderTrack.addEventListener(
+    "pointermove",
+    (event) => {
+
+      if (!isDragging) {
+        return;
+      }
+
+
+      latestDelta =
+        event.clientX -
+        startX;
+
+
+      sliderTrack.style.transform =
+        `translateX(${baseOffset + latestDelta}px)`;
+
+    }
+  );
+
+
+  // ---------------------------------------------------------
+  // End drag
+  // ---------------------------------------------------------
+
+  function endDrag() {
+
+    if (!isDragging) {
+      return;
+    }
+
+
+    isDragging = false;
+
+
+    sliderRoot.classList.remove(
+      "is-dragging"
+    );
+
+
+    const slides =
+      sliderTrack.querySelectorAll(
+        "[data-character-slide]"
+      );
+
+
+    const slideWidth =
+      slides[0]
+        ?.getBoundingClientRect()
+        .width || 1;
+
+
+    const threshold =
+      slideWidth * 0.18;
+
+
+    // Dragged left
+    if (
+      latestDelta <=
+      -threshold
+    ) {
+
+      goToImage(
+        activeImageIndex + 1
+      );
+
+    }
+
+    // Dragged right
+    else if (
+      latestDelta >=
+      threshold
+    ) {
+
+      goToImage(
+        activeImageIndex - 1
+      );
+
+    }
+
+    // Not enough movement
+    else {
+
+      goToImage(
+        activeImageIndex
+      );
+
+    }
+
+  }
+
+
+  sliderTrack.addEventListener(
+    "pointerup",
+    endDrag
+  );
+
+
+  sliderTrack.addEventListener(
+    "pointercancel",
+    endDrag
+  );
+
+
+  sliderTrack.addEventListener(
+    "pointerleave",
+    (event) => {
+
+      if (
+        isDragging &&
+        event.buttons === 0
+      ) {
+
+        endDrag();
+
+      }
+
+    }
+  );
+
+
+  // ---------------------------------------------------------
+  // Re-center when screen is resized
+  // ---------------------------------------------------------
+
+  window.addEventListener(
+    "resize",
+    () => {
+
+      goToImage(
+        activeImageIndex,
+        false
+      );
+
+    }
+  );
+
+
+  // ---------------------------------------------------------
+  // Initial character
+  // ---------------------------------------------------------
+
   setActiveCharacter(0);
+
 }
+
+
+// =========================================================
+// START
+// =========================================================
 
 loadCharacters();

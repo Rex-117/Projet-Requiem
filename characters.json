@@ -11,7 +11,7 @@
 
       "status": "Vivante",
       "sex": "Female",
-      "blood-type": "Unknown",
+      "bloodType": "Unknown",
       "isConfirmed": true,
 
       "images": [
@@ -25,9 +25,7 @@
       "thumbnail_image": "",
 
       "description": [
-        "Une analyste du FBI qui fait preuve d'un sens de la concentration et de la déduction hors du commun.",
-        "Cependant, la mort de sa mère l'a marquée au plus profond de son âme, et a fait d'elle une personne introvertie qui a tendance à se plonger totalement dans son travail.",
-        "C'est ainsi qu'elle se rend seule à l'hôtel abandonné où une mort mystérieuse a été signalée."
+        "Une analyste du FBI qui fait preuve d'un sens de la concentration et de la déduction hors du commun. Cependant, la mort de sa mère l'a marquée au plus profond de son âme, et a fait d'elle une personne introvertie qui a tendance à se plonger totalement dans son travail. C'est ainsi qu'elle se rend seule à l'hôtel abandonné où une mort mystérieuse a été signalée."
       ]
     },
 
@@ -42,7 +40,7 @@
 
       "status": "Vivant",
       "sex": "Male",
-      "blood-type": "A",
+      "bloodType": "A",
       "isConfirmed": true,
 
       "images": [
@@ -51,6 +49,8 @@
         "https://res.cloudinary.com/go4exsf4/image/upload/v1786390602/character_leon_thumb3.webp",
         "https://res.cloudinary.com/go4exsf4/image/upload/v1786390602/character_leon_thumb4.webp"
       ],
+
+      "thumbnail_image": "",
 
       "description": "L'un des survivants de l'incident de Raccoon City. Doté d'un sens aigu de la justice et de capacités physiques impressionnantes, il est intervenu lors de nombreuses épidémies depuis ce jour fatidique. Dorénavant, il met sa grande expérience du terrain au service de la DSO pour lutter contre le bioterrorisme, et a été envoyé enquêter sur la dernière série de morts étranges recensées dans le Midwest."
     },
@@ -66,7 +66,7 @@
 
       "status": "Décédé",
       "sex": "Female",
-      "blood-type": "N/A",
+      "bloodType": "N/A",
       "isConfirmed": true,
 
       "images": [
@@ -75,6 +75,8 @@
         "https://res.cloudinary.com/go4exsf4/image/upload/v1786391502/character_alyssa_thumb3.webp",
         "https://res.cloudinary.com/go4exsf4/image/upload/v1786391502/character_alyssa_thumb4.webp"
       ],
+
+      "thumbnail_image": "",
 
       "description": "Une survivante de l'incident de Raccoon City et la mère de Grace. Elle était journaliste au moment des faits. C'est une femme forte et déterminée qui a continué à exercer son métier même après l'incident de Raccoon City, bien résolue à découvrir la vérité derrière Umbrella. Jusqu'à ce que..."
     },
@@ -90,13 +92,15 @@
 
       "status": "Alive",
       "sex": "Female",
-      "blood-type": "N/A",
+      "bloodType": "N/A",
       "isConfirmed": true,
 
       "images": [
         "https://res.cloudinary.com/go4exsf4/image/upload/v1786391564/character_nathan_thumb1.webp",
         "https://res.cloudinary.com/go4exsf4/image/upload/v1786391564/character_nathan_thumb2.webp"
       ],
+
+      "thumbnail_image": "",
 
       "description": "Le supérieur de Grace au FBI. Nathan est pleinement conscient qu'elle est toujours hantée par le décès de sa mère, mais il lui a tout de même confié l'enquête sur la série de morts récentes."
     },
@@ -112,13 +116,15 @@
 
       "status": "Vivante",
       "sex": "Female",
-      "blood-type": "N/A",
+      "bloodType": "N/A",
       "isConfirmed": true,
 
       "images": [
         "https://res.cloudinary.com/go4exsf4/image/upload/v1786391483/character_emily_thumb1.webp",
         "https://res.cloudinary.com/go4exsf4/image/upload/v1786546636/character_emily_thumb2.webp"
       ],
+
+      "thumbnail_image": "",
 
       "description": "Une petite fille que Grace découvre enfermée dans le centre de soins. Elle est très pâle et maigre."
     },
@@ -137,7 +143,7 @@
 
       "status": "Décédé",
       "sex": "Male",
-      "blood-type": "N/A",
+      "bloodType": "N/A",
       "isConfirmed": true,
 
       "images": [
@@ -145,31 +151,37 @@
         "https://res.cloudinary.com/go4exsf4/image/upload/v1786390622/character_victor_thumb2.webp"
       ],
 
+      "thumbnail_image": "",
+
       "description": "Le suspect principal dans la vague de morts étranges qui s'abat sur les États-Unis. Selon plusieurs sources, Victor menait auparavant des recherches sur le virus T pour Umbrella Corporation, l'entreprise pharmaceutique au cœur de l'incident de Raccoon City."
     },
+
     {
       "name": "Ada Wong",
       "age": "54",
       "pob": "United States of America",
-      "nationality": "Caucasian/American",
+      "nationality": "Chinese/American",
       "affiliation": [
-        "Umbrella Corporation (????-2003)",
-        "The Connections (????-2026)"
+        "Espion industriel pour une entreprise concurrente d'Umbrella Corporation (vers 1997–?)"
       ],
-      "job": "Researcher / Virologist",
+      "job": "Agent secret indépendant (env. années 1990-présent)",
       "family": "N/A",
 
-      "status": "Décédé",
-      "sex": "Male",
-      "blood-type": "N/A",
+      "status": "Vivante",
+      "sex": "Female",
+      "bloodType": "AB",
       "isConfirmed": false,
 
       "images": [
-        "https://res.cloudinary.com/go4exsf4/image/upload/v1786390622/character_victor_thumb1.webp",
-        "https://res.cloudinary.com/go4exsf4/image/upload/v1786390622/character_victor_thumb2.webp"
+        "https://res.cloudinary.com/go4exsf4/image/upload/v1787203552/ada.jpg",
+        "https://res.cloudinary.com/go4exsf4/image/upload/v1787203552/Ada_RE9_Fan_Concept_Art_2.jpg",
+        "https://res.cloudinary.com/go4exsf4/image/upload/v1787203552/Ada_RE9_Fan_Concept_Art.jpg",
+        "https://res.cloudinary.com/go4exsf4/image/upload/v1787203553/Ada_22.jpg"
       ],
 
-      "description": "Le suspect principal dans la vague de morts étranges qui s'abat sur les États-Unis. Selon plusieurs sources, Victor menait auparavant des recherches sur le virus T pour Umbrella Corporation, l'entreprise pharmaceutique au cœur de l'incident de Raccoon City."
+      "thumbnail_image": "",
+
+      "description": "Ada Wong (エイダ・ウォン Eida Won?) est le pseudonyme d'une espionne énigmatique, d'origine asiatique-américaine. Elle s'est forgée une réputation dans le monde des affaires grâce à sa capacité à gérer les situations les plus délicates et les demandes les plus complexes sans éprouver le moindre remords."
     }
   ]
 }

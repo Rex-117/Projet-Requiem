@@ -18,8 +18,13 @@ app.get("/api/characters", (req, res) => {
       nationality: character.nationality,
       affiliation: character.affiliation,
       family: character.family,
+      status: character.status,
+      sex: character.sex,
+      bloodType: character.bloodType,
+      isConfirmed: character.isConfirmed,
       images: character.images,
       description: character.description,
+
     };
   });
 

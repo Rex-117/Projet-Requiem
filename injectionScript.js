@@ -1,6 +1,14 @@
 // Resident Evil Requiem — Character page
-// Separates confirmed and unconfirmed characters
-// and initializes one independent carousel for each section.
+//
+// Fetches /api/characters and drives every [data-character-section] on
+// the page independently (currently: "confirmed" roster + "unconfirmed"
+// potential-returning characters). Each section gets its own instance:
+// a thumbnail switcher, a peek-carousel with ONE SLIDE PER CHARACTER
+// (dragging/switching characters slides the carousel, revealing the
+// next character peeking at the edge — like the Locations carousel),
+// and INSIDE each character's slide, a stack of that character's own
+// images that crossfade via the numbered dots — same pattern as the
+// Story section, just nested one level deeper.
 
 async function loadCharacters() {
   try {
@@ -10,809 +18,270 @@ async function loadCharacters() {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
 
-    const characters = await response.json();
+    const data = await response.json();
 
-    console.log("ALL CHARACTERS:", characters);
+    const confirmed = data.filter((c) => c.isConfirmed !== false);
+    const unconfirmed = data.filter((c) => c.isConfirmed === false);
 
-    console.log(characters[0]);
-    console.log(characters[0].isConfirmed);
-    console.log(typeof characters[0].isConfirmed);
-    console.log(Object.keys(characters[0]));
+    document.querySelectorAll("[data-character-section]").forEach((section) => {
+      const characters =
+        section.dataset.characterSection === "unconfirmed"
+          ? unconfirmed
+          : confirmed;
 
-    // ---------------------------------------------------------
-    // Separate confirmed / unconfirmed characters
-    // ---------------------------------------------------------
-
-    const confirmedCharacters = characters.filter(
-      (character) => character.isConfirmed === true
-    );
-
-    const unconfirmedCharacters = characters.filter(
-      (character) => character.isConfirmed === false
-    );
-
-    console.log("CONFIRMED:", confirmedCharacters);
-    console.log("UNCONFIRMED:", unconfirmedCharacters);
-
-    // ---------------------------------------------------------
-    // Find both HTML sections
-    // ---------------------------------------------------------
-
-    const confirmedSection = document.querySelector(
-      '[data-character-section="confirmed"]'
-    );
-
-    const unconfirmedSection = document.querySelector(
-      '[data-character-section="unconfirmed"]'
-    );
-
-    console.log("CONFIRMED SECTION:", confirmedSection);
-    console.log("UNCONFIRMED SECTION:", unconfirmedSection);
-
-    // ---------------------------------------------------------
-    // Initialize both sections
-    // ---------------------------------------------------------
-
-    initCharacterSection(
-      confirmedCharacters,
-      confirmedSection
-    );
-
-    initCharacterSection(
-      unconfirmedCharacters,
-      unconfirmedSection
-    );
-
+      if (characters.length) {
+        initCharacterSection(section, characters);
+      } else {
+        section.style.display = "none"; // nothing to show for this group
+      }
+    });
   } catch (error) {
     console.error("Error loading characters:", error);
   }
 }
 
+function initCharacterSection(root, characters) {
+  if (!characters.length) return;
 
-// =========================================================
-// INITIALIZE ONE CHARACTER SECTION
-// =========================================================
+  const switcherWrap = root.querySelector(".character-switcher");
+  const switcherTrack = root.querySelector("[data-character-track]");
+  const switcherPrev = root.querySelector("[data-character-prev]");
+  const switcherNext = root.querySelector("[data-character-next]");
+  const imagesNav = root.querySelector("[data-character-images-nav]");
+  const sliderRoot = root.querySelector("[data-character-slider]");
+  const sliderTrack = root.querySelector("[data-character-slider-track]");
+  const nameEl = root.querySelector("[data-character-name]");
+  const bioEl = root.querySelector("[data-character-bio]");
 
-function initCharacterSection(characters, section) {
-
-  if (!section) {
-    console.error("Character section not found");
-    return;
-  }
-
-  if (!Array.isArray(characters) || characters.length === 0) {
-    console.error(
-      "No characters found for section:",
-      section
-    );
-
-    return;
-  }
-
-
-  // ---------------------------------------------------------
-  // Elements inside THIS section only
-  // ---------------------------------------------------------
-
-  const switcherTrack = section.querySelector(
-    "[data-character-track]"
-  );
-
-  const switcherPrev = section.querySelector(
-    "[data-character-prev]"
-  );
-
-  const switcherNext = section.querySelector(
-    "[data-character-next]"
-  );
-
-  const imagesNav = section.querySelector(
-    "[data-character-images-nav]"
-  );
-
-  const sliderRoot = section.querySelector(
-    "[data-character-slider]"
-  );
-
-  const sliderTrack = section.querySelector(
-    "[data-character-slider-track]"
-  );
-
-  const nameEl = section.querySelector(
-    "[data-character-name]"
-  );
-
-  const bioEl = section.querySelector(
-    "[data-character-bio]"
-  );
-
-
-  if (!switcherTrack || !sliderRoot || !sliderTrack) {
-    console.error(
-      "Missing required character elements inside:",
-      section
-    );
-
-    return;
-  }
-
-
-  // ---------------------------------------------------------
-  // Current indexes
-  // ---------------------------------------------------------
+  if (!switcherTrack || !sliderRoot || !sliderTrack) return;
 
   let activeCharacterIndex = 0;
-  let activeImageIndex = 0;
 
-
-  // ---------------------------------------------------------
-  // Helpers
-  // ---------------------------------------------------------
-
-  function currentCharacter() {
-    return characters[activeCharacterIndex];
-  }
-
-
-  function currentImages() {
-    return currentCharacter()?.images || [];
-  }
-
-
-  // ---------------------------------------------------------
-  // Create thumbnail switcher
-  // ---------------------------------------------------------
-
+  // --- Thumbnail switcher strip (one per character) ---------------------
   switcherTrack.innerHTML = "";
-
-
   characters.forEach((character, index) => {
-
     const thumb = document.createElement("button");
-
     thumb.type = "button";
-
-    thumb.className =
-      "character-switcher__thumb";
-
-    thumb.dataset.characterIndex =
-      String(index);
-
-    thumb.setAttribute(
-      "aria-label",
-      character.name
-    );
-
+    thumb.className = "character-switcher__thumb";
+    thumb.dataset.characterIndex = String(index);
+    thumb.setAttribute("aria-label", character.name);
 
     const img = document.createElement("img");
-
-    img.src =
-      character.images?.[0] || "";
-
-    img.alt =
-      character.name;
-
-    img.draggable =
-      false;
-
+    img.src = (character.images && character.images[0]) || "";
+    img.alt = character.name;
+    img.draggable = false;
 
     thumb.appendChild(img);
-
-
-    thumb.addEventListener(
-      "click",
-      () => {
-        setActiveCharacter(index);
-      }
-    );
-
-
+    thumb.addEventListener("click", () => setActiveCharacter(index));
     switcherTrack.appendChild(thumb);
-
   });
 
-
-  // ---------------------------------------------------------
-  // Highlight current character thumbnail
-  // ---------------------------------------------------------
-
-  function updateSwitcherHighlight() {
-
-    const thumbnails =
-      switcherTrack.querySelectorAll(
-        "[data-character-index]"
-      );
-
-
-    thumbnails.forEach((thumb) => {
-
-      const thumbIndex =
-        Number(
-          thumb.dataset.characterIndex
-        );
-
-
-      thumb.classList.toggle(
-        "is-active",
-        thumbIndex === activeCharacterIndex
-      );
-
-    });
-
+  // A switcher with just one character has nothing to switch between
+  if (characters.length <= 1 && switcherWrap) {
+    switcherWrap.style.display = "none";
   }
 
-
-  // ---------------------------------------------------------
-  // Calculate carousel offset
-  // ---------------------------------------------------------
-
-  function offsetForImageIndex(index) {
-
-    const slides =
-      sliderTrack.querySelectorAll(
-        "[data-character-slide]"
-      );
-
-
-    const slide =
-      slides[index];
-
-
-    if (!slide) {
-      return 0;
-    }
-
-
-    const containerWidth =
-      sliderRoot
-        .getBoundingClientRect()
-        .width;
-
-
-    const slideWidth =
-      slide
-        .getBoundingClientRect()
-        .width;
-
-
-    const slideCenter =
-      slide.offsetLeft +
-      slideWidth / 2;
-
-
-    return (
-      containerWidth / 2 -
-      slideCenter
-    );
-
-  }
-
-
-  // ---------------------------------------------------------
-  // Render image navigation
-  // ---------------------------------------------------------
-
-  function renderImageDots() {
-
-    if (!imagesNav) {
-      return;
-    }
-
-
-    const images =
-      currentImages();
-
-
-    const dots = images
-      .map(
-        (_, index) => {
-
-          return `
-            <button
-              type="button"
-              class="media-slider__dot ${
-                index === activeImageIndex
-                  ? "is-active"
-                  : ""
-              }"
-              data-character-image-dot="${index}"
-              aria-label="Afficher l'image ${index + 1}"
-            >
-              ${index + 1}
-            </button>
-          `;
-
-        }
-      )
-      .join(
-        '<span class="media-slider__sep">–</span>'
-      );
-
-
-    imagesNav.innerHTML = `
-      <span class="media-slider__label">
-        Images
-      </span>
-
-      ${dots}
-    `;
-
-
-    const imageDots =
-      imagesNav.querySelectorAll(
-        "[data-character-image-dot]"
-      );
-
-
-    imageDots.forEach((dot) => {
-
-      dot.addEventListener(
-        "click",
-        () => {
-
-          const index =
-            Number(
-              dot.dataset.characterImageDot
-            );
-
-          goToImage(index);
-
-        }
-      );
-
-    });
-
-  }
-
-
-  // ---------------------------------------------------------
-  // Render current character images
-  // ---------------------------------------------------------
-
-  function renderCharacterImages() {
-
-    const character =
-      currentCharacter();
-
-    const images =
-      currentImages();
-
-
-    sliderTrack.innerHTML =
-      images
+  // --- Build every character's slide up front — each one holds a
+  //     stack of that character's own images (crossfade, no cropping
+  //     via object-fit: contain so portrait/landscape mixes both fit) --
+  sliderTrack.innerHTML = characters
+    .map((character, ci) => {
+      const images = character.images || [];
+      const imgsHtml = images
         .map(
-          (src, index) => {
-
-            return `
-              <div
-                class="location-slider__slide ${
-                  index === 0
-                    ? "is-active"
-                    : ""
-                }"
-                data-character-slide
-              >
-
-                <img
-                  src="${src}"
-                  alt="${character.name} — image ${index + 1}"
-                  draggable="false"
-                />
-
-              </div>
-            `;
-
-          }
+          (src, ii) => `
+          <img
+            class="cycle-fade__img${ii === 0 ? " is-active" : ""}"
+            data-character-image-index="${ii}"
+            src="${src}"
+            alt="${character.name} — image ${ii + 1}"
+            draggable="false"
+          />`,
         )
         .join("");
 
+      return `
+        <div
+          class="location-slider__slide character-slide${ci === 0 ? " is-active" : ""}"
+          data-character-slide
+          data-character-slide-index="${ci}"
+        >
+          <div class="character-slide__frame">${imgsHtml}</div>
+        </div>`;
+    })
+    .join("");
+
+  const slides = () => sliderTrack.querySelectorAll("[data-character-slide]");
+
+  // --- Peek-carousel centering math, scoped to CHARACTER slides now
+  //     (same approach as the Locations carousel) -----------------------
+  const offsetForCharacterIndex = (index) => {
+    const slideEls = slides();
+    const slide = slideEls[index];
+    if (!slide) return 0;
+
+    const containerWidth = sliderRoot.getBoundingClientRect().width;
+    const slideWidth = slide.getBoundingClientRect().width;
+    const slideCenter = slide.offsetLeft + slideWidth / 2;
+
+    return containerWidth / 2 - slideCenter;
+  };
+
+  const updateSwitcherHighlight = () => {
+    switcherTrack
+      .querySelectorAll("[data-character-index]")
+      .forEach((thumb) => {
+        thumb.classList.toggle(
+          "is-active",
+          Number(thumb.dataset.characterIndex) === activeCharacterIndex,
+        );
+      });
+  };
+
+  // --- "Images 1 – 2 – 3 – 4 – 5" dots for the ACTIVE character's own
+  //     image set — rebuilt per character since the count varies -------
+  const renderImageDots = () => {
+    if (!imagesNav) return;
+
+    const images = characters[activeCharacterIndex].images || [];
+    const activeSlide = slides()[activeCharacterIndex];
+    const activeImg = activeSlide?.querySelector(".cycle-fade__img.is-active");
+    const activeImageIndex = activeImg
+      ? Number(activeImg.dataset.characterImageIndex)
+      : 0;
+
+    if (images.length <= 1) {
+      imagesNav.innerHTML = "";
+      return;
+    }
+
+    const dots = images
+      .map(
+        (_, i) => `
+        <button
+          type="button"
+          class="media-slider__dot${i === activeImageIndex ? " is-active" : ""}"
+          data-character-image-dot="${i}"
+          aria-label="Afficher l'image ${i + 1}"
+        >${i + 1}</button>`,
+      )
+      .join('<span class="media-slider__sep">–</span>');
+
+    imagesNav.innerHTML = `<span class="media-slider__label">Images</span>${dots}`;
+
+    imagesNav
+      .querySelectorAll("[data-character-image-dot]")
+      .forEach((dot) => {
+        dot.addEventListener("click", () => {
+          goToImage(Number(dot.dataset.characterImageDot));
+        });
+      });
+  };
+
+  // --- Crossfades WITHIN the currently active character's slide only —
+  //     no carousel movement, exactly like the Story section's dots. ---
+  const goToImage = (index) => {
+    const activeSlide = slides()[activeCharacterIndex];
+    if (!activeSlide) return;
+
+    const imgs = activeSlide.querySelectorAll(".cycle-fade__img");
+    if (!imgs.length) return;
+
+    const next = ((index % imgs.length) + imgs.length) % imgs.length;
+    imgs.forEach((img, i) => img.classList.toggle("is-active", i === next));
+
+    renderImageDots();
+  };
+
+  // --- Switches which character is centered: name, bio, thumbnail
+  //     highlight, and slides the carousel to reveal it. ----------------
+  const setActiveCharacter = (index, animate = true) => {
+    activeCharacterIndex = (index + characters.length) % characters.length;
+    updateSwitcherHighlight();
+
+    const character = characters[activeCharacterIndex];
+    if (nameEl) nameEl.textContent = character.name;
+
+    if (bioEl) {
+      const paragraphs = Array.isArray(character.description)
+        ? character.description
+        : [character.description].filter(Boolean);
+
+      bioEl.innerHTML = paragraphs
+        .map((text) => `<p class="info-text info-text--highlight">${text}</p>`)
+        .join("");
+    }
+
+    slides().forEach((slide, i) => {
+      slide.classList.toggle("is-active", i === activeCharacterIndex);
+    });
 
     renderImageDots();
 
-
-    sliderTrack.style.transition =
-      "none";
-
-
-    requestAnimationFrame(() => {
-
-      sliderTrack.style.transform =
-        `translateX(${offsetForImageIndex(0)}px)`;
-
-    });
-
-  }
-
-
-  // ---------------------------------------------------------
-  // Go to specific image
-  // ---------------------------------------------------------
-
-  function goToImage(
-    index,
-    animate = true
-  ) {
-
-    const images =
-      currentImages();
-
-
-    if (!images.length) {
-      return;
-    }
-
-
-    activeImageIndex =
-      (
-        index +
-        images.length
-      ) %
-      images.length;
-
-
-    const slides =
-      sliderTrack.querySelectorAll(
-        "[data-character-slide]"
-      );
-
-
-    slides.forEach(
-      (slide, slideIndex) => {
-
-        slide.classList.toggle(
-          "is-active",
-          slideIndex === activeImageIndex
-        );
-
-      }
-    );
-
-
-    if (imagesNav) {
-
-      const dots =
-        imagesNav.querySelectorAll(
-          "[data-character-image-dot]"
-        );
-
-
-      dots.forEach((dot) => {
-
-        dot.classList.toggle(
-          "is-active",
-          Number(
-            dot.dataset.characterImageDot
-          ) === activeImageIndex
-        );
-
-      });
-
-    }
-
-
-    sliderTrack.style.transition =
-      animate
-        ? "transform 0.6s ease"
-        : "none";
-
-
-    sliderTrack.style.transform =
-      `translateX(${offsetForImageIndex(activeImageIndex)}px)`;
-
-  }
-
-
-  // ---------------------------------------------------------
-  // Change active character
-  // ---------------------------------------------------------
-
-  function setActiveCharacter(index) {
-
-    activeCharacterIndex =
-      (
-        index +
-        characters.length
-      ) %
-      characters.length;
-
-
-    activeImageIndex = 0;
-
-
-    updateSwitcherHighlight();
-
-
-    const character =
-      currentCharacter();
-
-
-    // -------------------------------------------------------
-    // Name
-    // -------------------------------------------------------
-
-    if (nameEl) {
-
-      nameEl.textContent =
-        character.name;
-
-    }
-
-
-    // -------------------------------------------------------
-    // Description
-    // -------------------------------------------------------
-
-    if (bioEl) {
-
-      const paragraphs =
-        Array.isArray(
-          character.description
-        )
-          ? character.description
-          : [
-              character.description
-            ].filter(Boolean);
-
-
-      bioEl.innerHTML =
-        paragraphs
-          .map(
-            (text) => {
-
-              return `
-                <p class="info-text info-text--highlight">
-                  ${text}
-                </p>
-              `;
-
-            }
-          )
-          .join("");
-
-    }
-
-
-    renderCharacterImages();
-
-  }
-
-
-  // ---------------------------------------------------------
-  // Previous character
-  // ---------------------------------------------------------
-
-  switcherPrev?.addEventListener(
-    "click",
-    () => {
-
-      setActiveCharacter(
-        activeCharacterIndex - 1
-      );
-
-    }
+    sliderTrack.style.transition = animate ? "transform 0.6s ease" : "none";
+    sliderTrack.style.transform = `translateX(${offsetForCharacterIndex(activeCharacterIndex)}px)`;
+  };
+
+  switcherPrev?.addEventListener("click", () =>
+    setActiveCharacter(activeCharacterIndex - 1),
+  );
+  switcherNext?.addEventListener("click", () =>
+    setActiveCharacter(activeCharacterIndex + 1),
   );
 
-
-  // ---------------------------------------------------------
-  // Next character
-  // ---------------------------------------------------------
-
-  switcherNext?.addEventListener(
-    "click",
-    () => {
-
-      setActiveCharacter(
-        activeCharacterIndex + 1
-      );
-
-    }
-  );
-
-
-  // =========================================================
-  // DRAG / SWIPE
-  // =========================================================
-
+  // --- Drag / swipe on the big carousel — moves between CHARACTERS,
+  //     not between a single character's images. -----------------------
   let isDragging = false;
-
   let startX = 0;
-
   let baseOffset = 0;
-
   let latestDelta = 0;
 
+  sliderTrack.addEventListener("pointerdown", (event) => {
+    isDragging = true;
+    startX = event.clientX;
+    baseOffset = offsetForCharacterIndex(activeCharacterIndex);
+    latestDelta = 0;
+    sliderRoot.classList.add("is-dragging");
+    sliderTrack.style.transition = "none";
+    sliderTrack.setPointerCapture?.(event.pointerId);
+  });
 
-  // ---------------------------------------------------------
-  // Pointer down
-  // ---------------------------------------------------------
+  sliderTrack.addEventListener("pointermove", (event) => {
+    if (!isDragging) return;
+    latestDelta = event.clientX - startX;
+    sliderTrack.style.transform = `translateX(${baseOffset + latestDelta}px)`;
+  });
 
-  sliderTrack.addEventListener(
-    "pointerdown",
-    (event) => {
-
-      isDragging = true;
-
-      startX =
-        event.clientX;
-
-      baseOffset =
-        offsetForImageIndex(
-          activeImageIndex
-        );
-
-      latestDelta = 0;
-
-
-      sliderRoot.classList.add(
-        "is-dragging"
-      );
-
-
-      sliderTrack.style.transition =
-        "none";
-
-
-      sliderTrack.setPointerCapture?.(
-        event.pointerId
-      );
-
-    }
-  );
-
-
-  // ---------------------------------------------------------
-  // Pointer move
-  // ---------------------------------------------------------
-
-  sliderTrack.addEventListener(
-    "pointermove",
-    (event) => {
-
-      if (!isDragging) {
-        return;
-      }
-
-
-      latestDelta =
-        event.clientX -
-        startX;
-
-
-      sliderTrack.style.transform =
-        `translateX(${baseOffset + latestDelta}px)`;
-
-    }
-  );
-
-
-  // ---------------------------------------------------------
-  // End drag
-  // ---------------------------------------------------------
-
-  function endDrag() {
-
-    if (!isDragging) {
-      return;
-    }
-
-
+  const endDrag = () => {
+    if (!isDragging) return;
     isDragging = false;
+    sliderRoot.classList.remove("is-dragging");
 
+    const slideEls = slides();
+    const slideWidth = slideEls[0]?.getBoundingClientRect().width || 1;
+    const threshold = slideWidth * 0.18;
 
-    sliderRoot.classList.remove(
-      "is-dragging"
-    );
-
-
-    const slides =
-      sliderTrack.querySelectorAll(
-        "[data-character-slide]"
-      );
-
-
-    const slideWidth =
-      slides[0]
-        ?.getBoundingClientRect()
-        .width || 1;
-
-
-    const threshold =
-      slideWidth * 0.18;
-
-
-    // Dragged left
-    if (
-      latestDelta <=
-      -threshold
-    ) {
-
-      goToImage(
-        activeImageIndex + 1
-      );
-
+    if (latestDelta <= -threshold) {
+      setActiveCharacter(activeCharacterIndex + 1);
+    } else if (latestDelta >= threshold) {
+      setActiveCharacter(activeCharacterIndex - 1);
+    } else {
+      setActiveCharacter(activeCharacterIndex); // snap back
     }
+  };
 
-    // Dragged right
-    else if (
-      latestDelta >=
-      threshold
-    ) {
+  sliderTrack.addEventListener("pointerup", endDrag);
+  sliderTrack.addEventListener("pointercancel", endDrag);
+  sliderTrack.addEventListener("pointerleave", (event) => {
+    if (isDragging && event.buttons === 0) endDrag();
+  });
 
-      goToImage(
-        activeImageIndex - 1
-      );
-
-    }
-
-    // Not enough movement
-    else {
-
-      goToImage(
-        activeImageIndex
-      );
-
-    }
-
-  }
-
-
-  sliderTrack.addEventListener(
-    "pointerup",
-    endDrag
+  window.addEventListener("resize", () =>
+    setActiveCharacter(activeCharacterIndex, false),
   );
 
-
-  sliderTrack.addEventListener(
-    "pointercancel",
-    endDrag
-  );
-
-
-  sliderTrack.addEventListener(
-    "pointerleave",
-    (event) => {
-
-      if (
-        isDragging &&
-        event.buttons === 0
-      ) {
-
-        endDrag();
-
-      }
-
-    }
-  );
-
-
-  // ---------------------------------------------------------
-  // Re-center when screen is resized
-  // ---------------------------------------------------------
-
-  window.addEventListener(
-    "resize",
-    () => {
-
-      goToImage(
-        activeImageIndex,
-        false
-      );
-
-    }
-  );
-
-
-  // ---------------------------------------------------------
-  // Initial character
-  // ---------------------------------------------------------
-
-  setActiveCharacter(0);
-
+  // --- Go! ---------------------------------------------------------------
+  setActiveCharacter(0, false);
 }
-
-
-// =========================================================
-// START
-// =========================================================
 
 loadCharacters();

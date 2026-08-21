@@ -1598,16 +1598,41 @@ body {
 /* Big carousel: same breakout/drag mechanics */
 .character-slider .location-slider__slide {
   position: relative;
-  aspect-ratio: 2 / 0;
+  flex-basis: 36%;
+  aspect-ratio: auto;
 }
 
-.character-slider .location-slider__slide.is-active::before {
+.character-slide__frame {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background-color: #0d0d0d;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.character-slide.is-active .character-slide__frame::before {
   /* the "stacked photograph" frame */
   content: "";
   position: absolute;
   z-index: -1;
   inset: -14px -14px 14px 14px;
   border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.character-slide__frame .cycle-fade__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0;
+  transition: opacity 0.9s ease;
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+.character-slide__frame .cycle-fade__img.is-active {
+  opacity: 1;
 }
 
 .character-info {

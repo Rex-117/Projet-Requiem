@@ -17,6 +17,7 @@ app.get("/api/characters", (req, res) => {
       pob: character.pob,
       nationality: character.nationality,
       affiliation: character.affiliation,
+      job: character.job,
       family: character.family,
       status: character.status,
       sex: character.sex,
@@ -24,7 +25,6 @@ app.get("/api/characters", (req, res) => {
       isConfirmed: character.isConfirmed,
       images: character.images,
       description: character.description,
-
     };
   });
 

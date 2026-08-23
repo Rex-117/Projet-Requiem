@@ -24,6 +24,8 @@ app.get("/api/characters", (req, res) => {
       bloodType: character.bloodType,
       isConfirmed: character.isConfirmed,
       images: character.images,
+      thumbnail_image: character.thumbnail_image,
+      model_video: character.model_video,
       description: character.description,
     };
   });

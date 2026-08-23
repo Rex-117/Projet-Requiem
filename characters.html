@@ -38,13 +38,52 @@
         <li><a href="index.html#story" class="nav-link">Histoire</a></li>
         <li><a href="index.html#locations" class="nav-link">Lieux</a></li>
         <li><a href="index.html#gameplay" class="nav-link">Gameplay</a></li>
-        <li><a href="index.html#products" class="nav-link">Produits</a></li>
+        <li>
+          <a href="index.html#collaboration" class="nav-link">Collaboration</a>
+        </li>
         <li>
           <a href="characters.html" class="nav-link is-active">Personnages</a>
         </li>
         <li><a href="trailer.html" class="nav-link">Trailers</a></li>
         <li><a href="credits.html" class="nav-link">Crédits</a></li>
       </ul>
+
+      <!-- ---------------------------------------------------------
+           Background music mute toggle — circle button. Hover reveals a vertical volume
+           slider below it; clicking the icon mutes/unmutes.
+      --------------------------------------------------------- -->
+      <div class="audio-player" data-audio-player>
+        <button
+          type="button"
+          class="audio-player__toggle"
+          data-audio-toggle
+          aria-label="Couper / activer le son"
+        >
+          <img
+            class="fa-solid fa-volume-high"
+            src="assets/img/speaker.png"
+            alt=""
+            srcset=""
+            data-audio-icon
+          />
+          <!-- <i class="fa-solid fa-volume-high" data-audio-icon></i> -->
+        </button>
+        <div class="audio-player__panel" data-audio-panel>
+          <input
+            type="range"
+            class="audio-player__range"
+            data-audio-range
+            min="0"
+            max="100"
+            step="1"
+            value="100"
+            aria-label="Volume"
+          />
+        </div>
+        <audio data-audio-element loop preload="auto">
+          <source src="assets/audio/Bonus Theme.mp3" type="audio/mpeg" />
+        </audio>
+      </div>
     </nav>
 
     <!-- ---------------------------------------------------------
@@ -53,7 +92,7 @@
     <main class="info-section" data-character-section="confirmed">
       <div class="info-section__bg" aria-hidden="true"></div>
       <div class="info-section__inner">
-        <h2 class="info-title">Character</h2>
+        <h2 class="info-title">Characters</h2>
 
         <!-- Small thumbnail strip -->
         <div class="character-switcher">
@@ -63,16 +102,18 @@
             data-character-prev
             aria-label="Previous character"
           >
-            <i class="fa-solid fa-arrow-left"></i>
+            <img src="assets/img/icon_arrow_small.webp" alt="" srcset="" />
+            <!-- <i class="fa-solid fa-arrow-left"></i> -->
           </button>
           <div class="character-switcher__track" data-character-track></div>
           <button
             type="button"
-            class="character-switcher__arrow"
+            class="character-switcher__arrow-right"
             data-character-next
             aria-label="Next character"
           >
-            <i class="fa-solid fa-arrow-right"></i>
+            <img src="assets/img/icon_arrow_small.webp" alt="" srcset="" />
+            <!-- <i class="fa-solid fa-arrow-right"></i> -->
           </button>
         </div>
 
@@ -91,7 +132,10 @@
       </div>
     </main>
 
-    <section class="info-section" data-character-section="unconfirmed">
+    <section
+      class="info-section"
+      data-character-section="unconfirmed"
+    >
       <div class="info-section__bg" aria-hidden="true"></div>
       <div class="info-section__inner">
         <h2 class="info-title">Personnages susceptibles de revenir</h2>
@@ -104,16 +148,18 @@
             data-character-prev
             aria-label="Previous character"
           >
-            <i class="fa-solid fa-arrow-left"></i>
+            <img src="assets/img/icon_arrow_small.webp" alt="" srcset="" />
+            <!-- <i class="fa-solid fa-arrow-left"></i> -->
           </button>
           <div class="character-switcher__track" data-character-track></div>
           <button
             type="button"
-            class="character-switcher__arrow"
+            class="character-switcher__arrow-right"
             data-character-next
             aria-label="Next character"
           >
-            <i class="fa-solid fa-arrow-right"></i>
+            <img src="assets/img/icon_arrow_small.webp" alt="" srcset="" />
+            <!-- <i class="fa-solid fa-arrow-right"></i> -->
           </button>
         </div>
 
@@ -128,6 +174,54 @@
         <div class="character-info">
           <h3 class="character-info__name" data-character-name></h3>
           <div class="character-info__bio" data-character-bio></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------------------------------------------------------
+         Model viewer — pulls "model_video" from characters.json.
+         Only characters with a non-empty model_video show up in the
+         switcher here; the section hides itself if none do yet.
+    --------------------------------------------------------- -->
+    <section class="info-section" data-model-viewer-section>
+      <div class="info-section__bg" aria-hidden="true"></div>
+      <div class="info-section__inner">
+        <h2 class="info-title">Model Viewer</h2>
+
+        <div class="character-switcher">
+          <button
+            type="button"
+            class="character-switcher__arrow"
+            data-model-viewer-prev
+            aria-label="Previous character"
+          >
+            <img src="assets/img/icon_arrow_small.webp" alt="" srcset="" />
+          </button>
+          <div class="character-switcher__track" data-model-viewer-track></div>
+          <button
+            type="button"
+            class="character-switcher__arrow-right"
+            data-model-viewer-next
+            aria-label="Next character"
+          >
+            <img src="assets/img/icon_arrow_small.webp" alt="" srcset="" />
+          </button>
+        </div>
+
+        <div class="model-viewer">
+          <div class="model-viewer__frame">
+            <video
+              class="model-viewer__video"
+              data-model-viewer-video
+              controls
+              loop
+              playsinline
+            ></video>
+          </div>
+        </div>
+
+        <div class="character-info">
+          <h3 class="character-info__name" data-model-viewer-name></h3>
         </div>
       </div>
     </section>

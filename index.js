@@ -55,7 +55,63 @@ document.addEventListener("DOMContentLoaded", () => {
   initTrailerSlider();
   initCycleFade();
   initViewModeToggle();
+  initAudioPlayer();
 });
+
+// --- Background music player: circular mute toggle + volume slider ----
+function initAudioPlayer() {
+  const player = document.querySelector("[data-audio-player]");
+  if (!player) return;
+
+  const toggle = player.querySelector("[data-audio-toggle]");
+  const icon = player.querySelector("[data-audio-icon]");
+  const range = player.querySelector("[data-audio-range]");
+  const audio = player.querySelector("[data-audio-element]");
+  if (!toggle || !audio) return;
+
+  const ICONS = {
+    high: "fa-volume-high",
+    low: "fa-volume-low",
+    muted: "fa-volume-xmark",
+  };
+
+  const updateIcon = () => {
+    if (!icon) return;
+    icon.classList.remove(ICONS.high, ICONS.low, ICONS.muted);
+    if (audio.muted || audio.volume === 0) {
+      icon.classList.add(ICONS.muted);
+    } else if (audio.volume < 1) {
+      icon.classList.add(ICONS.low);
+    } else {
+      icon.classList.add(ICONS.high);
+    }
+    toggle.classList.toggle("is-muted", audio.muted || audio.volume === 0);
+  };
+
+  audio.volume = 1;
+  updateIcon();
+
+  // Browsers block audio with sound until the person interacts with the
+  // page at least once — try immediately, then quietly retry on the
+  // first interaction instead of leaving console errors behind.
+  const tryPlay = () => audio.play().catch(() => {});
+  tryPlay();
+  ["pointerdown", "keydown"].forEach((eventName) => {
+    document.addEventListener(eventName, tryPlay, { once: true });
+  });
+
+  toggle.addEventListener("click", () => {
+    audio.muted = !audio.muted;
+    updateIcon();
+  });
+
+  range?.addEventListener("input", () => {
+    const value = Number(range.value) / 100;
+    audio.volume = value;
+    audio.muted = value === 0;
+    updateIcon();
+  });
+}
 
 // --- Story-style slider: images crossfade, driven by numbered dots ------
 function initFadeSliders() {

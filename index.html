@@ -40,11 +40,49 @@
         <li><a href="#story" class="nav-link">Histoire</a></li>
         <li><a href="#locations" class="nav-link">Lieux</a></li>
         <li><a href="#gameplay" class="nav-link">Gameplay</a></li>
-        <li><a href="#products" class="nav-link">Produits</a></li>
+        <li><a href="#collaboration" class="nav-link">Collaboration</a></li>
         <li><a href="characters.html" class="nav-link">Personnages</a></li>
         <li><a href="trailer.html" class="nav-link">Trailers</a></li>
         <li><a href="credits.html" class="nav-link">Crédits</a></li>
       </ul>
+
+      <!-- ---------------------------------------------------------
+           Background music mute toggle — circle button
+           trailer play-button style. Hover reveals a vertical volume
+           slider below it; clicking the icon mutes/unmutes.
+      --------------------------------------------------------- -->
+      <div class="audio-player" data-audio-player>
+        <button
+          type="button"
+          class="audio-player__toggle"
+          data-audio-toggle
+          aria-label="Couper / activer le son"
+        >
+          <img
+            class="fa-solid fa-volume-high"
+            src="assets/img/speaker.png"
+            alt=""
+            srcset=""
+            data-audio-icon
+          />
+          <!-- <i class="fa-solid fa-volume-high" data-audio-icon></i> -->
+        </button>
+        <div class="audio-player__panel" data-audio-panel>
+          <input
+            type="range"
+            class="audio-player__range"
+            data-audio-range
+            min="0"
+            max="100"
+            step="1"
+            value="100"
+            aria-label="Volume"
+          />
+        </div>
+        <audio data-audio-element loop preload="auto">
+          <source src="assets/audio/Foreboding.mp3" type="audio/mpeg" />
+        </audio>
+      </div>
     </nav>
 
     <header class="hero" id="home">
@@ -607,6 +645,59 @@
                 >Vue à la première personne</span
               >
             </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------------------------------------------------------
+         Collaboration — two framed panels
+    --------------------------------------------------------- -->
+    <section id="collaboration" class="info-section">
+      <div class="info-section__bg" aria-hidden="true"></div>
+      <div class="info-section__inner">
+        <div class="location-header">
+          <h2 class="info-title">Collaboration</h2>
+        </div>
+
+        <div class="collab-grid">
+          <div class="collab-panel">
+            <div class="collab-panel__media">
+              <img
+                src="assets/img/collaboration/collaboration_porsche.webp"
+                alt="Resident Evil Requiem × Porsche"
+                draggable="false"
+              />
+            </div>
+            <span class="collab-panel__caption">Porsche × Resident Evil</span>
+          </div>
+
+          <div class="collab-panel">
+            <div class="collab-panel__media collab-panel__media--link">
+              <a
+                href="http://hamiltonwatch.com/fr-fr/resident-evil-requiem"
+                target="_blank"
+                rel="noopener"
+                aria-label="Découvrir la collaboration Hamilton × Resident Evil"
+              >
+                <img
+                  src="assets/img/collaboration/collaboration_hamilton.webp"
+                  alt="Resident Evil Requiem × Hamilton"
+                  draggable="false"
+                />
+              </a>
+            </div>
+            <span class="collab-panel__caption">Hamilton × Resident Evil</span>
+            <a
+              href="http://hamiltonwatch.com/fr-fr/resident-evil-requiem"
+              class="collab-panel__link"
+              target="_blank"
+              rel="noopener"
+            >
+              Avis
+              <img src="assets/img/icon_arrow_small.webp" alt="" />
+              <!-- <i class="fa-solid fa-arrow-right" aria-hidden="true"></i> -->
+            </a>
           </div>
         </div>
       </div>

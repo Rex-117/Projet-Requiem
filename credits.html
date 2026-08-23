@@ -38,18 +38,57 @@
         <li><a href="index.html#story" class="nav-link">Histoire</a></li>
         <li><a href="index.html#locations" class="nav-link">Lieux</a></li>
         <li><a href="index.html#gameplay" class="nav-link">Gameplay</a></li>
-        <li><a href="index.html#products" class="nav-link">Produits</a></li>
+        <li>
+          <a href="index.html#collaboration" class="nav-link">Collaboration</a>
+        </li>
         <li><a href="characters.html" class="nav-link">Personnages</a></li>
         <li><a href="trailer.html" class="nav-link">Trailers</a></li>
         <li><a href="credits.html" class="nav-link is-active">Crédits</a></li>
       </ul>
+
+      <!-- ---------------------------------------------------------
+           Background music mute toggle — circle button. Hover reveals a vertical volume
+           slider below it; clicking the icon mutes/unmutes.
+      --------------------------------------------------------- -->
+      <div class="audio-player" data-audio-player>
+        <button
+          type="button"
+          class="audio-player__toggle"
+          data-audio-toggle
+          aria-label="Couper / activer le son"
+        >
+          <img
+            class="fa-solid fa-volume-high"
+            src="assets/img/speaker.png"
+            alt=""
+            srcset=""
+            data-audio-icon
+          />
+          <!-- <i class="fa-solid fa-volume-high" data-audio-icon></i> -->
+        </button>
+        <div class="audio-player__panel" data-audio-panel>
+          <input
+            type="range"
+            class="audio-player__range"
+            data-audio-range
+            min="0"
+            max="100"
+            step="1"
+            value="100"
+            aria-label="Volume"
+          />
+        </div>
+        <audio data-audio-element loop preload="auto">
+          <source
+            src="assets/audio/Through the Darkness.mp3"
+            type="audio/mpeg"
+          />
+        </audio>
+      </div>
     </nav>
 
     <!-- ---------------------------------------------------------
-         Credits — same textured .info-section background as the
-         other pages, a logo up top, then two credit groups
-         (Distribution / Équipe) separated by a dashed divider.
-         Copy a whole .credits-group block to add more groups.
+         Credits page 
     --------------------------------------------------------- -->
     <main id="main-credits" class="info-section">
       <div class="info-section__bg" aria-hidden="true"></div>
@@ -66,8 +105,7 @@
         <span class="credits-thread" aria-hidden="true"></span>
 
         <!-- ---------------------------------------------------------
-             Group 1 — Distribution (cast). Copy a .credits-card to
-             add an entry; each one is image + name + short paragraph.
+             Group 1 — Distribution (cast).
         --------------------------------------------------------- -->
         <section class="credits-group">
           <h2 class="info-title">L'équipe derrière RE: Requiem</h2>
@@ -375,7 +413,7 @@
 
             <article class="credits-card">
               <img
-                src="assets/img/Credits/crew_1.webp"
+                src="assets/img/Credits/Benoit.jpg"
                 alt=""
                 draggable="false"
               />
@@ -393,7 +431,7 @@
 
             <article class="credits-card">
               <img
-                src="assets/img/Credits/crew_2.webp"
+                src="assets/img/Credits/Andreanne.jpg"
                 alt=""
                 draggable="false"
               />
@@ -411,7 +449,7 @@
 
             <article class="credits-card">
               <img
-                src="assets/img/Credits/crew_3.webp"
+                src="assets/img/Credits/Sandrine.jpg"
                 alt=""
                 draggable="false"
               />
@@ -427,11 +465,7 @@
             </article>
 
             <article class="credits-card">
-              <img
-                src="assets/img/Credits/crew_4.webp"
-                alt=""
-                draggable="false"
-              />
+              <img src="assets/img/Credits/Alix.jpg" alt="" draggable="false" />
               <h3 class="credits-card__name">Alix Jasmin-Morissette</h3>
               <p class="credits-card__bio">Formateur</p>
               <p class="credits-card__bio">
@@ -443,7 +477,7 @@
 
             <article class="credits-card">
               <img
-                src="assets/img/Credits/crew_4.webp"
+                src="assets/img/Credits/Louis.jpg"
                 alt=""
                 draggable="false"
               />
@@ -457,6 +491,32 @@
             </article>
           </div>
         </section>
+      </div>
+
+      <div class="info-section__bg_trailer" aria-hidden="true"></div>
+      <div class="trailer-page__inner-bottom">
+        <h1 class="info-title">
+          Ne lâchez pas! Continuez et réalisez vos rêves! Apprends de tes
+          difficultés.
+        </h1>
+
+        <div id="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/tYzMYcUty6s"
+            title="Vidéo YouTube"
+            frameborder="0"
+            allow="
+              accelerometer;
+              autoplay;
+              clipboard-write;
+              encrypted-media;
+              gyroscope;
+              picture-in-picture;
+              web-share;
+            "
+            allowfullscreen
+          ></iframe>
+        </div>
       </div>
     </main>
 

@@ -1,14 +1,15 @@
 // Resident Evil Requiem — Character page
 //
-// Fetches /api/characters and drives every [data-character-section] on
-// the page independently (currently: "confirmed" roster + "unconfirmed"
-// potential-returning characters). Each section gets its own instance:
-// a thumbnail switcher, a peek-carousel with ONE SLIDE PER CHARACTER
-// (dragging/switching characters slides the carousel, revealing the
-// next character peeking at the edge — like the Locations carousel),
-// and INSIDE each character's slide, a stack of that character's own
-// images that crossfade via the numbered dots — same pattern as the
-// Story section, just nested one level deeper.
+// Fetches /api/characters and drives every character-driven section on
+// the page independently:
+//   - [data-character-section] ("confirmed" roster + "unconfirmed"
+//     potential-returning characters) — thumbnail switcher + peek
+//     carousel with one slide per character, each holding a stack of
+//     that character's own images crossfading via numbered dots.
+//   - [data-model-viewer-section] — same thumbnail-switcher pattern,
+//     but swaps a single <video>'s source instead of driving an image
+//     carousel. Only characters with a non-empty model_video appear
+//     in its switcher.
 
 async function loadCharacters() {
   try {
@@ -35,30 +36,36 @@ async function loadCharacters() {
         section.style.display = "none"; // nothing to show for this group
       }
     });
+
+    const withModelVideo = data.filter((c) => c.model_video);
+
+    document
+      .querySelectorAll("[data-model-viewer-section]")
+      .forEach((section) => {
+        if (withModelVideo.length) {
+          initModelViewerSection(section, withModelVideo);
+        } else {
+          section.style.display = "none"; // no videos added to characters.json yet
+        }
+      });
   } catch (error) {
     console.error("Error loading characters:", error);
   }
 }
 
-function initCharacterSection(root, characters) {
-  if (!characters.length) return;
+// --- Shared thumbnail switcher builder — used by both the character
+//     carousel and the model viewer. Builds one thumbnail button per
+//     character and wires clicks to onSelect(index); returns a
+//     function to call whenever the active index changes so the
+//     highlighted thumbnail can be kept in sync. ------------------------
+function buildThumbnailSwitcher(root, characters, onSelect) {
+  const wrap = root.querySelector(".character-switcher");
+  const track = root.querySelector(
+    "[data-character-track], [data-model-viewer-track]",
+  );
+  if (!track) return { updateHighlight: () => {} };
 
-  const switcherWrap = root.querySelector(".character-switcher");
-  const switcherTrack = root.querySelector("[data-character-track]");
-  const switcherPrev = root.querySelector("[data-character-prev]");
-  const switcherNext = root.querySelector("[data-character-next]");
-  const imagesNav = root.querySelector("[data-character-images-nav]");
-  const sliderRoot = root.querySelector("[data-character-slider]");
-  const sliderTrack = root.querySelector("[data-character-slider-track]");
-  const nameEl = root.querySelector("[data-character-name]");
-  const bioEl = root.querySelector("[data-character-bio]");
-
-  if (!switcherTrack || !sliderRoot || !sliderTrack) return;
-
-  let activeCharacterIndex = 0;
-
-  // --- Thumbnail switcher strip (one per character) ---------------------
-  switcherTrack.innerHTML = "";
+  track.innerHTML = "";
   characters.forEach((character, index) => {
     const thumb = document.createElement("button");
     thumb.type = "button";
@@ -67,19 +74,89 @@ function initCharacterSection(root, characters) {
     thumb.setAttribute("aria-label", character.name);
 
     const img = document.createElement("img");
-    img.src = (character.images && character.images[0]) || "";
+    img.src =
+      character.thumbnail_image ||
+      (character.images && character.images[0]) ||
+      "";
     img.alt = character.name;
     img.draggable = false;
 
     thumb.appendChild(img);
-    thumb.addEventListener("click", () => setActiveCharacter(index));
-    switcherTrack.appendChild(thumb);
+    thumb.addEventListener("click", () => onSelect(index));
+    track.appendChild(thumb);
   });
 
-  // A switcher with just one character has nothing to switch between
-  if (characters.length <= 1 && switcherWrap) {
-    switcherWrap.style.display = "none";
+  if (characters.length <= 1 && wrap) {
+    wrap.style.display = "none";
   }
+
+  return {
+    updateHighlight: (activeIndex) => {
+      track.querySelectorAll("[data-character-index]").forEach((thumb) => {
+        thumb.classList.toggle(
+          "is-active",
+          Number(thumb.dataset.characterIndex) === activeIndex,
+        );
+      });
+    },
+  };
+}
+
+// --- Renders age/pob/nationality/affiliation/job/family/bloodType as
+//     highlighted lines, same visual style as the description text,
+//     followed by the description paragraphs themselves. ---------------
+function renderCharacterBio(character) {
+  const formatValue = (value) => {
+    if (Array.isArray(value)) return value.filter(Boolean).join(", ");
+    return value || "N/A";
+  };
+
+  const SPEC_FIELDS = [
+    ["Âge", "age"],
+    ["Lieu de naissance", "pob"],
+    ["Nationalité", "nationality"],
+    ["Affiliation", "affiliation"],
+    ["Profession", "job"],
+    ["Famille", "family"],
+    ["Groupe sanguin", "bloodType"],
+  ];
+
+  const paragraphs = Array.isArray(character.description)
+    ? character.description
+    : [character.description].filter(Boolean);
+
+  const descriptionHtml = paragraphs
+    .map((text) => `<p class="info-text info-text--highlight">${text}</p>`)
+    .join("");
+
+  const specsHtml = SPEC_FIELDS.map(
+    ([label, key]) =>
+      `<p class="info-text info-text--highlight"><strong>${label} :</strong> ${formatValue(character[key])}</p>`,
+  ).join("");
+
+  return descriptionHtml + specsHtml;
+}
+
+function initCharacterSection(root, characters) {
+  if (!characters.length) return;
+
+  const imagesNav = root.querySelector("[data-character-images-nav]");
+  const sliderRoot = root.querySelector("[data-character-slider]");
+  const sliderTrack = root.querySelector("[data-character-slider-track]");
+  const nameEl = root.querySelector("[data-character-name]");
+  const bioEl = root.querySelector("[data-character-bio]");
+  const switcherPrev = root.querySelector("[data-character-prev]");
+  const switcherNext = root.querySelector("[data-character-next]");
+
+  if (!sliderRoot || !sliderTrack) return;
+
+  let activeCharacterIndex = 0;
+  let activeImageIndex = 0;
+  let imageAutoplayTimer = null;
+
+  const switcher = buildThumbnailSwitcher(root, characters, (index) =>
+    setActiveCharacter(index),
+  );
 
   // --- Build every character's slide up front — each one holds a
   //     stack of that character's own images (crossfade, no cropping
@@ -127,28 +204,12 @@ function initCharacterSection(root, characters) {
     return containerWidth / 2 - slideCenter;
   };
 
-  const updateSwitcherHighlight = () => {
-    switcherTrack
-      .querySelectorAll("[data-character-index]")
-      .forEach((thumb) => {
-        thumb.classList.toggle(
-          "is-active",
-          Number(thumb.dataset.characterIndex) === activeCharacterIndex,
-        );
-      });
-  };
-
   // --- "Images 1 – 2 – 3 – 4 – 5" dots for the ACTIVE character's own
   //     image set — rebuilt per character since the count varies -------
   const renderImageDots = () => {
     if (!imagesNav) return;
 
     const images = characters[activeCharacterIndex].images || [];
-    const activeSlide = slides()[activeCharacterIndex];
-    const activeImg = activeSlide?.querySelector(".cycle-fade__img.is-active");
-    const activeImageIndex = activeImg
-      ? Number(activeImg.dataset.characterImageIndex)
-      : 0;
 
     if (images.length <= 1) {
       imagesNav.innerHTML = "";
@@ -169,13 +230,12 @@ function initCharacterSection(root, characters) {
 
     imagesNav.innerHTML = `<span class="media-slider__label">Images</span>${dots}`;
 
-    imagesNav
-      .querySelectorAll("[data-character-image-dot]")
-      .forEach((dot) => {
-        dot.addEventListener("click", () => {
-          goToImage(Number(dot.dataset.characterImageDot));
-        });
+    imagesNav.querySelectorAll("[data-character-image-dot]").forEach((dot) => {
+      dot.addEventListener("click", () => {
+        goToImage(Number(dot.dataset.characterImageDot));
+        restartImageAutoplay(); // manual pick resets the clock, same as the Story slider
       });
+    });
   };
 
   // --- Crossfades WITHIN the currently active character's slide only —
@@ -187,36 +247,45 @@ function initCharacterSection(root, characters) {
     const imgs = activeSlide.querySelectorAll(".cycle-fade__img");
     if (!imgs.length) return;
 
-    const next = ((index % imgs.length) + imgs.length) % imgs.length;
-    imgs.forEach((img, i) => img.classList.toggle("is-active", i === next));
+    activeImageIndex = ((index % imgs.length) + imgs.length) % imgs.length;
+    imgs.forEach((img, i) =>
+      img.classList.toggle("is-active", i === activeImageIndex),
+    );
 
     renderImageDots();
+  };
+
+  // --- Auto-advances the active character's images every 5s. Restarts
+  //     (rather than just continuing) whenever the character or image
+  //     changes, so it doesn't jump right after a manual pick. ---------
+  const restartImageAutoplay = () => {
+    clearInterval(imageAutoplayTimer);
+    const images = characters[activeCharacterIndex]?.images || [];
+    if (images.length > 1) {
+      imageAutoplayTimer = setInterval(
+        () => goToImage(activeImageIndex + 1),
+        5000,
+      );
+    }
   };
 
   // --- Switches which character is centered: name, bio, thumbnail
   //     highlight, and slides the carousel to reveal it. ----------------
   const setActiveCharacter = (index, animate = true) => {
     activeCharacterIndex = (index + characters.length) % characters.length;
-    updateSwitcherHighlight();
+    activeImageIndex = 0;
+    switcher.updateHighlight(activeCharacterIndex);
 
     const character = characters[activeCharacterIndex];
     if (nameEl) nameEl.textContent = character.name;
-
-    if (bioEl) {
-      const paragraphs = Array.isArray(character.description)
-        ? character.description
-        : [character.description].filter(Boolean);
-
-      bioEl.innerHTML = paragraphs
-        .map((text) => `<p class="info-text info-text--highlight">${text}</p>`)
-        .join("");
-    }
+    if (bioEl) bioEl.innerHTML = renderCharacterBio(character);
 
     slides().forEach((slide, i) => {
       slide.classList.toggle("is-active", i === activeCharacterIndex);
     });
 
     renderImageDots();
+    restartImageAutoplay();
 
     sliderTrack.style.transition = animate ? "transform 0.6s ease" : "none";
     sliderTrack.style.transform = `translateX(${offsetForCharacterIndex(activeCharacterIndex)}px)`;
@@ -280,8 +349,45 @@ function initCharacterSection(root, characters) {
     setActiveCharacter(activeCharacterIndex, false),
   );
 
-  // --- Go! ---------------------------------------------------------------
   setActiveCharacter(0, false);
+}
+
+// --- Model viewer: same thumbnail-switcher pattern, but swaps a single
+//     <video>'s source per character instead of driving an image
+//     carousel. Only characters with a non-empty model_video are
+//     passed in (filtered in loadCharacters). ---------------------------
+function initModelViewerSection(root, characters) {
+  if (!characters.length) return;
+
+  const video = root.querySelector("[data-model-viewer-video]");
+  const nameEl = root.querySelector("[data-model-viewer-name]");
+  const prevBtn = root.querySelector("[data-model-viewer-prev]");
+  const nextBtn = root.querySelector("[data-model-viewer-next]");
+
+  if (!video) return;
+
+  let activeIndex = 0;
+
+  const switcher = buildThumbnailSwitcher(root, characters, (index) =>
+    setActiveCharacter(index),
+  );
+
+  const setActiveCharacter = (index) => {
+    activeIndex = (index + characters.length) % characters.length;
+    switcher.updateHighlight(activeIndex);
+
+    const character = characters[activeIndex];
+    if (nameEl) nameEl.textContent = character.name;
+
+    video.pause();
+    video.src = character.model_video;
+    video.load();
+  };
+
+  prevBtn?.addEventListener("click", () => setActiveCharacter(activeIndex - 1));
+  nextBtn?.addEventListener("click", () => setActiveCharacter(activeIndex + 1));
+
+  setActiveCharacter(0);
 }
 
 loadCharacters();

@@ -8,12 +8,10 @@
       "affiliation": "Federal Bureau of Investigation",
       "job": "FBI Intelligence Analyst",
       "family": ["Alyssa Ashcroft"],
-
       "status": "Vivante",
       "sex": "Female",
       "bloodType": "Unknown",
       "isConfirmed": true,
-
       "images": [
         "https://res.cloudinary.com/go4exsf4/image/upload/v1786388635/character_grace_thumb1.webp",
         "https://res.cloudinary.com/go4exsf4/image/upload/v1786388635/character_grace_thumb2.webp",
@@ -21,12 +19,11 @@
         "https://res.cloudinary.com/go4exsf4/image/upload/v1786388635/character_grace_thumb4.webp",
         "https://res.cloudinary.com/go4exsf4/image/upload/v1786388635/character_grace_thumb5.webp"
       ],
-
-      "thumbnail_image": "",
-
+      "thumbnail_image": "https://res.cloudinary.com/go4exsf4/image/upload/v1787247532/character_grace_thumb.webp",
       "description": [
         "Une analyste du FBI qui fait preuve d'un sens de la concentration et de la déduction hors du commun. Cependant, la mort de sa mère l'a marquée au plus profond de son âme, et a fait d'elle une personne introvertie qui a tendance à se plonger totalement dans son travail. C'est ainsi qu'elle se rend seule à l'hôtel abandonné où une mort mystérieuse a été signalée."
-      ]
+      ],
+      "model_video": "https://res.cloudinary.com/go4exsf4/video/upload/v1787516710/Grace.mp4"
     },
 
     {
@@ -37,22 +34,19 @@
       "affiliation": "DSO(Division of Security Operations)",
       "job": "DSO Agent",
       "family": ["N/A", "Décédé"],
-
       "status": "Vivant",
       "sex": "Male",
       "bloodType": "A",
       "isConfirmed": true,
-
       "images": [
         "https://res.cloudinary.com/go4exsf4/image/upload/v1786390602/character_leon_thumb1.webp",
         "https://res.cloudinary.com/go4exsf4/image/upload/v1786390602/character_leon_thumb2.webp",
         "https://res.cloudinary.com/go4exsf4/image/upload/v1786390602/character_leon_thumb3.webp",
         "https://res.cloudinary.com/go4exsf4/image/upload/v1786390602/character_leon_thumb4.webp"
       ],
-
-      "thumbnail_image": "",
-
-      "description": "L'un des survivants de l'incident de Raccoon City. Doté d'un sens aigu de la justice et de capacités physiques impressionnantes, il est intervenu lors de nombreuses épidémies depuis ce jour fatidique. Dorénavant, il met sa grande expérience du terrain au service de la DSO pour lutter contre le bioterrorisme, et a été envoyé enquêter sur la dernière série de morts étranges recensées dans le Midwest."
+      "thumbnail_image": "https://res.cloudinary.com/go4exsf4/image/upload/v1787247554/character_leon_thumb.webp",
+      "description": "L'un des survivants de l'incident de Raccoon City. Doté d'un sens aigu de la justice et de capacités physiques impressionnantes, il est intervenu lors de nombreuses épidémies depuis ce jour fatidique. Dorénavant, il met sa grande expérience du terrain au service de la DSO pour lutter contre le bioterrorisme, et a été envoyé enquêter sur la dernière série de morts étranges recensées dans le Midwest.",
+      "model_video": "https://res.cloudinary.com/go4exsf4/video/upload/v1787516737/Leon.mp4"
     },
 
     {
@@ -63,22 +57,19 @@
       "affiliation": ["N/A", "Daily Raccoon (Sep. 1998)"],
       "job": "Journaliste / Rédacteur indépendant",
       "family": ["N/A", "Décédé"],
-
       "status": "Décédé",
       "sex": "Female",
       "bloodType": "N/A",
       "isConfirmed": true,
-
       "images": [
         "https://res.cloudinary.com/go4exsf4/image/upload/v1786391502/character_alyssa_thumb1.webp",
         "https://res.cloudinary.com/go4exsf4/image/upload/v1786391502/character_alyssa_thumb2.webp",
         "https://res.cloudinary.com/go4exsf4/image/upload/v1786391502/character_alyssa_thumb3.webp",
         "https://res.cloudinary.com/go4exsf4/image/upload/v1786391502/character_alyssa_thumb4.webp"
       ],
-
-      "thumbnail_image": "",
-
-      "description": "Une survivante de l'incident de Raccoon City et la mère de Grace. Elle était journaliste au moment des faits. C'est une femme forte et déterminée qui a continué à exercer son métier même après l'incident de Raccoon City, bien résolue à découvrir la vérité derrière Umbrella. Jusqu'à ce que..."
+      "thumbnail_image": "https://res.cloudinary.com/go4exsf4/image/upload/v1787247498/character_alyssa_thumb.webp",
+      "description": "Une survivante de l'incident de Raccoon City et la mère de Grace. Elle était journaliste au moment des faits. C'est une femme forte et déterminée qui a continué à exercer son métier même après l'incident de Raccoon City, bien résolue à découvrir la vérité derrière Umbrella. Jusqu'à ce que...",
+      "model_video": "https://res.cloudinary.com/go4exsf4/video/upload/v1787516599/Alyssa.mp4"
     },
 
     {
@@ -89,20 +80,17 @@
       "affiliation": "(FBI)Federal Bureau of Investigation",
       "job": "Agent spécial du FBI en charge",
       "family": "N/A",
-
       "status": "Alive",
       "sex": "Female",
       "bloodType": "N/A",
       "isConfirmed": true,
-
       "images": [
         "https://res.cloudinary.com/go4exsf4/image/upload/v1786391564/character_nathan_thumb1.webp",
         "https://res.cloudinary.com/go4exsf4/image/upload/v1786391564/character_nathan_thumb2.webp"
       ],
-
-      "thumbnail_image": "",
-
-      "description": "Le supérieur de Grace au FBI. Nathan est pleinement conscient qu'elle est toujours hantée par le décès de sa mère, mais il lui a tout de même confié l'enquête sur la série de morts récentes."
+      "thumbnail_image": "https://res.cloudinary.com/go4exsf4/image/upload/v1787247593/character_nathan_thumb.webp",
+      "description": "Le supérieur de Grace au FBI. Nathan est pleinement conscient qu'elle est toujours hantée par le décès de sa mère, mais il lui a tout de même confié l'enquête sur la série de morts récentes.",
+      "model_video": "https://res.cloudinary.com/go4exsf4/video/upload/v1787516756/Nathan.mp4"
     },
 
     {
@@ -113,20 +101,17 @@
       "affiliation": "N/A",
       "job": "N/A",
       "family": "N/A",
-
       "status": "Vivante",
       "sex": "Female",
       "bloodType": "N/A",
       "isConfirmed": true,
-
       "images": [
         "https://res.cloudinary.com/go4exsf4/image/upload/v1786391483/character_emily_thumb1.webp",
         "https://res.cloudinary.com/go4exsf4/image/upload/v1786546636/character_emily_thumb2.webp"
       ],
-
-      "thumbnail_image": "",
-
-      "description": "Une petite fille que Grace découvre enfermée dans le centre de soins. Elle est très pâle et maigre."
+      "thumbnail_image": "https://res.cloudinary.com/go4exsf4/image/upload/v1786391482/character_emily_thumb.webp",
+      "description": "Une petite fille que Grace découvre enfermée dans le centre de soins. Elle est très pâle et maigre.",
+      "model_video": "https://res.cloudinary.com/go4exsf4/video/upload/v1787516642/Emily.mp4"
     },
 
     {
@@ -140,24 +125,21 @@
       ],
       "job": "Researcher / Virologist",
       "family": "N/A",
-
       "status": "Décédé",
       "sex": "Male",
       "bloodType": "N/A",
       "isConfirmed": true,
-
       "images": [
         "https://res.cloudinary.com/go4exsf4/image/upload/v1786390622/character_victor_thumb1.webp",
         "https://res.cloudinary.com/go4exsf4/image/upload/v1786390622/character_victor_thumb2.webp"
       ],
-
-      "thumbnail_image": "",
-
-      "description": "Le suspect principal dans la vague de morts étranges qui s'abat sur les États-Unis. Selon plusieurs sources, Victor menait auparavant des recherches sur le virus T pour Umbrella Corporation, l'entreprise pharmaceutique au cœur de l'incident de Raccoon City."
+      "thumbnail_image": "https://res.cloudinary.com/go4exsf4/image/upload/v1786390622/character_victor_thumb.webp",
+      "description": "Le suspect principal dans la vague de morts étranges qui s'abat sur les États-Unis. Selon plusieurs sources, Victor menait auparavant des recherches sur le virus T pour Umbrella Corporation, l'entreprise pharmaceutique au cœur de l'incident de Raccoon City.",
+      "model_video": "https://res.cloudinary.com/go4exsf4/video/upload/v1787516657/Gideon.mp4"
     },
 
     {
-      "name": "Ada Wong",
+      "name": "Ada Wong(Art conceptuel)",
       "age": "54",
       "pob": "United States of America",
       "nationality": "Chinese/American",
@@ -166,22 +148,71 @@
       ],
       "job": "Agent secret indépendant (env. années 1990-présent)",
       "family": "N/A",
-
       "status": "Vivante",
       "sex": "Female",
       "bloodType": "AB",
       "isConfirmed": false,
-
       "images": [
-        "https://res.cloudinary.com/go4exsf4/image/upload/v1787203552/ada.jpg",
         "https://res.cloudinary.com/go4exsf4/image/upload/v1787203552/Ada_RE9_Fan_Concept_Art_2.jpg",
         "https://res.cloudinary.com/go4exsf4/image/upload/v1787203552/Ada_RE9_Fan_Concept_Art.jpg",
-        "https://res.cloudinary.com/go4exsf4/image/upload/v1787203553/Ada_22.jpg"
+        "https://res.cloudinary.com/go4exsf4/image/upload/v1787203552/Ada_RE9_Fan_Concept_Art_4.jpg",
+        "https://res.cloudinary.com/go4exsf4/image/upload/v1787203553/Ada_RE9_Fan_Concept_Art_3.jpg"
       ],
+      "thumbnail_image": "https://res.cloudinary.com/go4exsf4/image/upload/v1787203552/Ada_RE9_Fan_Concept_Art_2.jpg",
+      "description": "Ada Wong (エイダ・ウォン Eida Won?) est le pseudonyme d'une espionne énigmatique, d'origine asiatique-américaine. Elle s'est forgée une réputation dans le monde des affaires grâce à sa capacité à gérer les situations les plus délicates et les demandes les plus complexes sans éprouver le moindre remords.",
+      "model_video": ""
+    },
 
-      "thumbnail_image": "",
+    {
+      "name": "Ada Wong(Conception de personnage précédente RE4: Remake)",
+      "age": "30",
+      "pob": "United States of America",
+      "nationality": "Chinese/American",
+      "affiliation": [
+        "Espion industriel pour une entreprise concurrente d'Umbrella Corporation (vers 1997–?)",
+        "Travaile pour Albert Wesker"
+      ],
+      "job": "Agent secret indépendant (env. années 1990-présent)",
+      "family": "N/A",
+      "status": "Vivante",
+      "sex": "Female",
+      "bloodType": "AB",
+      "isConfirmed": false,
+      "images": [
+        "https://res.cloudinary.com/go4exsf4/image/upload/v1787203552/ada.jpg",
+        "https://res.cloudinary.com/go4exsf4/image/upload/v1787203553/Ada_48.jpg",
+        "https://res.cloudinary.com/go4exsf4/image/upload/v1787203553/Ada_22.jpg",
+        "https://res.cloudinary.com/go4exsf4/image/upload/v1787203552/Ada_47.jpg",
+        "https://res.cloudinary.com/go4exsf4/image/upload/v1787462860/ada_4.webp"
+      ],
+      "thumbnail_image": "https://res.cloudinary.com/go4exsf4/image/upload/v1787520997/ada_wong_thumbnail.webp",
+      "description": "Ada Wong (エイダ・ウォン Eida Won?) est le pseudonyme d'une espionne énigmatique, d'origine asiatique-américaine. Elle s'est forgée une réputation dans le monde des affaires grâce à sa capacité à gérer les situations les plus délicates et les demandes les plus complexes sans éprouver le moindre remords.",
+      "model_video": ""
+    },
 
-      "description": "Ada Wong (エイダ・ウォン Eida Won?) est le pseudonyme d'une espionne énigmatique, d'origine asiatique-américaine. Elle s'est forgée une réputation dans le monde des affaires grâce à sa capacité à gérer les situations les plus délicates et les demandes les plus complexes sans éprouver le moindre remords."
+    {
+      "name": "Chris Redfield(Conception de personnage précédente)",
+      "age": "48",
+      "pob": "United States of America",
+      "nationality": "Caucasian/American",
+      "affiliation": [
+        "BSAA(Bioterrorism Security Assessment Alliance) operator (2003-)"
+      ],
+      "job": "Hound Wolf Squad Captain (2018-)",
+      "family": "Claire Redfield (Sœur)",
+      "status": "Vivant",
+      "sex": "Male",
+      "bloodType": "O",
+      "isConfirmed": false,
+      "images": [
+        "https://res.cloudinary.com/go4exsf4/image/upload/v1787464483/chris-redfield.jpg",
+        "https://res.cloudinary.com/go4exsf4/image/upload/v1787464483/chris-redfield_2.jpg",
+        "https://res.cloudinary.com/go4exsf4/image/upload/v1787464484/chris-redfield_3.jpg",
+        "https://res.cloudinary.com/go4exsf4/image/upload/v1787464485/chris-redfield_4.jpg"
+      ],
+      "thumbnail_image": "https://res.cloudinary.com/go4exsf4/image/upload/v1787464483/chris-redfield.jpg",
+      "description": "Le capitaine Chris Redfield (クリス・レッドフィールド Kurisu Reddofīrudo) est un opérateur américain de la BSAA (Bioterrorism Security Assessment Alliance), qu'il a fondée en 2003. Après avoir été confronté au bioterrorisme en 1998, Redfield a consacré sa carrière à la destruction d'armes bio-organiques et à la lutte contre leurs producteurs et vendeurs. Il est le frère aîné de Claire Redfield, membre de TerraSave, et le mentor de Rosemary Winters, une Américaine aux capacités surhumaines.",
+      "model_video": ""
     }
   ]
 }

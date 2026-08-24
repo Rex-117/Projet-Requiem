@@ -1560,6 +1560,11 @@ body {
   text-align: center;
 }
 
+.credits-group > .info-text {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .credits-group .info-title {
   margin-top: 140px;
   margin-bottom: 72px;
@@ -1774,7 +1779,7 @@ body {
   position: relative;
   z-index: 1;
   margin-top: 48px;
-  max-width: 720px;
+  max-width: 1500px;
 }
 
 .character-info__name {
@@ -1784,8 +1789,88 @@ body {
   margin-bottom: 24px;
 }
 
+.character-info__row {
+  display: flex;
+  align-items: flex-start;
+  gap: 60px;
+}
+
+.character-info__bio {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 640px;
+}
+
 .character-info__bio p {
   margin-bottom: 14px;
+}
+
+.character-info__specs {
+  flex: 1 1 420px;
+  max-width: 800px;
+  padding: 24px 32px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.character-info__specs-title {
+  font-family: "Special Elite", "Sofia Sans Semi Condensed", serif;
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  margin-bottom: 18px;
+  padding-bottom: 14px;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.3);
+}
+
+/* The field list itself — a landscape grid instead of one narrow
+   stacked column. 2 columns by default (box sits beside the bio, so
+   it's narrower); widens to 3 once it gets the full row to itself. */
+.character-info__specs > div {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px 24px;
+}
+
+/* .info-text--highlight is normally `display: inline` so its highlight
+   clones across wrapped lines in body copy — but that makes every spec
+   run into the next on one line. Force each field back to its own
+   block/grid cell here. */
+.character-info__specs p.info-text--highlight {
+  display: block;
+  margin-bottom: 0;
+}
+
+@media (max-width: 1100px) {
+  .character-info__row {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .character-info__bio {
+    max-width: 640px;
+  }
+
+  .character-info__specs {
+    max-width: none;
+    width: 100%;
+  }
+
+  .character-info__specs > div {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .character-info__specs > div {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .character-info__specs > div {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 700px) {

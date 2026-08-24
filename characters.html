@@ -127,15 +127,18 @@
 
         <div class="character-info">
           <h3 class="character-info__name" data-character-name></h3>
-          <div class="character-info__bio" data-character-bio></div>
+          <div class="character-info__row">
+            <div class="character-info__bio" data-character-bio></div>
+            <aside class="character-info__specs">
+              <h4 class="character-info__specs-title">Character information</h4>
+              <div data-character-specs></div>
+            </aside>
+          </div>
         </div>
       </div>
     </main>
 
-    <section
-      class="info-section"
-      data-character-section="unconfirmed"
-    >
+    <section class="info-section" data-character-section="unconfirmed">
       <div class="info-section__bg" aria-hidden="true"></div>
       <div class="info-section__inner">
         <h2 class="info-title">Personnages susceptibles de revenir</h2>
@@ -173,7 +176,15 @@
 
         <div class="character-info">
           <h3 class="character-info__name" data-character-name></h3>
-          <div class="character-info__bio" data-character-bio></div>
+          <div class="character-info__row">
+            <div class="character-info__bio" data-character-bio></div>
+            <aside class="character-info__specs">
+              <h4 class="character-info__specs-title">
+                Informations sur les personnages
+              </h4>
+              <div data-character-specs></div>
+            </aside>
+          </div>
         </div>
       </div>
     </section>
@@ -215,6 +226,8 @@
               data-model-viewer-video
               controls
               loop
+              autoplay
+              muted
               playsinline
             ></video>
           </div>

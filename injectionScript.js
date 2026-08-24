@@ -103,9 +103,8 @@ function buildThumbnailSwitcher(root, characters, onSelect) {
 }
 
 // --- Renders age/pob/nationality/affiliation/job/family/bloodType as
-//     highlighted lines, same visual style as the description text,
-//     followed by the description paragraphs themselves. ---------------
-function renderCharacterBio(character) {
+//     highlighted lines for the "Character information" sidebar. -------
+function renderCharacterSpecs(character) {
   const formatValue = (value) => {
     if (Array.isArray(value)) return value.filter(Boolean).join(", ");
     return value || "N/A";
@@ -121,20 +120,20 @@ function renderCharacterBio(character) {
     ["Groupe sanguin", "bloodType"],
   ];
 
+  return SPEC_FIELDS.map(
+    ([label, key]) =>
+      `<p class="info-text info-text--highlight"><strong>${label} :</strong> ${formatValue(character[key])}</p>`,
+  ).join("");
+}
+
+function renderCharacterDescription(character) {
   const paragraphs = Array.isArray(character.description)
     ? character.description
     : [character.description].filter(Boolean);
 
-  const descriptionHtml = paragraphs
+  return paragraphs
     .map((text) => `<p class="info-text info-text--highlight">${text}</p>`)
     .join("");
-
-  const specsHtml = SPEC_FIELDS.map(
-    ([label, key]) =>
-      `<p class="info-text info-text--highlight"><strong>${label} :</strong> ${formatValue(character[key])}</p>`,
-  ).join("");
-
-  return descriptionHtml + specsHtml;
 }
 
 function initCharacterSection(root, characters) {
@@ -145,6 +144,7 @@ function initCharacterSection(root, characters) {
   const sliderTrack = root.querySelector("[data-character-slider-track]");
   const nameEl = root.querySelector("[data-character-name]");
   const bioEl = root.querySelector("[data-character-bio]");
+  const specsEl = root.querySelector("[data-character-specs]");
   const switcherPrev = root.querySelector("[data-character-prev]");
   const switcherNext = root.querySelector("[data-character-next]");
 
@@ -278,7 +278,8 @@ function initCharacterSection(root, characters) {
 
     const character = characters[activeCharacterIndex];
     if (nameEl) nameEl.textContent = character.name;
-    if (bioEl) bioEl.innerHTML = renderCharacterBio(character);
+    if (bioEl) bioEl.innerHTML = renderCharacterDescription(character);
+    if (specsEl) specsEl.innerHTML = renderCharacterSpecs(character);
 
     slides().forEach((slide, i) => {
       slide.classList.toggle("is-active", i === activeCharacterIndex);
@@ -381,7 +382,15 @@ function initModelViewerSection(root, characters) {
 
     video.pause();
     video.src = character.model_video;
+    video.muted = true; // required by browser autoplay policies
     video.load();
+
+    // Autoplay isn't guaranteed to fire just from the `autoplay`
+    // attribute after a src swap on every browser, so kick it off
+    // explicitly too — same quiet-retry pattern as the audio player.
+    const tryPlay = () => video.play().catch(() => {});
+    video.addEventListener("loadedmetadata", tryPlay, { once: true });
+    tryPlay();
   };
 
   prevBtn?.addEventListener("click", () => setActiveCharacter(activeIndex - 1));

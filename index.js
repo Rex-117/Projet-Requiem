@@ -123,10 +123,9 @@ function initAudioPlayer() {
         });
       });
   };
+  // Execute the check on load
+  tryPlay();
 }
-
-// Execute the check on load
-tryPlay();
 
 // --- Story-style slider: images crossfade, driven by numbered dots ------
 function initFadeSliders() {

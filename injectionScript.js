@@ -190,8 +190,7 @@ function initCharacterSection(root, characters) {
 
   const slides = () => sliderTrack.querySelectorAll("[data-character-slide]");
 
-  // --- Peek-carousel centering math, scoped to CHARACTER slides now
-  //     (same approach as the Locations carousel) -----------------------
+  // --- Peek-carousel centering math, scoped to CHARACTER slides now -----------------------
   const offsetForCharacterIndex = (index) => {
     const slideEls = slides();
     const slide = slideEls[index];
@@ -204,8 +203,7 @@ function initCharacterSection(root, characters) {
     return containerWidth / 2 - slideCenter;
   };
 
-  // --- "Images 1 – 2 – 3 – 4 – 5" dots for the ACTIVE character's own
-  //     image set — rebuilt per character since the count varies -------
+  // --- "Images 1 – 2 – 3 – 4 – 5" -------
   const renderImageDots = () => {
     if (!imagesNav) return;
 
@@ -255,9 +253,7 @@ function initCharacterSection(root, characters) {
     renderImageDots();
   };
 
-  // --- Auto-advances the active character's images every 5s. Restarts
-  //     (rather than just continuing) whenever the character or image
-  //     changes, so it doesn't jump right after a manual pick. ---------
+  // --- Auto-advances the active character's images every 5s. ---------
   const restartImageAutoplay = () => {
     clearInterval(imageAutoplayTimer);
     const images = characters[activeCharacterIndex]?.images || [];
@@ -353,10 +349,7 @@ function initCharacterSection(root, characters) {
   setActiveCharacter(0, false);
 }
 
-// --- Model viewer: same thumbnail-switcher pattern, but swaps a single
-//     <video>'s source per character instead of driving an image
-//     carousel. Only characters with a non-empty model_video are
-//     passed in (filtered in loadCharacters). ---------------------------
+// --- Model viewer: same thumbnail-switcher pattern ---------------------------
 function initModelViewerSection(root, characters) {
   if (!characters.length) return;
 

@@ -33,5 +33,4 @@ node_modules/
  target/
  dist/
  build/
-package-lock.json
-package.json
+

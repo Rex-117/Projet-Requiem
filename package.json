@@ -1,7 +1,11 @@
 {
+  "name": "Projet-Requiem",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node server.js"
+  },
   "dependencies": {
     "@studio-freight/lenis": "^1.0.42",
-    "express": "^5.2.1",
-    "node": "^26.7.0"
+    "express": "^5.2.1"
   }
 }

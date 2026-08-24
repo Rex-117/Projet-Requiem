@@ -94,35 +94,23 @@ function initAudioPlayer() {
   // Browsers block audio with sound until the person interacts with the
   // page at least once — try immediately, then quietly retry on the
   // first interaction instead of leaving console errors behind.
-  const tryPlay = () => {
-    audio
-      .play()
-      .then(() => {
-        // Autoplay worked! Synced to normal playing state
-        audio.muted = false;
-        updateIcon();
-      })
-      .catch(() => {
-        // Autoplay BLOCKED by browser. Force visual UI into muted/paused state
-        audio.muted = true;
-        updateIcon();
+  const tryPlay = () => audio.play().catch(() => {});
+  tryPlay();
+  ["pointerdown", "keydown"].forEach((eventName) => {
+    document.addEventListener(eventName, tryPlay, { once: true });
+  });
 
-        // Wait for the fallback first user interaction to unmute smoothly
-        ["pointerdown", "keydown"].forEach((eventName) => {
-          document.addEventListener(
-            eventName,
-            () => {
-              // Only unmute if they haven't explicitly toggled it off while waiting
-              audio.muted = false;
-              audio.volume = 1;
-              audio.play();
-              updateIcon();
-            },
-            { once: true },
-          );
-        });
-      });
-  };
+  toggle.addEventListener("click", () => {
+    audio.muted = !audio.muted;
+    updateIcon();
+  });
+
+  range?.addEventListener("input", () => {
+    const value = Number(range.value) / 100;
+    audio.volume = value;
+    audio.muted = value === 0;
+    updateIcon();
+  });
 }
 
 // Execute the check on load

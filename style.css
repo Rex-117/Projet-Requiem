@@ -286,20 +286,18 @@
   inset: 0;
   z-index: 0;
   opacity: 0.7;
+
+  /* Define the vertical and horizontal grid lines inside a single 48px square tile */
   background-image:
-    repeating-linear-gradient(
-      0deg,
-      rgba(255, 255, 255, 0.076) 0px,
-      transparent 1px,
-      transparent 48px
-    ),
-    repeating-linear-gradient(
-      90deg,
-      rgba(255, 255, 255, 0.076) 0px,
-      transparent 1px,
-      transparent 48px
-    ),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.076) 1px, transparent 1px),
+    linear-gradient(to right, rgba(255, 255, 255, 0.076) 1px, transparent 1px),
     radial-gradient(circle at 12% 35%, rgba(42, 36, 36, 0.25), transparent 40%);
+
+  /* Set the repeating tile dimension constraint to match your original 48px size */
+  background-size:
+    48px 48px,
+    48px 48px,
+    100% 100%;
   background-color: #2a2a2a;
 }
 
@@ -318,20 +316,18 @@
   inset: 0;
   z-index: 0;
   opacity: 0.7;
+
+  /* Define the vertical and horizontal grid lines inside a single 48px square tile */
   background-image:
-    repeating-linear-gradient(
-      0deg,
-      rgba(255, 255, 255, 0.076) 0px,
-      transparent 1px,
-      transparent 48px
-    ),
-    repeating-linear-gradient(
-      90deg,
-      rgba(255, 255, 255, 0.076) 0px,
-      transparent 1px,
-      transparent 48px
-    ),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.076) 1px, transparent 1px),
+    linear-gradient(to right, rgba(255, 255, 255, 0.076) 1px, transparent 1px),
     radial-gradient(circle at 12% 35%, rgba(42, 36, 36, 0.25), transparent 40%);
+
+  /* Set the repeating tile dimension constraint to match your original 48px size */
+  background-size:
+    48px 48px,
+    48px 48px,
+    100% 100%;
   background-color: #2a2a2a;
 }
 

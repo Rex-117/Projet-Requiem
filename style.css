@@ -487,6 +487,7 @@
   object-fit: cover;
   display: block;
   background: #222; /* placeholder color until real image src is set */
+  border: 5px solid gray;
 }
 
 .media-slider__nav {
@@ -559,6 +560,7 @@
   background: rgba(230, 230, 225, 0.92);
   color: #111;
   padding: 4px 6px;
+  margin-right: 170px;
 }
 
 /* Break out of the section's max-width to bleed edge-to-edge, so the
@@ -612,6 +614,7 @@
   user-select: none;
   pointer-events: none; /* the track itself handles the drag gesture */
 }
+
 .location-slider .location-slider__track .location-slider__slide:nth-child(3) {
   aspect-ratio: initial;
   aspect-ratio: initial;
@@ -1747,7 +1750,7 @@ body {
   aspect-ratio: 16 / 9;
   overflow: hidden;
   background-color: #0d0d0d;
-  border: 1px solid rgba(255, 255, 255, 0.35);
+  border: 2px solid rgba(255, 255, 255, 0.35);
 }
 
 .character-slide.is-active .character-slide__frame::before {
@@ -1823,19 +1826,14 @@ body {
   border-bottom: 1px dashed rgba(255, 255, 255, 0.3);
 }
 
-/* The field list itself — a landscape grid instead of one narrow
-   stacked column. 2 columns by default (box sits beside the bio, so
-   it's narrower); widens to 3 once it gets the full row to itself. */
+/* The field list itself — a landscape grid */
 .character-info__specs > div {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 12px 24px;
 }
 
-/* .info-text--highlight is normally `display: inline` so its highlight
-   clones across wrapped lines in body copy — but that makes every spec
-   run into the next on one line. Force each field back to its own
-   block/grid cell here. */
+/* .info-text--highlight is normally `display: inline`  */
 .character-info__specs p.info-text--highlight {
   display: block;
   margin-bottom: 0;

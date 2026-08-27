@@ -262,8 +262,9 @@ function initLocationSlider() {
 // --- Trailer filmstrip: native horizontal scroll + snap, driven by
 //     prev/next arrows, with a live "current / total" counter --------
 function initTrailerSlider() {
+  const root = document.querySelector("[data-trailer-slider]");
   const track = document.querySelector("[data-trailer-track]");
-  if (!track) return;
+  if (!root || !track) return;
 
   const cards = track.querySelectorAll("[data-trailer-card]");
   const prevBtn = document.querySelector("[data-trailer-prev]");
@@ -298,6 +299,68 @@ function initTrailerSlider() {
   nextBtn?.addEventListener("click", () => {
     track.scrollBy({ left: step(), behavior: "smooth" });
   });
+
+  // Match the locations carousel's click-and-drag / swipe interaction.
+  let isDragging = false;
+  let startX = 0;
+  let startScrollLeft = 0;
+  let hasDragged = false;
+
+  const onPointerDown = (event) => {
+    if (event.pointerType === "mouse" && event.button !== 0) return;
+
+    isDragging = true;
+    hasDragged = false;
+    startX = event.clientX;
+    startScrollLeft = track.scrollLeft;
+    root.classList.add("is-dragging");
+    track.setPointerCapture?.(event.pointerId);
+  };
+
+  const onPointerMove = (event) => {
+    if (!isDragging) return;
+
+    const delta = event.clientX - startX;
+    if (Math.abs(delta) > 5) hasDragged = true;
+    if (!hasDragged) return;
+
+    event.preventDefault();
+    track.scrollLeft = startScrollLeft - delta;
+  };
+
+  const endDrag = (event) => {
+    if (!isDragging) return;
+
+    isDragging = false;
+    root.classList.remove("is-dragging");
+    if (track.hasPointerCapture?.(event.pointerId)) {
+      track.releasePointerCapture(event.pointerId);
+    }
+
+    const nearestCard = Math.min(
+      Math.max(Math.round(track.scrollLeft / step()), 0),
+      cards.length - 1,
+    );
+    track.scrollTo({ left: nearestCard * step(), behavior: "smooth" });
+  };
+
+  track.addEventListener("pointerdown", onPointerDown);
+  track.addEventListener("pointermove", onPointerMove);
+  track.addEventListener("pointerup", endDrag);
+  track.addEventListener("pointercancel", endDrag);
+  track.addEventListener("dragstart", (event) => event.preventDefault());
+
+  // Dragging a linked card should move the strip, not open the link.
+  track.addEventListener(
+    "click",
+    (event) => {
+      if (!hasDragged) return;
+      event.preventDefault();
+      event.stopPropagation();
+      hasDragged = false;
+    },
+    true,
+  );
 
   let ticking = false;
   track.addEventListener("scroll", () => {
@@ -378,9 +441,12 @@ function initViewModeToggle() {
 }
 
 function smoothscroll() {
+  if (typeof Lenis === "undefined") return;
+
   const lenis = new Lenis({
     lerp: 0.08,
     smoothWheel: true,
+    prevent: (node) => node.hasAttribute?.("data-lenis-prevent"),
   });
 
   function raf(time) {

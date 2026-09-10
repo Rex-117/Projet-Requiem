@@ -84,6 +84,8 @@ Projet-Requiem/
 
 ## API locale
 
+La configuration du nouvel assistant flottant est documentée dans [CHAT_WIDGET.md](CHAT_WIDGET.md).
+
 Le serveur expose les données utilisées par la page des personnages :
 
 ```http

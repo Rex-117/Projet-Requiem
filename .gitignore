@@ -27,6 +27,9 @@ Thumbs.db
 # Common package manager lockfiles and dependencies 
 # (Uncomment the ones matching your language)
 node_modules/
+.npm-cache/
+test-results/
+playwright-report/
 # __pycache__/
 # *.pyc
  .venv/

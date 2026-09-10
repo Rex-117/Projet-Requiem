@@ -2,10 +2,16 @@
   "name": "Projet-Requiem",
   "version": "1.0.0",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "playwright test"
   },
   "dependencies": {
     "@studio-freight/lenis": "^1.0.42",
-    "express": "^5.2.1"
+    "dompurify": "3.4.15",
+    "express": "^5.2.1",
+    "marked": "18.0.12"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0"
   }
 }

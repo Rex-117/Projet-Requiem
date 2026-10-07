@@ -167,7 +167,11 @@ app.get("/api/characters", (req, res) => {
   res.json(charactersInfo);
 });
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
-});
+// Start server locally; on Vercel the exported app is run as a serverless function
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Server running at http://localhost:${PORT}`);
+  });
+}
+
+module.exports = app;

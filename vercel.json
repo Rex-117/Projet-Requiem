@@ -1,0 +1,22 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "server.js",
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": [
+          "*.html",
+          "*.css",
+          "*.js",
+          "characters.json",
+          "assets/**",
+          "node_modules/marked/lib/marked.esm.js",
+          "node_modules/dompurify/dist/purify.es.mjs",
+          "node_modules/@studio-freight/lenis/**"
+        ]
+      }
+    }
+  ],
+  "routes": [{ "src": "/(.*)", "dest": "server.js" }]
+}
